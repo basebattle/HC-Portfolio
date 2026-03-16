@@ -107,7 +107,7 @@ export const projects: Project[] = [
     name: "VBC Reimbursement Analyzer",
     slug: "vbc-analyzer",
     category: "Financial Optimization",
-    status: "Planned",
+    status: "Deployed",
     phase: 2,
     oneLiner: "Oncology-focused value-based care simulator modeling episode-level costs against CMS reimbursement tiers.",
     metric: "CMS Oncology Care Model financial impact modeling",
@@ -118,8 +118,8 @@ export const projects: Project[] = [
       "Fork of Tuva Project (Apache 2.0) with CMS Oncology Care Model mapping, episode-level TCOC, outlier flagging by provider and payer mix, and scenario sliders for risk-adjustment sensitivity."
     ],
     stack: ["dbt", "DuckDB", "Tuva Project", "Streamlit", "Python"],
-    github: null,
-    live: null,
+    github: "basebattle/vbc-analyzer",
+    live: "https://vbc-analyzer.streamlit.app",
     kpis: ["Episode-level TCOC calculation", "Performance-based payment adjustment modeling", "Risk-adjustment sensitivity across CMS-HCC V28"],
     veteran: "References episode-level TCOC analysis, CMS-HCC V28 risk-adjustment recalibration, and HFMA oncology episode cost benchmarks."
   },
