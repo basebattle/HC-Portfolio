@@ -95,8 +95,8 @@ export default function AboutSection() {
       <style dangerouslySetInnerHTML={{
         __html: `
         @media (min-width: 1024px) {
-          #about img {
-            object-position: center 15% !important;
+          section#about img {
+            object-position: center 40% !important;
             mask-image: radial-gradient(ellipse 80% 90% at 50% 30%, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0) 85%) !important;
             -webkit-mask-image: radial-gradient(ellipse 80% 90% at 50% 30%, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0) 85%) !important;
             opacity: 0.9 !important;
