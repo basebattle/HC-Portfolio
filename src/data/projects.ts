@@ -17,6 +17,11 @@ export interface Project {
   features?: { name: string; benefit: string; icon?: "zap" | "shield" | "cpu" | "check" }[];
   kpis: string[];
   veteran: string;
+  // NEW FIELDS FOR RESTRUCTURE:
+  heroNumber: string;
+  heroUnit: string;
+  descriptor: string;
+  bullets: string[];
 }
 
 export const projects: Project[] = [
@@ -45,7 +50,16 @@ export const projects: Project[] = [
       { name: "FastMCP Orchestration", benefit: "Registers 200+ endpoints automatically using semantic abstractions, eliminating boilerplate routing.", icon: "cpu" }
     ],
     kpis: ["Data exchange latency reduced to sub-second", "Multi-vocabulary terminology resolution across 4 code systems", "Zero custom integration code per downstream agent"],
-    veteran: "References TEFCA cross-network interoperability framework. Addresses the Azure API for FHIR retirement (September 2026) by demonstrating the migration-ready architecture pattern."
+    veteran: "References TEFCA cross-network interoperability framework. Addresses the Azure API for FHIR retirement (September 2026) by demonstrating the migration-ready architecture pattern.",
+    heroNumber: "4",
+    heroUnit: "MCP TOOLS",
+    descriptor: "First MCP-native FHIR R4 clinical data bridge",
+    bullets: [
+      "4 MCP tools replace hundreds of raw FHIR API endpoints",
+      "Real-time terminology across ICD-10, SNOMED CT, RxNorm, LOINC",
+      "Pydantic v2 strict-mode enforces type safety at MCP boundary",
+      "Next.js 16 EHR Simulator — HIPAA-compliant dev environment"
+    ],
   },
   {
     idx: "02",
@@ -70,7 +84,16 @@ export const projects: Project[] = [
       { name: "Predictive Denial Risk Engine", benefit: "Intercepts and scores flags before submission, acting as an automated compliance governor.", icon: "shield" }
     ],
     kpis: ["Auth cycle time: 14 days to 3 days", "Denial rate: 12% to 5% (58% improvement)", "Clinical staff time per request: 45 min to under 5 min"],
-    veteran: "References CMS NPPES provider validation, LCD/NCD clinical coverage determination, and payer-specific medical necessity criteria. Directly extends Optum Member Forms Agentic AI work."
+    veteran: "References CMS NPPES provider validation, LCD/NCD clinical coverage determination, and payer-specific medical necessity criteria. Directly extends Optum Member Forms Agentic AI work.",
+    heroNumber: "6",
+    heroUnit: "AGENT NODES",
+    descriptor: "LangGraph DAG automating 45-min clinical workflows",
+    bullets: [
+      "6-node DAG: Intake → Clinical Review → NPPES → Denial Risk → FHIR Bundle → Decision Synthesis",
+      "Probabilistic denial risk scored before submission",
+      "CMS NPPES provider credentialing as a dedicated agent node",
+      "Dual deployment: Streamlit legacy + Next.js/FastAPI v2"
+    ],
   },
   {
     idx: "03",
@@ -91,7 +114,16 @@ export const projects: Project[] = [
     github: "basebattle/revenue-cycle-dashboard",
     live: "https://payvider-dashboard.streamlit.app",
     kpis: ["Days in A/R: 45 to 28 (38% improvement)", "Clean Claim Rate: 78% to 94%", "Admin cost as % revenue: 28% to 18%"],
-    veteran: "Every KPI formula uses HFMA benchmark methodology. The NL query layer answers questions like 'Why did our denial rate spike in cardiology last quarter?' with data-backed explanations."
+    veteran: "Every KPI formula uses HFMA benchmark methodology. The NL query layer answers questions like 'Why did our denial rate spike in cardiology last quarter?' with data-backed explanations.",
+    heroNumber: "12",
+    heroUnit: "HFMA KPIS",
+    descriptor: "AI-powered revenue cycle intelligence platform",
+    bullets: [
+      "12 HFMA-benchmarked KPIs calculated in real time",
+      "6-node LangGraph: NL query → anomaly detect → PPT/Excel export",
+      "LangSmith observability for end-to-end agent tracing",
+      "Flags revenue leakage before it impacts cash flow"
+    ],
   },
   {
     idx: "04",
@@ -112,7 +144,16 @@ export const projects: Project[] = [
     github: "https://github.com/basebattle/claims-denial-agent",
     live: "https://claims-denial-agent.streamlit.app",
     kpis: ["Denial rate reduction from 12% to 9.6%", "CARC/RARC root-cause mapping: top 50 codes", "Rework cost avoidance and write-off reduction"],
-    veteran: "References X12 835 remittance advice parsing, CARC/RARC denial taxonomy, and Change Healthcare Revenue Cycle Denials Index for baseline benchmarking."
+    veteran: "References X12 835 remittance advice parsing, CARC/RARC denial taxonomy, and Change Healthcare Revenue Cycle Denials Index for baseline benchmarking.",
+    heroNumber: "5K",
+    heroUnit: "CLAIMS",
+    descriptor: "CARC/RARC denial analytics with Prevention Scorer",
+    bullets: [
+      "50 CARC/RARC codes mapped to 4 root-cause categories",
+      "5,000 synthetic claims at 12% denial rate baseline",
+      "Prevention Scorer ranks pending claims pre-submission",
+      "ROI model: 10 / 20 / 30% prevention scenario calculators"
+    ],
   },
   {
     idx: "05",
@@ -133,7 +174,16 @@ export const projects: Project[] = [
     github: "https://github.com/basebattle/vbc-analyzer",
     live: "https://vbc-analyzer.streamlit.app",
     kpis: ["Episode-level TCOC calculation", "Performance-based payment adjustment modeling", "Risk-adjustment sensitivity across CMS-HCC V28"],
-    veteran: "References episode-level TCOC analysis, CMS-HCC V28 risk-adjustment recalibration, and HFMA oncology episode cost benchmarks."
+    veteran: "References episode-level TCOC analysis, CMS-HCC V28 risk-adjustment recalibration, and HFMA oncology episode cost benchmarks.",
+    heroNumber: "$0",
+    heroUnit: "INFRA COST",
+    descriptor: "Episode TCOC and CMS-HCC V28 risk-adjusted modeling",
+    bullets: [
+      "Tuva Project (Apache 2.0) dbt pipeline — open-source standard",
+      "DuckDB file-based engine: zero cloud database, zero cost",
+      "Episode-level Total Cost of Care for oncology service lines",
+      "CMS-HCC V28 risk-adjustment sliders for VBC scenario modeling"
+    ],
   },
   {
     idx: "06",
@@ -154,7 +204,16 @@ export const projects: Project[] = [
     github: "https://github.com/basebattle/fhir-llm-gateway",
     live: "https://fhir-llm-gateway.vercel.app",
     kpis: ["Enterprise FHIR backend latency", "Bulk Data Access 2.0 throughput", "SMART on FHIR auth compliance"],
-    veteran: "References Azure API for FHIR retirement (September 2026) and migration to Azure Health Data Services. Cites TEFCA for cross-network interoperability."
+    veteran: "References Azure API for FHIR retirement (September 2026) and migration to Azure Health Data Services. Cites TEFCA for cross-network interoperability.",
+    heroNumber: "3",
+    heroUnit: "FHIR MODES",
+    descriptor: "Tri-mode FHIR client with Medplum Cloud integration",
+    bullets: [
+      "Static / Cloud / Local modes — one codebase, zero config change",
+      "Medplum OAuth2 client_credentials, 13 Synthea patient bundles",
+      "4-panel API Playground: Tool / Request / Response / Trace",
+      "Full reasoning audit trail with timestamps per tool call"
+    ],
   },
   {
     idx: "07",
@@ -175,7 +234,17 @@ export const projects: Project[] = [
     github: "basebattle/haira-assessment",
     live: "https://haira-assessment.vercel.app",
     kpis: ["Governance maturity score across 7 domains", "Benchmarking percentile vs. aggregate orgs", "Prioritized action items with effort/impact"],
-    veteran: "Operationalizes Hussein et al. 2026. References ONC HTI-2 algorithmic transparency, NIST AI RMF Govern function, and pre-deployment clinical validation protocols."
+    veteran: "Operationalizes Hussein et al. 2026. References ONC HTI-2 algorithmic transparency, NIST AI RMF Govern function, and pre-deployment clinical validation protocols.",
+    heroNumber: "35",
+    heroUnit: "QUESTIONS",
+    descriptor: "First digital HAIRA governance framework — npj 2026",
+    bullets: [
+      "35 questions across 7 AI governance domains",
+      "5-level maturity scoring: Initial through Leading",
+      "7-axis RadarChart vs synthetic industry benchmarks",
+      "No backend required — fully serverless, zero-cost Vercel deploy",
+      "Based on Hussein et al. 2026, npj Digital Medicine"
+    ],
   },
   {
     idx: "08",
@@ -196,7 +265,16 @@ export const projects: Project[] = [
     github: "https://github.com/basebattle/cds-analytics",
     live: "https://cds-analytics-app.vercel.app",
     kpis: ["CDS alert specificity improvement", "False-positive rate reduction", "Clinician recommendation acceptance rate"],
-    veteran: "References CDS Hooks order-sign workflow, SMART on FHIR prefetch, CQL rule authoring, and HL7 Normative/Trial-Use ballot. Frames LLM augmentation as Clinical Reasoning Amplification."
+    veteran: "References CDS Hooks order-sign workflow, SMART on FHIR prefetch, CQL rule authoring, and HL7 Normative/Trial-Use ballot. Frames LLM augmentation as Clinical Reasoning Amplification.",
+    heroNumber: "0.94",
+    heroUnit: "CONFIDENCE",
+    descriptor: "CDS Hooks v2.0.1 compliant LLM reasoning service",
+    bullets: [
+      "20 drug-drug interactions + 15 contraindications in rule engine",
+      "Custom ai_reasoning_trace extension — full CDS audit trail",
+      "Side-by-side: Traditional rule-based vs LLM-augmented CDS",
+      "Demo: Opioid+Benzo critical alert, NSAID+Renal high severity"
+    ],
   },
   {
     idx: "09",
@@ -217,7 +295,16 @@ export const projects: Project[] = [
     github: "https://github.com/basebattle/synthea-cohort-generator",
     live: "https://synthea-cohort-generator.streamlit.app",
     kpis: ["Cohort statistical fidelity vs. CMS benchmarks", "Reproducibility via shareable JSON configs", "Data quality scorecard per cohort"],
-    veteran: "References synthetic data validation against CMS public-use files, FHIR R4 Bundle transaction semantics, and IRB-exempt synthetic data pathways."
+    veteran: "References synthetic data validation against CMS public-use files, FHIR R4 Bundle transaction semantics, and IRB-exempt synthetic data pathways.",
+    heroNumber: "1K",
+    heroUnit: "FHIR PATIENTS",
+    descriptor: "3 preconfigured FHIR R4 cohorts, CMS-validated",
+    bullets: [
+      "Oncology (500), High-Risk Readmission (300), HaH (200)",
+      "FHIR R4 Bundle output per patient — feeds P01, P02, P06",
+      "CMS BSFCC benchmark comparison validates clinical realism",
+      "Data Passport: demographics, prevalence, utilisation scorecard"
+    ],
   },
   {
     idx: "10",
@@ -238,6 +325,15 @@ export const projects: Project[] = [
     github: "https://github.com/basebattle/hah-intelligence",
     live: "https://hah-intelligence.streamlit.app",
     kpis: ["NEWS2 escalation accuracy", "Time-to-clinician-alert", "CMS waiver compliance coverage"],
-    veteran: "References CMS Acute Hospital Care at Home waiver conditions, NEWS2 clinical deterioration scoring, FHIR Observation vital-signs profile, and IEEE 11073 RPM interoperability."
+    veteran: "References CMS Acute Hospital Care at Home waiver conditions, NEWS2 clinical deterioration scoring, FHIR Observation vital-signs profile, and IEEE 11073 RPM interoperability.",
+    heroNumber: "20",
+    heroUnit: "PATIENTS LIVE",
+    descriptor: "NEWS2 monitoring with CMS AHCaH waiver compliance",
+    bullets: [
+      "NEWS2 scoring: 6 physiological parameters → RAG triage",
+      "Census: 12 Green (0–4), 5 Amber (5–6), 3 Red (7+)",
+      "Escalation queue auto-sorted by NEWS2 severity",
+      "CMS AHCaH waiver: all 10 conditions of participation checked"
+    ],
   }
 ];
