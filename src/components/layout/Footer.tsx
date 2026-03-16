@@ -39,14 +39,14 @@ export default function Footer() {
               ((e.currentTarget as HTMLAnchorElement).style.color = "#E8EDF0")
             }
             onMouseLeave={(e) =>
-              ((e.currentTarget as HTMLAnchorElement).style.color =
-                "rgba(232,237,240,0.28)")
+            ((e.currentTarget as HTMLAnchorElement).style.color =
+              "rgba(232,237,240,0.28)")
             }
           >
             <Github size={16} />
           </a>
           <a
-            href="https://linkedin.com/in/piyushsharma"
+            href="https://www.linkedin.com/in/basebattle/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
@@ -56,8 +56,8 @@ export default function Footer() {
               ((e.currentTarget as HTMLAnchorElement).style.color = "#5C9BF5")
             }
             onMouseLeave={(e) =>
-              ((e.currentTarget as HTMLAnchorElement).style.color =
-                "rgba(232,237,240,0.28)")
+            ((e.currentTarget as HTMLAnchorElement).style.color =
+              "rgba(232,237,240,0.28)")
             }
           >
             <Linkedin size={16} />

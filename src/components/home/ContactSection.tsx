@@ -15,8 +15,8 @@ const LINKS = [
   {
     icon: Linkedin,
     label: "LinkedIn",
-    href: "https://linkedin.com/in/piyushsharma",
-    display: "linkedin.com/in/piyushsharma",
+    href: "https://www.linkedin.com/in/basebattle/",
+    display: "linkedin.com/in/basebattle",
     color: "#5C9BF5",
   },
   {

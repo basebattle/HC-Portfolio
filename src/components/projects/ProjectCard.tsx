@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { Globe, Activity, Github } from "lucide-react";
 import { Project } from "@/data/projects";
 
 const DOMAIN_COLORS: Record<string, string> = {
@@ -158,17 +159,94 @@ export default function ProjectCard({ project, compact = false }: { project: Pro
               ))}
             </div>
 
-            {/* Hint text at bottom */}
-            <div className="pt-[14px]">
-              <span
-                style={{
-                  fontFamily: "var(--font-jetbrains-mono)",
-                  fontSize: "10px",
-                  color: "#607D8B",
-                }}
-              >
-                Click to open case study →
-              </span>
+            {/* Quick Actions Row */}
+            <div className="pt-5 mt-auto flex items-center gap-3">
+              {project.live && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(project.live || "", "_blank");
+                  }}
+                  className="flex items-center justify-center p-2 rounded-lg border transition-all duration-200"
+                  style={{
+                    background: `${accentColor}12`,
+                    borderColor: `${accentColor}25`,
+                    color: accentColor,
+                  }}
+                  title="Visit Webpage"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = `${accentColor}25`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = `${accentColor}12`;
+                  }}
+                >
+                  <Globe size={15} />
+                </button>
+              )}
+
+              {project.simulation && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(project.simulation || "", "_blank");
+                  }}
+                  className="flex items-center justify-center p-2 rounded-lg border transition-all duration-200"
+                  style={{
+                    background: `${accentColor}12`,
+                    borderColor: `${accentColor}25`,
+                    color: accentColor,
+                  }}
+                  title="Run Simulation"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = `${accentColor}25`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = `${accentColor}12`;
+                  }}
+                >
+                  <Activity size={15} />
+                </button>
+              )}
+
+              {project.github && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const url = project.github?.startsWith("http")
+                      ? project.github
+                      : `https://github.com/${project.github}`;
+                    window.open(url, "_blank");
+                  }}
+                  className="flex items-center justify-center p-2 rounded-lg border transition-all duration-200"
+                  style={{
+                    background: "rgba(232,237,240,0.06)",
+                    borderColor: "rgba(255,255,255,0.1)",
+                    color: "#ECEFF1",
+                  }}
+                  title="View GitHub"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(232,237,240,0.12)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(232,237,240,0.06)";
+                  }}
+                >
+                  <Github size={15} />
+                </button>
+              )}
+
+              <div className="ml-auto flex items-center">
+                <span
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono)",
+                    fontSize: "10px",
+                    color: "#607D8B",
+                  }}
+                >
+                  View full case study →
+                </span>
+              </div>
             </div>
           </motion.div>
         )}
