@@ -130,7 +130,7 @@ export default function ImpactMetrics() {
                 }}
               >
                 <div style={{ color: metric.color, fontFamily: "var(--font-dm-serif)", fontSize: "40px", lineHeight: 1, marginBottom: "12px" }}>
-                  {metric.prefix}<CountUpMetric target={metric.value} />{metric.suffix}
+                  <CountUpMetric value={metric.value} prefix={metric.prefix} suffix={metric.suffix} />
                 </div>
                 <div style={{ fontFamily: "var(--font-dm-sans)", fontSize: "14px", color: "#E8EDF0", fontWeight: 500, marginBottom: "16px", flexGrow: 1 }}>
                   {metric.label}
