@@ -86,7 +86,7 @@ export const projects: Project[] = [
     name: "Claims Denial Workflow Agent",
     slug: "claims-denial",
     category: "Financial Optimization",
-    status: "Blueprint",
+    status: "Deployed",
     phase: 2,
     oneLiner: "Multi-agent denial prevention system mapping root causes before claims are submitted, targeting the $260 billion annual US denial problem.",
     metric: "$0.8M/yr projected savings (20% prevention rate)",
@@ -97,8 +97,8 @@ export const projects: Project[] = [
       "Multi-agent LangGraph system integrating Gmail, Drive, Sheets, and Slack via MCP. CARC/RARC denial taxonomy engine mapping top 50 codes to structured root-cause hierarchy. Prevention Score predicting highest-risk pending claims."
     ],
     stack: ["Python", "LangGraph", "FastAPI", "MCP", "Streamlit"],
-    github: null,
-    live: null,
+    github: "https://github.com/basebattle/claims-denial-agent",
+    live: "https://claims-denial-agent.streamlit.app",
     kpis: ["Denial rate reduction from 12% to 9.6%", "CARC/RARC root-cause mapping: top 50 codes", "Rework cost avoidance and write-off reduction"],
     veteran: "References X12 835 remittance advice parsing, CARC/RARC denial taxonomy, and Change Healthcare Revenue Cycle Denials Index for baseline benchmarking."
   },
@@ -118,7 +118,7 @@ export const projects: Project[] = [
       "Fork of Tuva Project (Apache 2.0) with CMS Oncology Care Model mapping, episode-level TCOC, outlier flagging by provider and payer mix, and scenario sliders for risk-adjustment sensitivity."
     ],
     stack: ["dbt", "DuckDB", "Tuva Project", "Streamlit", "Python"],
-    github: "basebattle/vbc-analyzer",
+    github: "https://github.com/basebattle/vbc-analyzer",
     live: "https://vbc-analyzer.streamlit.app",
     kpis: ["Episode-level TCOC calculation", "Performance-based payment adjustment modeling", "Risk-adjustment sensitivity across CMS-HCC V28"],
     veteran: "References episode-level TCOC analysis, CMS-HCC V28 risk-adjustment recalibration, and HFMA oncology episode cost benchmarks."
@@ -202,7 +202,7 @@ export const projects: Project[] = [
       "Streamlit control panel with preconfigured cohort profiles (Oncology, High-Risk Readmission, Hospital-at-Home). Validation against CMS public-use files. Data Passport pages for compliance review."
     ],
     stack: ["Synthea", "Python", "Streamlit", "Supabase", "CMS BSFCC"],
-    github: "basebattle/synthea-cohort-generator",
+    github: "https://github.com/basebattle/synthea-cohort-generator",
     live: "https://synthea-cohort-generator.streamlit.app",
     kpis: ["Cohort statistical fidelity vs. CMS benchmarks", "Reproducibility via shareable JSON configs", "Data quality scorecard per cohort"],
     veteran: "References synthetic data validation against CMS public-use files, FHIR R4 Bundle transaction semantics, and IRB-exempt synthetic data pathways."
