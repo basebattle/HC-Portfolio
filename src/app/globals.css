@@ -10,6 +10,25 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --animate-glint: glint 2s ease-in-out infinite;
+
+  @keyframes glint {
+    0% {
+      transform: translateX(-100%) skewX(-12deg);
+      opacity: 0;
+    }
+
+    50% {
+      transform: translateX(100%) skewX(-12deg);
+      opacity: 0.15;
+    }
+
+    100% {
+      transform: translateX(200%) skewX(-12deg);
+      opacity: 0;
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +42,30 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ── Badge Marquee Animations ── */
+
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(var(--marquee-width) * -1)); }
+}
+
+.badge-marquee-track {
+  animation: marquee-scroll var(--marquee-duration, 35s) linear infinite;
+}
+
+.badge-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes glint {
+  0%   { left: -150%; opacity: 0; }
+  25%  { opacity: 0.8; }
+  50%  { left: 150%; opacity: 0; }
+  100% { left: 150%; opacity: 0; }
+}
+
+.animate-glint {
+  animation: glint 1.4s ease-in-out infinite;
 }

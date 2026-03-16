@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "About", href: "#about" },
@@ -38,11 +38,10 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
             ? "bg-black/80 backdrop-blur-lg border-b border-white/10"
             : "bg-transparent"
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -87,6 +86,18 @@ export default function Navbar() {
 
             {/* Desktop CTA + mobile hamburger */}
             <div className="flex items-center gap-3">
+              {/* Desktop CTAs */}
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white transition-colors duration-150 border border-white/20 hover:bg-white/5"
+                style={{ fontFamily: "var(--font-dm-sans)" }}
+              >
+                <Download size={16} className="mr-2" />
+                Resume
+              </a>
+
               {/* CTA */}
               <a
                 href="#contact"
@@ -119,23 +130,20 @@ export default function Navbar() {
 
       {/* Mobile menu overlay */}
       <div
-        className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${
-          mobileOpen ? "pointer-events-auto" : "pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${mobileOpen ? "pointer-events-auto" : "pointer-events-none"
+          }`}
       >
         {/* Backdrop */}
         <div
-          className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
-            mobileOpen ? "opacity-100" : "opacity-0"
-          }`}
+          className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${mobileOpen ? "opacity-100" : "opacity-0"
+            }`}
           onClick={() => setMobileOpen(false)}
         />
 
         {/* Drawer */}
         <nav
-          className={`absolute top-16 left-0 right-0 bg-[#0F1923]/95 backdrop-blur-lg border-b border-white/10 transition-all duration-300 ${
-            mobileOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
-          }`}
+          className={`absolute top-16 left-0 right-0 bg-[#0F1923]/95 backdrop-blur-lg border-b border-white/10 transition-all duration-300 ${mobileOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+            }`}
           aria-label="Mobile navigation"
         >
           <div className="px-4 py-4 flex flex-col gap-1">
@@ -163,6 +171,16 @@ export default function Navbar() {
                 }}
               >
                 Book a Walkthrough
+              </a>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 flex items-center justify-center w-full px-4 py-3 rounded-lg text-base font-medium text-white/80 hover:text-white transition-all duration-150 border border-white/20 hover:bg-white/5"
+                style={{ fontFamily: "var(--font-dm-sans)" }}
+              >
+                <Download size={18} className="mr-2" />
+                Download Resume
               </a>
             </div>
           </div>

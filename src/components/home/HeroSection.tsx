@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowDown, ArrowRight, ChevronRight, Download } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
+import Image from "next/image";
 
 const STAT_CARDS = [
   {
@@ -85,26 +86,7 @@ export default function HeroSection() {
             {/* ── Left column ── */}
             <div className="flex flex-col gap-6">
 
-              {/* Gold award badge */}
-              <AnimateIn delay={0.05}>
-                <div className="inline-flex items-center gap-2 self-start">
-                  <span
-                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase border"
-                    style={{
-                      color: "#FF8F00",
-                      borderColor: "rgba(255,143,0,0.35)",
-                      background: "rgba(255,143,0,0.08)",
-                      fontFamily: "var(--font-dm-sans)",
-                    }}
-                  >
-                    <span
-                      className="inline-block w-1.5 h-1.5 rounded-full shrink-0"
-                      style={{ backgroundColor: "#FF8F00" }}
-                    />
-                    Best Large Deal Winner
-                  </span>
-                </div>
-              </AnimateIn>
+
 
               {/* H1 */}
               <AnimateIn delay={0.13}>
@@ -190,53 +172,86 @@ export default function HeroSection() {
               </AnimateIn>
             </div>
 
-            {/* ── Right column: 2×2 stat cards (desktop only) ── */}
-            <div className="hidden lg:grid grid-cols-2 gap-4">
-              {STAT_CARDS.map((card, i) => (
-                <AnimateIn key={card.label} delay={0.20 + i * 0.09} from="bottom">
-                  <div
-                    className="flex flex-col gap-2 p-6 rounded-2xl border h-full"
-                    style={{
-                      background: "rgba(22,32,41,0.7)",
-                      backdropFilter: "blur(12px)",
-                      WebkitBackdropFilter: "blur(12px)",
-                      borderColor: "rgba(255,255,255,0.08)",
-                    }}
-                  >
-                    <span
-                      className="text-[2.6rem] font-bold leading-none tabular-nums"
-                      style={{
-                        color: card.color,
-                        fontFamily: "var(--font-dm-serif)",
-                      }}
-                    >
-                      {card.value}
-                    </span>
-                    <span
-                      className="text-sm font-semibold leading-snug"
-                      style={{
-                        color: "#E8EDF0",
-                        fontFamily: "var(--font-dm-sans)",
-                      }}
-                    >
-                      {card.label}
-                    </span>
-                    <span
-                      className="text-xs"
-                      style={{
-                        color: "rgba(232,237,240,0.42)",
-                        fontFamily: "var(--font-dm-sans)",
-                      }}
-                    >
-                      {card.sublabel}
-                    </span>
+            {/* ── Right column: 2×2 stat cards + Hero Profile Image ── */}
+            <div className="hidden lg:flex flex-col gap-6 relative h-[600px] w-full items-center justify-center">
+
+              {/* Hero Image Container */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              >
+                {/* 
+                  Drop the hero image here. 
+                  Masked using maskImage so the harsh edges fade cleanly into the #0F1923 background.
+                */}
+                <div
+                  className="relative w-[380px] h-[500px]"
+                  style={{
+                    WebkitMaskImage: "radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%)",
+                    maskImage: "radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%)",
+                  }}
+                >
+                  <Image
+                    src="/hero-profile.png"
+                    alt="Dr. Piyush Sharma"
+                    fill
+                    className="object-cover opacity-80 mix-blend-screen"
+                    priority
+                    unoptimized
+                  />
+                </div>
+              </motion.div>
+
+              {/* Grid for Stat Cards, positioned over the image with high z-index */}
+              <div className="grid grid-cols-2 gap-4 w-full z-10">
+                {STAT_CARDS.map((card, i) => (
+                  <AnimateIn key={card.label} delay={0.20 + i * 0.09} from="bottom">
                     <div
-                      className="mt-2 h-px w-8 rounded-full"
-                      style={{ backgroundColor: card.color, opacity: 0.45 }}
-                    />
-                  </div>
-                </AnimateIn>
-              ))}
+                      className="flex flex-col gap-2 p-6 rounded-2xl border"
+                      style={{
+                        background: "rgba(22,32,41,0.65)", // increased transparency to peek image behind
+                        backdropFilter: "blur(14px)",
+                        WebkitBackdropFilter: "blur(14px)",
+                        borderColor: "rgba(255,255,255,0.05)",
+                      }}
+                    >
+                      <span
+                        className="text-[2.6rem] font-bold leading-none tabular-nums drop-shadow-md"
+                        style={{
+                          color: card.color,
+                          fontFamily: "var(--font-dm-serif)",
+                        }}
+                      >
+                        {card.value}
+                      </span>
+                      <span
+                        className="text-sm font-semibold leading-snug"
+                        style={{
+                          color: "#E8EDF0",
+                          fontFamily: "var(--font-dm-sans)",
+                        }}
+                      >
+                        {card.label}
+                      </span>
+                      <span
+                        className="text-xs"
+                        style={{
+                          color: "rgba(232,237,240,0.5)",
+                          fontFamily: "var(--font-dm-sans)",
+                        }}
+                      >
+                        {card.sublabel}
+                      </span>
+                      <div
+                        className="mt-2 h-px w-8 rounded-full"
+                        style={{ backgroundColor: card.color, opacity: 0.45 }}
+                      />
+                    </div>
+                  </AnimateIn>
+                ))}
+              </div>
             </div>
           </div>
         </div>

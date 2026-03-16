@@ -7,6 +7,7 @@ import { ChevronDown, ExternalLink, Github, ArrowRight } from "lucide-react";
 import GlassCard from "@/components/ui/GlassCard";
 import Badge from "@/components/ui/Badge";
 import { Project } from "@/data/projects";
+import ProjectActions from "./ProjectActions";
 
 // ─── Design-system colour maps ──────────────────────────────────────────────
 
@@ -198,6 +199,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           ))}
         </div>
 
+        {/* ── Triple Action Buttons ── */}
+        <ProjectActions project={project} />
+
         {/* ── Expand / collapse ── */}
         <button
           onClick={() => setExpanded((v) => !v)}
@@ -289,60 +293,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     ))}
                   </div>
                 </div>
-
-                {/* External links */}
-                {(project.github || project.live) && (
-                  <div className="flex gap-3">
-                    {project.github && (
-                      <a
-                        href={`https://github.com/${project.github}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-medium transition-colors duration-150"
-                        style={{
-                          color: "rgba(232,237,240,0.45)",
-                          fontFamily: "var(--font-dm-sans)",
-                        }}
-                        onMouseEnter={(e) =>
-                          ((e.currentTarget as HTMLAnchorElement).style.color =
-                            "#E8EDF0")
-                        }
-                        onMouseLeave={(e) =>
-                          ((e.currentTarget as HTMLAnchorElement).style.color =
-                            "rgba(232,237,240,0.45)")
-                        }
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <Github size={12} />
-                        GitHub
-                      </a>
-                    )}
-                    {project.live && (
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-medium transition-colors duration-150"
-                        style={{
-                          color: "rgba(232,237,240,0.45)",
-                          fontFamily: "var(--font-dm-sans)",
-                        }}
-                        onMouseEnter={(e) =>
-                          ((e.currentTarget as HTMLAnchorElement).style.color =
-                            "#00BFA5")
-                        }
-                        onMouseLeave={(e) =>
-                          ((e.currentTarget as HTMLAnchorElement).style.color =
-                            "rgba(232,237,240,0.45)")
-                        }
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <ExternalLink size={12} />
-                        Live demo
-                      </a>
-                    )}
-                  </div>
-                )}
               </div>
             </motion.div>
           )}

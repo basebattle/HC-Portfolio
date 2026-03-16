@@ -13,6 +13,8 @@ export interface Project {
   stack: string[];
   github: string | null;
   live: string | null;
+  simulation?: string | null;
+  features?: { name: string; benefit: string; icon?: "zap" | "shield" | "cpu" | "check" }[];
   kpis: string[];
   veteran: string;
 }
@@ -36,6 +38,12 @@ export const projects: Project[] = [
     stack: ["Python 3.12+", "FastMCP", "HTTPX", "HL7 FHIR R4", "Pydantic v2", "Uvicorn"],
     github: "basebattle/FHIR-MCP-data-bridge",
     live: "https://v3-ehr-simulator.vercel.app",
+    simulation: "https://v3-ehr-simulator.vercel.app/test-suite",
+    features: [
+      { name: "Tri-mode FHIR Client", benefit: "Allows zero-cost static deployment while retaining live OAuth compatibility via standard FHIR APIs.", icon: "zap" },
+      { name: "Pydantic v2 Type Safety", benefit: "Enforces strict-mode validation at execution, removing runtime crashes when schemas evolve.", icon: "shield" },
+      { name: "FastMCP Orchestration", benefit: "Registers 200+ endpoints automatically using semantic abstractions, eliminating boilerplate routing.", icon: "cpu" }
+    ],
     kpis: ["Data exchange latency reduced to sub-second", "Multi-vocabulary terminology resolution across 4 code systems", "Zero custom integration code per downstream agent"],
     veteran: "References TEFCA cross-network interoperability framework. Addresses the Azure API for FHIR retirement (September 2026) by demonstrating the migration-ready architecture pattern."
   },
@@ -57,6 +65,10 @@ export const projects: Project[] = [
     stack: ["Python 3.12+", "LangGraph", "Claude API", "Next.js 14", "React 18", "Tailwind CSS v3"],
     github: "basebattle/prior-auth-pipeline",
     live: "https://prior-auth-pipeline.vercel.app",
+    features: [
+      { name: "LangGraph Orchestration", benefit: "Manages state reliably across multi-phase async clinical tasks without drifting or deadlocking.", icon: "cpu" },
+      { name: "Predictive Denial Risk Engine", benefit: "Intercepts and scores flags before submission, acting as an automated compliance governor.", icon: "shield" }
+    ],
     kpis: ["Auth cycle time: 14 days to 3 days", "Denial rate: 12% to 5% (58% improvement)", "Clinical staff time per request: 45 min to under 5 min"],
     veteran: "References CMS NPPES provider validation, LCD/NCD clinical coverage determination, and payer-specific medical necessity criteria. Directly extends Optum Member Forms Agentic AI work."
   },

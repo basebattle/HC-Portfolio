@@ -7,6 +7,7 @@ import StackStrip from "@/components/projects/StackStrip";
 import OutcomeCards from "@/components/projects/OutcomeCards";
 import VeteranSignal from "@/components/projects/VeteranSignal";
 import ProjectLinks from "@/components/projects/ProjectLinks";
+import InterstitialFeatures from "@/components/projects/InterstitialFeatures";
 import AnimateIn from "@/components/ui/AnimateIn";
 
 // ─── Static params ────────────────────────────────────────────────────────────
@@ -74,6 +75,11 @@ export default async function ProjectDetailPage({
         <ProjectHero project={project} />
 
         <Divider />
+
+        {/* ── Interstitial Feature Deep-Dive ── */}
+        <InterstitialFeatures features={project.features} />
+
+        {project.features && <Divider />}
 
         {/* ── (3+4) Problem + Before/After evolution ── */}
         <CaseStudyContent project={project} />

@@ -10,3 +10,48 @@ body {
   color: #E8EDF0;
   font-family: var(--font-dm-sans), sans-serif;
 }
+
+/* Badge Marquee */
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(var(--marquee-width) * -1));
+  }
+}
+
+.badge-marquee-track {
+  animation: marquee-scroll var(--marquee-duration, 35s) linear infinite;
+}
+
+.badge-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes glint {
+  0% {
+    left: -150%;
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 0.8;
+  }
+
+  50% {
+    left: 150%;
+    opacity: 0;
+  }
+
+  100% {
+    left: 150%;
+    opacity: 0;
+  }
+}
+
+.animate-glint {
+  animation: glint 1.4s ease-in-out infinite;
+}
