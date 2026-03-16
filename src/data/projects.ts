@@ -128,7 +128,7 @@ export const projects: Project[] = [
     name: "FHIR-to-LLM Clinical Data Gateway",
     slug: "fhir-llm-gateway",
     category: "Clinical Intelligence",
-    status: "Planned",
+    status: "Deployed",
     phase: 3,
     oneLiner: "Enterprise-grade upgrade of the FHIR-MCP Bridge, backed by Microsoft FHIR Server and Bulk Data Access 2.0.",
     metric: "Enterprise interoperability proof point for CTO personas",
@@ -139,8 +139,8 @@ export const projects: Project[] = [
       "Microsoft FHIR Server (Bulk Data Access 2.0, March 2026) as backend. Synthea patient bundles. API playground showing MCP tool invocations alongside FHIR responses and agent reasoning traces."
     ],
     stack: ["Microsoft FHIR Server", "FastMCP", "Synthea", "Next.js", "FastAPI", "Python"],
-    github: null,
-    live: null,
+    github: "https://github.com/basebattle/fhir-llm-gateway",
+    live: "https://fhir-llm-gateway.vercel.app",
     kpis: ["Enterprise FHIR backend latency", "Bulk Data Access 2.0 throughput", "SMART on FHIR auth compliance"],
     veteran: "References Azure API for FHIR retirement (September 2026) and migration to Azure Health Data Services. Cites TEFCA for cross-network interoperability."
   },
@@ -170,7 +170,7 @@ export const projects: Project[] = [
     name: "CDS Hooks + LLM Reasoning Engine",
     slug: "cds-hooks",
     category: "Clinical Intelligence",
-    status: "Planned",
+    status: "Deployed",
     phase: 3,
     oneLiner: "LLM-augmented clinical decision support embedding transparent AI reasoning directly into EHR workflows via HL7 CDS Hooks.",
     metric: "Algorithmic transparency for ONC HTI-2 compliance",
@@ -181,8 +181,8 @@ export const projects: Project[] = [
       "Hybrid CDS responding to order-sign hook: rule-based logic augmented with LLM reasoning generating natural-language clinical rationales. AI reasoning trace panel for ONC HTI-2 auditability."
     ],
     stack: ["CDS Hooks v2.0.1", "cqf-ruler", "Claude API", "FHIR R4", "Next.js"],
-    github: null,
-    live: null,
+    github: "https://github.com/basebattle/cds-analytics",
+    live: "https://cds-analytics-app.vercel.app",
     kpis: ["CDS alert specificity improvement", "False-positive rate reduction", "Clinician recommendation acceptance rate"],
     veteran: "References CDS Hooks order-sign workflow, SMART on FHIR prefetch, CQL rule authoring, and HL7 Normative/Trial-Use ballot. Frames LLM augmentation as Clinical Reasoning Amplification."
   },
@@ -212,7 +212,7 @@ export const projects: Project[] = [
     name: "Hospital-at-Home Intelligence Layer",
     slug: "hah-monitoring",
     category: "Clinical Intelligence",
-    status: "Planned",
+    status: "Deployed",
     phase: 3,
     oneLiner: "Clinical Command Center for distributed care, applying NEWS2 risk scoring to remote patient monitoring data in real time.",
     metric: "CMS waiver compliance coverage for Hospital-at-Home programs",
@@ -223,8 +223,8 @@ export const projects: Project[] = [
       "Python ingestion transforming RPM data into FHIR Observations. NEWS2 risk scoring with real-time escalation alerts. Clinician dashboard with RAG-status indicators and trending vitals. Every feature mapped to CMS waiver compliance."
     ],
     stack: ["Next.js", "Python", "IoMT FHIR patterns", "FHIR Observation"],
-    github: null,
-    live: null,
+    github: "https://github.com/basebattle/hah-intelligence",
+    live: "https://hah-intelligence.streamlit.app",
     kpis: ["NEWS2 escalation accuracy", "Time-to-clinician-alert", "CMS waiver compliance coverage"],
     veteran: "References CMS Acute Hospital Care at Home waiver conditions, NEWS2 clinical deterioration scoring, FHIR Observation vital-signs profile, and IEEE 11073 RPM interoperability."
   }
