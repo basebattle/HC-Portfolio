@@ -6,6 +6,7 @@ import { projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
 import ProjectCard from "@/components/projects/ProjectCard";
 import AnimateIn from "@/components/ui/AnimateIn";
+import CountUpMetric from "@/components/ui/CountUpMetric";
 
 type Filter = "All" | Project["category"];
 
@@ -218,47 +219,61 @@ export default function ProjectGrid({ standalone = false }: ProjectGridProps) {
           </motion.div>
         </AnimatePresence>
 
-        {/* ── Bottom summary bar ── */}
+        {/* ── Bottom Roadmap Stats ── */}
         <AnimateIn from="bottom" delay={0.1} className="mt-14">
           <div
-            className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 rounded-2xl border"
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 px-8 py-10 rounded-2xl border"
             style={{
-              background: "rgba(22,32,41,0.50)",
-              borderColor: "rgba(255,255,255,0.07)",
+              background: "rgba(22,32,41,0.7)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              borderColor: "rgba(255,255,255,0.1)",
             }}
           >
-            <div className="flex flex-wrap gap-6">
-              {[
-                { label: "Deployed", count: projects.filter(p => p.status === "Deployed").length, color: "#4CAF7D" },
-                { label: "Blueprint", count: projects.filter(p => p.status === "Blueprint").length, color: "#FF8F00" },
-                { label: "Planned", count: projects.filter(p => p.status === "Planned").length, color: "rgba(232,237,240,0.35)" },
-              ].map(({ label, count, color }) => (
-                <div key={label} className="flex items-center gap-2">
-                  <span
-                    className="inline-block w-2 h-2 rounded-full"
-                    style={{ backgroundColor: color }}
-                  />
-                  <span
-                    className="text-xs"
-                    style={{
-                      color: "rgba(232,237,240,0.45)",
-                      fontFamily: "var(--font-dm-sans)",
-                    }}
-                  >
-                    <span style={{ color }}>{count}</span> {label}
-                  </span>
-                </div>
-              ))}
+            {/* Deployed */}
+            <div className="flex flex-col gap-2 relative">
+              <div className="flex items-baseline gap-3">
+                <span className="text-6xl lg:text-7xl font-bold tabular-nums" style={{ color: "#00BFA5", fontFamily: "var(--font-dm-serif)" }}>
+                  <CountUpMetric value={projects.filter(p => p.status === "Deployed").length} duration={1500} />
+                </span>
+                <span className="text-2xl font-normal" style={{ color: "#E8EDF0", fontFamily: "var(--font-dm-sans)" }}>Deployed</span>
+              </div>
+              <span className="text-xs" style={{ color: "#607D8B", fontFamily: "var(--font-jetbrains-mono)" }}>
+                Live on Vercel · Render · Streamlit
+              </span>
+
+              {/* Separator - desktop only */}
+              <div className="hidden md:block absolute right-[-1rem] top-2 bottom-2 w-px bg-white/10" />
             </div>
-            <span
-              className="text-xs"
-              style={{
-                color: "rgba(232,237,240,0.25)",
-                fontFamily: "var(--font-dm-sans)",
-              }}
-            >
-              {projects.length} total projects
-            </span>
+
+            {/* Blueprint */}
+            <div className="flex flex-col gap-2 relative md:pl-4">
+              <div className="flex items-baseline gap-3">
+                <span className="text-6xl lg:text-7xl font-bold tabular-nums" style={{ color: "#FF8F00", fontFamily: "var(--font-dm-serif)" }}>
+                  <CountUpMetric value={13} duration={1500} delay={150} />
+                </span>
+                <span className="text-2xl font-normal" style={{ color: "#E8EDF0", fontFamily: "var(--font-dm-sans)" }}>Blueprint</span>
+              </div>
+              <span className="text-xs" style={{ color: "#607D8B", fontFamily: "var(--font-jetbrains-mono)" }}>
+                Architected · Documented · Queued
+              </span>
+
+              {/* Separator - desktop only */}
+              <div className="hidden md:block absolute right-[-1rem] top-2 bottom-2 w-px bg-white/10" />
+            </div>
+
+            {/* Planning */}
+            <div className="flex flex-col gap-2 md:pl-4">
+              <div className="flex items-baseline gap-3">
+                <span className="text-6xl lg:text-7xl font-bold tabular-nums" style={{ color: "#607D8B", fontFamily: "var(--font-dm-serif)" }}>
+                  <CountUpMetric value={3} duration={1500} delay={300} />
+                </span>
+                <span className="text-2xl font-normal" style={{ color: "#E8EDF0", fontFamily: "var(--font-dm-sans)" }}>Planning</span>
+              </div>
+              <span className="text-xs" style={{ color: "#607D8B", fontFamily: "var(--font-jetbrains-mono)" }}>
+                Research · Feasibility · Scoping
+              </span>
+            </div>
           </div>
         </AnimateIn>
       </div>

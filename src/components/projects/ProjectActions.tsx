@@ -24,15 +24,15 @@ function ActionButton({
     const isAccent = variant === "accent";
 
     const baseStyles =
-        "inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm transition-all duration-150 whitespace-nowrap outline-none";
+        "inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm transition-all duration-150 whitespace-nowrap outline-none hover:scale-[1.02] active:scale-[0.98] transform";
 
     const variants = {
         outline:
             "text-white/80 hover:text-white border border-white/20 hover:bg-white/5",
         solid: disabled
-            ? "bg-white/10 text-white/40 cursor-not-allowed"
-            : "bg-[#0D7377] text-white hover:bg-[#0D7377]/80",
-        accent: "bg-[#FF8F00] text-black hover:bg-[#FF8F00]/90 font-medium",
+            ? "bg-white/10 text-white/40 cursor-not-allowed hover:scale-100 active:scale-100"
+            : "bg-[#008080] text-white hover:bg-[#006666]",
+        accent: "bg-[#FFBF00] text-[#0F1923] hover:bg-[#E6AC00] font-medium",
     };
 
     const className = `${baseStyles} ${variants[variant]}`;

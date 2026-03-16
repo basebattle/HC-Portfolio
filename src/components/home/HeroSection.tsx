@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight, ChevronRight, Download } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
+import CountUpMetric from "@/components/ui/CountUpMetric";
 import Image from "next/image";
 
 const STAT_CARDS = [
@@ -44,6 +45,17 @@ export default function HeroSection() {
     >
       {/* Radial gradient overlays */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        {/* Animated Grid */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+            maskImage: "radial-gradient(ellipse at center, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%)",
+            WebkitMaskImage: "radial-gradient(ellipse at center, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%)",
+            animation: "pulse 8s ease-in-out infinite alternate"
+          }}
+        />
         {/* Teal bloom — top-right */}
         <div
           className="absolute"
@@ -54,6 +66,7 @@ export default function HeroSection() {
             right: "-5%",
             background:
               "radial-gradient(ellipse at center, rgba(13,115,119,0.22) 0%, transparent 70%)",
+            animation: "pulse 10s ease-in-out infinite alternate"
           }}
         />
         {/* Green bloom — bottom-left */}
@@ -66,6 +79,7 @@ export default function HeroSection() {
             left: "-5%",
             background:
               "radial-gradient(ellipse at center, rgba(0,191,165,0.13) 0%, transparent 70%)",
+            animation: "pulse 12s ease-in-out infinite alternate-reverse"
           }}
         />
         {/* Wide teal wash at 70% 40% per spec */}
@@ -84,21 +98,16 @@ export default function HeroSection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
 
             {/* ── Left column ── */}
-            <div className="flex flex-col gap-6">
-
-
-
+            <div className="flex flex-col gap-8">
               {/* H1 */}
               <AnimateIn delay={0.13}>
                 <h1
                   className="text-5xl sm:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-normal leading-[1.06] tracking-tight"
                   style={{ fontFamily: "var(--font-dm-serif)", color: "#E8EDF0" }}
                 >
-                  Healthcare AI
+                  Healthcare AI,
                   <br />
-                  <span style={{ color: "#00BFA5" }}>Innovation</span>
-                  <br />
-                  Showroom
+                  <span style={{ color: "#0D7377" }}>Operationalised.</span>
                 </h1>
               </AnimateIn>
 
@@ -107,40 +116,85 @@ export default function HeroSection() {
                 <p
                   className="text-base sm:text-lg leading-relaxed max-w-[520px]"
                   style={{
-                    color: "rgba(232,237,240,0.65)",
+                    color: "#607D8B",
                     fontFamily: "var(--font-dm-sans)",
                   }}
                 >
-                  Four production-grade proof-of-concepts targeting the
-                  highest-cost inefficiencies in US health systems — prior
-                  authorization, revenue cycle, clinical data access, and AI
-                  governance — built to the standards C-suite stakeholders
-                  evaluate.
+                  10 production systems at the intersection of clinical informatics,
+                  agentic AI, and US payer-provider operations. Built to prove
+                  a thesis: domain expertise is the only moat that matters.
                 </p>
+              </AnimateIn>
+
+              {/* Stats Bar */}
+              <AnimateIn delay={0.25}>
+                <div className="flex items-center gap-8 py-2">
+                  <div className="flex flex-col gap-1">
+                    <span
+                      className="text-4xl font-bold tabular-nums"
+                      style={{ color: "#00BFA5", fontFamily: "var(--font-dm-serif)" }}
+                    >
+                      <CountUpMetric value={10} duration={1200} />
+                    </span>
+                    <span
+                      className="text-[11px] uppercase tracking-wider font-semibold"
+                      style={{ color: "#607D8B", fontFamily: "var(--font-dm-sans)" }}
+                    >
+                      Live Systems
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span
+                      className="text-4xl font-bold tabular-nums"
+                      style={{ color: "#FF8F00", fontFamily: "var(--font-dm-serif)" }}
+                    >
+                      <CountUpMetric value={3} duration={1200} />
+                    </span>
+                    <span
+                      className="text-[11px] uppercase tracking-wider font-semibold"
+                      style={{ color: "#607D8B", fontFamily: "var(--font-dm-sans)" }}
+                    >
+                      Healthcare AI Domains
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span
+                      className="text-4xl font-bold tabular-nums"
+                      style={{ color: "#ECEFF1", fontFamily: "var(--font-dm-serif)" }}
+                    >
+                      <CountUpMetric value={7} duration={1200} />
+                    </span>
+                    <span
+                      className="text-[11px] uppercase tracking-wider font-semibold"
+                      style={{ color: "#607D8B", fontFamily: "var(--font-dm-sans)" }}
+                    >
+                      FHIR/CDS Standards Implemented
+                    </span>
+                  </div>
+                </div>
               </AnimateIn>
 
               {/* CTA buttons */}
               <AnimateIn delay={0.29}>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 mt-2">
                   <button
                     onClick={() => scrollTo("#solutions")}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90 active:opacity-80"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                     style={{
-                      background:
-                        "linear-gradient(135deg, #0D7377 0%, #00BFA5 100%)",
+                      background: "#0D7377",
                       fontFamily: "var(--font-dm-sans)",
                     }}
                   >
-                    Explore Solutions
+                    View Portfolio
                     <ArrowRight size={15} />
                   </button>
                   <button
-                    onClick={() => scrollTo("#contact")}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-150"
+                    onClick={() => scrollTo("#about")}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                     style={{
                       color: "#E8EDF0",
                       border: "1px solid rgba(232,237,240,0.15)",
-                      background: "rgba(232,237,240,0.04)",
+                      background: "transparent",
                       fontFamily: "var(--font-dm-sans)",
                     }}
                     onMouseEnter={(e) => {
@@ -149,26 +203,13 @@ export default function HeroSection() {
                     }}
                     onMouseLeave={(e) => {
                       (e.currentTarget as HTMLButtonElement).style.background =
-                        "rgba(232,237,240,0.04)";
+                        "transparent";
                     }}
                   >
-                    Book a Walkthrough
+                    Read the Story
                     <ChevronRight size={15} />
                   </button>
                 </div>
-              </AnimateIn>
-
-              {/* Trust micro-line */}
-              <AnimateIn delay={0.35}>
-                <p
-                  className="text-xs tracking-wide"
-                  style={{
-                    color: "rgba(232,237,240,0.30)",
-                    fontFamily: "var(--font-dm-sans)",
-                  }}
-                >
-                  10 projects &middot; 3 categories &middot; FHIR R4 &middot; CMS-aligned &middot; HIPAA-ready
-                </p>
               </AnimateIn>
             </div>
 

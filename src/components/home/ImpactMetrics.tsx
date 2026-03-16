@@ -1,128 +1,127 @@
 "use client";
 
 import AnimateIn from "@/components/ui/AnimateIn";
-import CountUpMetric from "@/components/ui/CountUpMetric";
 import SectionLabel from "@/components/ui/SectionLabel";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
-const KPI_ROWS = [
+const DOMAINS = [
   {
-    id: "prior-auth",
-    name: "Prior Authorization Cycle Time",
-    project: "Prior Authorization Pipeline",
-    baseline: { label: "14 days", value: 14, suffix: "d" },
-    target: { label: "3 days", value: 3, suffix: "d" },
-    improvement: "78% reduction",
-    annual: "$1.2M",
-    annualValue: 1.2,
-    source: "AMA 2023 Prior Auth Survey — avg 14.6 hrs/physician/week",
-    sourceShort: "AMA 2023",
+    name: "Clinical Intelligence",
+    color: "#0D7377",
+    projects: [
+      {
+        id: "P01",
+        name: "FHIR-MCP Bridge",
+        bullets: [
+          <>First MCP-native FHIR R4 bridge — reduces EHR integration surface from hundreds of API endpoints to <strong style={{ color: "#0D7377" }}>4</strong> semantically meaningful clinical tool calls</>,
+          <>Real-time terminology resolution across <strong style={{ color: "#0D7377" }}>4</strong> code systems: ICD-10-CM, SNOMED CT, RxNorm, LOINC — simultaneously per patient query</>,
+          <>Pydantic v2 strict-mode model layer enforces type safety across the MCP boundary — <strong style={{ color: "#0D7377" }}>zero</strong> runtime type errors in deployed build</>,
+          <>Next.js 16 EHR Simulator enables HIPAA-compliant AI development: full patient chart simulation with <strong style={{ color: "#0D7377" }}>no PHI exposure risk</strong></>,
+        ],
+      },
+      {
+        id: "P02",
+        name: "Prior Authorization Pipeline",
+        bullets: [
+          <><strong style={{ color: "#0D7377" }}>6-node</strong> LangGraph DAG automates a workflow requiring <strong style={{ color: "#0D7377" }}>45+ minutes</strong> of clinical staff time per request — to near-real-time processing</>,
+          <>Probabilistic denial risk assessment runs <strong style={{ color: "#0D7377" }}>before submission</strong> — identifying documentation gaps and code mismatches at the point of care</>,
+          <>CMS NPPES provider credentialing validation integrated as a dedicated agent node — eliminates manual NPI verification step</>,
+          <>Dual deployment: legacy Streamlit (main branch) + Next.js/FastAPI (v2-nextjs branch on Render) — <strong style={{ color: "#0D7377" }}>zero</strong> migration downtime</>,
+        ],
+      },
+      {
+        id: "P06",
+        name: "FHIR-to-LLM Clinical Data Gateway",
+        bullets: [
+          <>Tri-mode FHIR client (static/cloud/local) — <strong style={{ color: "#0D7377" }}>single codebase</strong> serves demo, live, and development environments without code changes</>,
+          <>Medplum Cloud integration: <strong style={{ color: "#0D7377" }}>13</strong> Synthea patient bundles, OAuth2 client_credentials flow, Innovation-Showroom-FHIR project</>,
+          <><strong style={{ color: "#0D7377" }}>4-panel</strong> API Playground (Tool Selection / FHIR Request / FHIR Response / Agent Trace) — full observability of LLM-to-FHIR call chain</>,
+        ],
+      },
+      {
+        id: "P08",
+        name: "CDS Hooks + LLM Reasoning Engine",
+        bullets: [
+          <>CDS Hooks <strong style={{ color: "#0D7377" }}>v2.0.1 compliant</strong> — interoperable with any HL7-conformant EHR</>,
+          <>Rule engine: <strong style={{ color: "#0D7377" }}>20</strong> drug-drug interactions + <strong style={{ color: "#0D7377" }}>15</strong> drug-condition contraindications encoded in JSON lookup tables</>,
+          <>Custom ai_reasoning_trace extension (com.healthcareshowroom.ai_reasoning_trace) — provides <strong style={{ color: "#0D7377" }}>full audit trail</strong> from rule evaluation through LLM reasoning to card generation: addresses clinical AI explainability requirements</>,
+          <>Demo fidelity: Opioid+Benzo (<strong style={{ color: "#0D7377" }}>0.94</strong> confidence), NSAID+Renal CKD (<strong style={{ color: "#0D7377" }}>0.91</strong>)</>,
+        ],
+      },
+      {
+        id: "P09",
+        name: "Synthetic Patient Cohort Generator",
+        bullets: [
+          <><strong style={{ color: "#0D7377" }}>3</strong> preconfigured FHIR R4 cohorts: <strong style={{ color: "#0D7377" }}>500</strong> oncology patients (lung/breast/colorectal), <strong style={{ color: "#0D7377" }}>300</strong> high-risk readmission (CHF/COPD/diabetes), <strong style={{ color: "#0D7377" }}>200</strong> hospital-at-home (pneumonia/CHF/COPD exacerbation)</>,
+          <>CMS BSFCC public-use file benchmark comparison — validates synthetic cohort clinical realism against federal reference data</>,
+          <>FHIR R4 Bundle output per patient — direct integration with P01/P02/P06</>,
+        ],
+      },
+      {
+        id: "P10",
+        name: "Hospital-at-Home Intelligence Layer",
+        bullets: [
+          <>NEWS2 scoring engine (<strong style={{ color: "#0D7377" }}>6</strong> physiological parameters) applied to <strong style={{ color: "#0D7377" }}>20</strong> simulated patients: <strong style={{ color: "#0D7377" }}>12</strong> Green (0–4), <strong style={{ color: "#0D7377" }}>5</strong> Amber (5–6), <strong style={{ color: "#0D7377" }}>3</strong> Red (7+)</>,
+          <>CMS Acute Hospital Care at Home waiver compliance checklist: all <strong style={{ color: "#0D7377" }}>10</strong> conditions of participation implemented and checkable</>,
+          <>Escalation alert queue auto-sorted by NEWS2 severity — automates clinical triage decisions across full patient census</>,
+        ],
+      },
+    ],
   },
   {
-    id: "rcm-ar",
-    name: "Days in Accounts Receivable",
-    project: "Revenue Cycle Dashboard",
-    baseline: { label: "45 days", value: 45, suffix: "d" },
-    target: { label: "28 days", value: 28, suffix: "d" },
-    improvement: "38% reduction",
-    annual: "$1.6M",
-    annualValue: 1.6,
-    source: "HFMA MAP Key 4 benchmark — optimal A/R <40 days",
-    sourceShort: "HFMA MAP",
+    name: "Financial Optimization",
+    color: "#FF8F00",
+    projects: [
+      {
+        id: "P03",
+        name: "Revenue Cycle Management Dashboard",
+        bullets: [
+          <><strong style={{ color: "#FF8F00" }}>12</strong> HFMA-benchmarked KPIs calculated in real time: Days in A/R, Clean Claim Rate, Collection Rate, Denial Rate, Net Collection Rate and <strong style={{ color: "#FF8F00" }}>7</strong> others — with industry benchmark comparison (MGMA/HFMA)</>,
+          <><strong style={{ color: "#FF8F00" }}>6-node</strong> LangGraph pipeline: query_parser → analysis_engine → anomaly_detector → benchmark_comparator → summary_writer → report_generator (PowerPoint/Excel/Plotly)</>,
+          <>Automated anomaly detection flags deviations in revenue cycle metrics before they impact cash flow — shift from monthly review to <strong style={{ color: "#FF8F00" }}>real-time alerting</strong></>,
+          <>LangSmith observability integrated for end-to-end agent tracing, prompt debugging, and LLM output quality evaluation</>,
+        ],
+      },
+      {
+        id: "P04",
+        name: "Claims Denial Workflow Agent",
+        bullets: [
+          <>CARC/RARC taxonomy engine maps top <strong style={{ color: "#FF8F00" }}>50</strong> denial codes to <strong style={{ color: "#FF8F00" }}>4</strong> root-cause categories — enabling systemic pattern analysis across <strong style={{ color: "#FF8F00" }}>5,000</strong> synthetic claims at <strong style={{ color: "#FF8F00" }}>12%</strong> denial rate</>,
+          <>ROI model with <strong style={{ color: "#FF8F00" }}>10/20/30%</strong> prevention scenario calculators — enables CFO-level business case construction for denial prevention investment</>,
+          <>Prevention Scorer ranks pending claims by denial probability <strong style={{ color: "#FF8F00" }}>before submission</strong> — prospective risk management rather than reactive denial appeal</>,
+          <>Denial chain drill-down: submission → denial → appeal → resolution — full lifecycle visibility per claim</>,
+        ],
+      },
+      {
+        id: "P05",
+        name: "VBC Reimbursement Analyzer",
+        bullets: [
+          <>Tuva Project (Apache 2.0) dbt pipeline integration — open-source claims-to-analytics standard used by leading US health systems</>,
+          <>Episode-level Total Cost of Care (TCOC) calculation for oncology service lines — the foundational metric of all VBC contracts</>,
+          <>CMS-HCC V28 risk-adjustment sensitivity analysis via interactive scenario sliders — actuarial-grade modeling without actuarial cost</>,
+          <>DuckDB analytical engine: <strong style={{ color: "#FF8F00" }}>zero</strong> cloud database cost, file-based, runs entirely locally — <strong style={{ color: "#FF8F00" }}>$0</strong> infrastructure for production analytics</>,
+        ],
+      },
+    ],
   },
   {
-    id: "clean-claim",
-    name: "Clean Claim Rate",
-    project: "Revenue Cycle Dashboard",
-    baseline: { label: "78%", value: 78, suffix: "%" },
-    target: { label: "94%", value: 94, suffix: "%" },
-    improvement: "+16pp",
-    annual: null,
-    annualValue: null,
-    source: "HFMA benchmark — industry average 75–85%",
-    sourceShort: "HFMA",
-  },
-  {
-    id: "denial-rate",
-    name: "Claims Denial Rate",
-    project: "Claims Denial Workflow Agent",
-    baseline: { label: "12%", value: 12, suffix: "%" },
-    target: { label: "5%", value: 5, suffix: "%" },
-    improvement: "58% reduction",
-    annual: "$0.8M",
-    annualValue: 0.8,
-    source: "Change Healthcare Denials Index — avg 11.99% denial rate",
-    sourceShort: "Change HC Index",
-  },
-  {
-    id: "admin-time",
-    name: "Clinical Staff Time per Auth Request",
-    project: "Prior Authorization Pipeline",
-    baseline: { label: "45 min", value: 45, suffix: " min" },
-    target: { label: "5 min", value: 5, suffix: " min" },
-    improvement: "89% reduction",
-    annual: null,
-    annualValue: null,
-    source: "CAQH Index 2023 — 14 min average manual auth time",
-    sourceShort: "CAQH Index",
+    name: "Strategic Governance",
+    color: "#1565C0",
+    projects: [
+      {
+        id: "P07",
+        name: "HAIRA AI Governance Assessment Tool",
+        bullets: [
+          <>First digital implementation of the HAIRA framework (Hussein et al. 2026, npj Digital Medicine) — peer-reviewed academic foundation for all <strong style={{ color: "#1565C0" }}>35</strong> assessment questions</>,
+          <><strong style={{ color: "#1565C0" }}>7</strong> governance domains, <strong style={{ color: "#1565C0" }}>5-level</strong> maturity scoring (Initial → Leading), <strong style={{ color: "#1565C0" }}>7-axis</strong> RadarChart with synthetic industry benchmark comparison</>,
+          <>Prioritised recommendations engine sorted by lowest-scoring domain — directs improvement effort to highest-leverage governance gaps</>,
+          <>Fully serverless: localStorage state persistence, zero-cost Vercel deployment, no backend — any healthcare organisation can self-assess in <strong style={{ color: "#1565C0" }}>15 minutes</strong> without a consulting engagement</>,
+        ],
+      },
+    ],
   },
 ];
-
-const SUMMARY_TILES = [
-  { label: "Projected Annual Impact", value: 2.8, prefix: "$", suffix: "M", decimals: 1, color: "#FF8F00" },
-  { label: "Deployed Projects", value: 3, prefix: "", suffix: "", decimals: 0, color: "#00BFA5" },
-  { label: "Avg A/R Improvement", value: 38, prefix: "", suffix: "%", decimals: 0, color: "#00BFA5" },
-  { label: "Auth Cycle Reduction", value: 78, prefix: "", suffix: "%", decimals: 0, color: "#FF8F00" },
-];
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
-
-function ProgressBar({
-  baseline,
-  target,
-  color,
-}: {
-  baseline: number;
-  target: number;
-  color: string;
-}) {
-  // Visual: baseline fills full width at 100%, target shrinks proportionally
-  const pct = Math.round((target / baseline) * 100);
-  return (
-    <div className="flex items-center gap-2 w-full">
-      {/* Track */}
-      <div
-        className="relative flex-1 h-1.5 rounded-full overflow-hidden"
-        style={{ background: "rgba(255,255,255,0.07)" }}
-      >
-        {/* Baseline fill (dimmed full width) */}
-        <div
-          className="absolute inset-0 rounded-full"
-          style={{ background: "rgba(255,255,255,0.12)" }}
-        />
-        {/* Target fill */}
-        <div
-          className="absolute left-0 top-0 h-full rounded-full"
-          style={{
-            width: `${pct}%`,
-            background: color,
-            transition: "width 1.2s cubic-bezier(0.22,1,0.36,1)",
-          }}
-        />
-      </div>
-      <span
-        className="text-[10px] tabular-nums shrink-0"
-        style={{
-          color: "rgba(232,237,240,0.30)",
-          fontFamily: "var(--font-jetbrains-mono)",
-        }}
-      >
-        {pct}%
-      </span>
-    </div>
-  );
-}
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
@@ -130,308 +129,91 @@ export default function ImpactMetrics() {
   return (
     <section
       id="impact"
-      className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ background: "#080F16" }}
+      className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-b"
+      style={{
+        background: "#1A2535",
+        borderColor: "rgba(255,255,255,0.06)"
+      }}
     >
-      {/* Subtle radial bloom */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(13,115,119,0.10) 0%, transparent 70%)",
-        }}
-      />
-
       <div className="relative z-10 max-w-7xl mx-auto">
-
         {/* ── Section header ── */}
         <AnimateIn from="bottom" delay={0}>
-          <SectionLabel className="block mb-3">Impact</SectionLabel>
+          <SectionLabel className="block mb-6">Impact</SectionLabel>
         </AnimateIn>
 
         <AnimateIn from="bottom" delay={0.07}>
           <h2
-            className="text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight mb-4"
-            style={{ fontFamily: "var(--font-dm-serif)", color: "#E8EDF0" }}
+            className="text-4xl sm:text-5xl lg:text-6xl font-normal leading-tight mb-16"
+            style={{ fontFamily: "var(--font-dm-serif)", color: "#ECEFF1" }}
           >
-            <CountUpMetric
-              value={2.8}
-              prefix="$"
-              suffix="M"
-              decimals={1}
-              duration={1600}
-              delay={300}
-              style={{
-                color: "#FF8F00",
-                fontFamily: "var(--font-dm-serif)",
-              }}
-            />{" "}
-            Projected Downstream Impact
+            Measured Impact
           </h2>
         </AnimateIn>
 
-        <AnimateIn from="bottom" delay={0.13}>
-          <p
-            className="text-base max-w-2xl mb-14"
-            style={{
-              color: "rgba(232,237,240,0.52)",
-              fontFamily: "var(--font-dm-sans)",
-            }}
-          >
-            Modeled against a 200-bed reference health system with 12,000 annual
-            prior-auth requests, 15% commercial payer mix, and a 78% baseline clean
-            claim rate. All figures use published HFMA, AMA, and CAQH benchmark
-            methodology.
-          </p>
-        </AnimateIn>
-
-        {/* ── Summary tiles ── */}
-        <AnimateIn from="bottom" delay={0.16}>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-16">
-            {SUMMARY_TILES.map((tile, i) => (
-              <div
-                key={tile.label}
-                className="flex flex-col gap-1 px-5 py-4 rounded-2xl border"
-                style={{
-                  background: "rgba(22,32,41,0.65)",
-                  borderColor: "rgba(255,255,255,0.07)",
-                  backdropFilter: "blur(8px)",
-                }}
-              >
-                <span
-                  className="text-2xl sm:text-3xl font-bold tabular-nums leading-none"
-                  style={{
-                    color: tile.color,
-                    fontFamily: "var(--font-dm-serif)",
-                  }}
-                >
-                  <CountUpMetric
-                    value={tile.value}
-                    prefix={tile.prefix}
-                    suffix={tile.suffix}
-                    decimals={tile.decimals}
-                    duration={1400}
-                    delay={200 + i * 80}
-                  />
-                </span>
-                <span
-                  className="text-xs leading-snug mt-1"
-                  style={{
-                    color: "rgba(232,237,240,0.45)",
-                    fontFamily: "var(--font-dm-sans)",
-                  }}
-                >
-                  {tile.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </AnimateIn>
-
-        {/* ── KPI rows ── */}
-        <div className="flex flex-col gap-0">
-          {KPI_ROWS.map((row, i) => (
-            <AnimateIn key={row.id} from="bottom" delay={i * 0.07}>
-              <div
-                className="group grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-x-8 gap-y-4 px-6 py-6 border-b transition-colors duration-150"
-                style={{
-                  borderColor: "rgba(255,255,255,0.06)",
-                  background: "transparent",
-                }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLDivElement).style.background =
-                    "rgba(22,32,41,0.45)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLDivElement).style.background =
-                    "transparent")
-                }
-              >
-                {/* Left: name + project tag + progress */}
-                <div className="flex flex-col gap-3">
-
-                  {/* Name row */}
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span
-                      className="text-base font-semibold"
-                      style={{
-                        color: "#E8EDF0",
-                        fontFamily: "var(--font-dm-sans)",
-                      }}
-                    >
-                      {row.name}
-                    </span>
-                    <span
-                      className="text-[10px] px-2 py-0.5 rounded-full border"
-                      style={{
-                        color: "rgba(232,237,240,0.38)",
-                        borderColor: "rgba(255,255,255,0.08)",
-                        background: "rgba(255,255,255,0.03)",
-                        fontFamily: "var(--font-dm-sans)",
-                      }}
-                    >
-                      {row.project}
-                    </span>
-                  </div>
-
-                  {/* Baseline → Target row */}
-                  <div className="flex items-center gap-3 flex-wrap">
-                    {/* Baseline */}
-                    <div className="flex flex-col gap-0.5">
-                      <span
-                        className="text-[10px] font-medium tracking-wider uppercase"
-                        style={{
-                          color: "rgba(232,237,240,0.28)",
-                          fontFamily: "var(--font-dm-sans)",
-                        }}
-                      >
-                        Baseline
-                      </span>
-                      <CountUpMetric
-                        value={row.baseline.value}
-                        suffix={row.baseline.suffix}
-                        decimals={0}
-                        duration={900}
-                        delay={i * 60}
-                        className="text-xl font-semibold tabular-nums"
-                        style={{
-                          color: "rgba(232,237,240,0.50)",
-                          fontFamily: "var(--font-dm-serif)",
-                          textDecoration: "line-through",
-                          textDecorationColor: "rgba(232,237,240,0.20)",
-                        }}
-                      />
-                    </div>
-
-                    {/* Arrow */}
-                    <span
-                      className="text-lg mt-3"
-                      style={{ color: "rgba(232,237,240,0.20)" }}
-                    >
-                      →
-                    </span>
-
-                    {/* Target */}
-                    <div className="flex flex-col gap-0.5">
-                      <span
-                        className="text-[10px] font-medium tracking-wider uppercase"
-                        style={{
-                          color: "rgba(232,237,240,0.28)",
-                          fontFamily: "var(--font-dm-sans)",
-                        }}
-                      >
-                        Target
-                      </span>
-                      <CountUpMetric
-                        value={row.target.value}
-                        suffix={row.target.suffix}
-                        decimals={0}
-                        duration={1200}
-                        delay={200 + i * 60}
-                        className="text-xl font-semibold tabular-nums"
-                        style={{
-                          color: "#4CAF7D",
-                          fontFamily: "var(--font-dm-serif)",
-                        }}
-                      />
-                    </div>
-
-                    {/* Improvement badge */}
-                    <span
-                      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border mt-3"
-                      style={{
-                        color: "#4CAF7D",
-                        borderColor: "rgba(76,175,125,0.28)",
-                        background: "rgba(76,175,125,0.08)",
-                        fontFamily: "var(--font-dm-sans)",
-                      }}
-                    >
-                      {row.improvement}
-                    </span>
-                  </div>
-
-                  {/* Progress bar */}
-                  <ProgressBar
-                    baseline={row.baseline.value}
-                    target={row.target.value}
-                    color={row.annual ? "#FF8F00" : "#00BFA5"}
-                  />
-
-                  {/* Source citation */}
-                  <p
-                    className="text-[10px]"
-                    style={{
-                      color: "rgba(232,237,240,0.25)",
-                      fontFamily: "var(--font-dm-sans)",
-                    }}
+        {/* ── MECE Grid ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
+          {DOMAINS.map((domain, i) => (
+            <AnimateIn key={domain.name} from="bottom" delay={0.15 + i * 0.1}>
+              <div className="flex flex-col gap-8">
+                {/* Domain Header */}
+                <div className="flex items-center gap-3 border-b pb-4" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                  <div className="w-4 h-4 shrink-0 rounded-sm" style={{ background: domain.color }} />
+                  <h3
+                    className="text-xl font-semibold tracking-wide"
+                    style={{ fontFamily: "var(--font-dm-sans)", color: domain.color }}
                   >
-                    Source: {row.source}
-                  </p>
+                    {domain.name}
+                  </h3>
                 </div>
 
-                {/* Right: annual impact (if financial) */}
-                {row.annual && (
-                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-1 sm:text-right">
-                    <div>
-                      <CountUpMetric
-                        value={row.annualValue!}
-                        prefix="$"
-                        suffix="M"
-                        decimals={1}
-                        duration={1400}
-                        delay={300 + i * 60}
-                        className="text-2xl sm:text-3xl font-bold tabular-nums"
-                        style={{
-                          color: "#FF8F00",
-                          fontFamily: "var(--font-dm-serif)",
-                        }}
-                      />
-                      <p
-                        className="text-[10px] mt-0.5"
-                        style={{
-                          color: "rgba(232,237,240,0.30)",
-                          fontFamily: "var(--font-dm-sans)",
-                        }}
-                      >
-                        annual impact
-                      </p>
+                {/* Projects */}
+                <div className="flex flex-col gap-10">
+                  {domain.projects.map((project) => (
+                    <div key={project.name} className="flex flex-col gap-4">
+                      {/* Project Title */}
+                      <div className="flex items-baseline gap-2">
+                        <span
+                          className="text-xs font-bold px-2 py-0.5 rounded-md"
+                          style={{
+                            background: "rgba(255,255,255,0.05)",
+                            color: "rgba(232,237,240,0.6)",
+                            fontFamily: "var(--font-jetbrains-mono)"
+                          }}
+                        >
+                          {project.id}
+                        </span>
+                        <h4
+                          className="text-lg font-medium"
+                          style={{ fontFamily: "var(--font-dm-serif)", color: "#E8EDF0" }}
+                        >
+                          {project.name}
+                        </h4>
+                      </div>
+
+                      {/* Bullets */}
+                      <ul className="flex flex-col gap-3">
+                        {project.bullets.map((bullet, idx) => (
+                          <li key={idx} className="flex items-start gap-3">
+                            <span
+                              className="mt-2.5 w-1.5 h-[2px] shrink-0 rounded-full"
+                              style={{ background: "#0D7377" }}
+                            />
+                            <p
+                              className="text-[15px] leading-relaxed"
+                              style={{ fontFamily: "var(--font-dm-sans)", color: "#ECEFF1" }}
+                            >
+                              {bullet}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  </div>
-                )}
+                  ))}
+                </div>
               </div>
             </AnimateIn>
           ))}
         </div>
-
-        {/* ── Methodology footnote ── */}
-        <AnimateIn from="bottom" delay={0.1}>
-          <div
-            className="mt-12 px-6 py-5 rounded-2xl border"
-            style={{
-              background: "rgba(13,115,119,0.05)",
-              borderColor: "rgba(13,115,119,0.15)",
-            }}
-          >
-            <p
-              className="text-xs leading-relaxed"
-              style={{
-                color: "rgba(232,237,240,0.38)",
-                fontFamily: "var(--font-dm-sans)",
-              }}
-            >
-              <span style={{ color: "rgba(232,237,240,0.55)" }}>
-                Methodology note:
-              </span>{" "}
-              All projections modeled against a 200-bed reference system. Financial
-              impact uses HFMA revenue cycle benchmarks, AMA prior authorization
-              survey data (2023), CAQH Index administrative efficiency metrics, and
-              the Change Healthcare Revenue Cycle Denials Index. Figures represent
-              potential annual savings; actual results depend on implementation scope
-              and payer mix. No live patient data was used.
-            </p>
-          </div>
-        </AnimateIn>
       </div>
     </section>
   );

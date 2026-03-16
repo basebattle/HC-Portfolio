@@ -49,11 +49,12 @@ export default function BadgeMarquee({
     track.style.animationPlayState = isPaused ? "paused" : "running";
   }, [isPaused]);
 
-  const totalTrackWidth = (badgeSize + gap) * BADGES.length;
+  const badgeWidth = badgeSize * 0.75;
+  const totalTrackWidth = (badgeWidth + gap) * BADGES.length;
 
   return (
     <section
-      className="relative w-full overflow-hidden py-6"
+      className="relative w-full overflow-hidden py-6 mt-16"
       style={{
         // Dark frosted strip — sits in your header / hero section
         background:

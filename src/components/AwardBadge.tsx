@@ -82,7 +82,7 @@ export default function AwardBadge({
       onMouseLeave={handleMouseLeave}
       className="relative flex-shrink-0 cursor-pointer select-none"
       style={{
-        width: size,
+        width: size * 0.75, // 3:4 aspect ratio
         height: size,
         // Perspective on the wrapper drives the 3D effect
         perspective: "600px",
@@ -120,8 +120,8 @@ export default function AwardBadge({
           src={badge.src}
           alt={badge.alt}
           fill
-          sizes={`${size}px`}
-          className="object-contain p-2"
+          sizes={`${size * 0.75}px`}
+          className="object-cover"
           priority={false}
           draggable={false}
         />

@@ -33,7 +33,7 @@ export default function ProjectLinks({ github, live }: ProjectLinksProps) {
             href={`https://github.com/${github}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition-all duration-150 border"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition-all duration-150 border transform hover:scale-[1.02] active:scale-[0.98]"
             style={{
               color: "#E8EDF0",
               borderColor: "rgba(255,255,255,0.12)",
@@ -63,9 +63,8 @@ export default function ProjectLinks({ github, live }: ProjectLinksProps) {
             href={live}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white transition-opacity duration-150 hover:opacity-90"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-150 transform hover:scale-[1.02] active:scale-[0.98] bg-[#008080] hover:bg-[#006666]"
             style={{
-              background: "linear-gradient(135deg, #0D7377 0%, #00BFA5 100%)",
               fontFamily: "var(--font-dm-sans)",
             }}
           >
