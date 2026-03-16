@@ -191,7 +191,7 @@ export const projects: Project[] = [
     name: "Synthetic Patient Cohort Generator",
     slug: "synthea-cohorts",
     category: "Clinical Intelligence",
-    status: "Planned",
+    status: "Deployed",
     phase: 2,
     oneLiner: "Purpose-built synthetic patient cohorts validated against CMS public-use files, powering every AI validation scenario in the portfolio.",
     metric: "AI validation data infrastructure for the entire portfolio",
@@ -202,8 +202,8 @@ export const projects: Project[] = [
       "Streamlit control panel with preconfigured cohort profiles (Oncology, High-Risk Readmission, Hospital-at-Home). Validation against CMS public-use files. Data Passport pages for compliance review."
     ],
     stack: ["Synthea", "Python", "Streamlit", "Supabase", "CMS BSFCC"],
-    github: null,
-    live: null,
+    github: "basebattle/synthea-cohort-generator",
+    live: "https://synthea-cohort-generator.streamlit.app",
     kpis: ["Cohort statistical fidelity vs. CMS benchmarks", "Reproducibility via shareable JSON configs", "Data quality scorecard per cohort"],
     veteran: "References synthetic data validation against CMS public-use files, FHIR R4 Bundle transaction semantics, and IRB-exempt synthetic data pathways."
   },
