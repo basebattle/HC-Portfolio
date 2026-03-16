@@ -149,7 +149,7 @@ export const projects: Project[] = [
     name: "HAIRA Governance Assessment Tool",
     slug: "haira",
     category: "Strategic Governance",
-    status: "Planned",
+    status: "Deployed",
     phase: 4,
     oneLiner: "First operational implementation of the peer-reviewed HAIRA maturity model for healthcare AI governance readiness.",
     metric: "Governance maturity scoring across 7 clinical AI domains",
@@ -160,8 +160,8 @@ export const projects: Project[] = [
       "Web assessment tool across seven HAIRA domains with scored questionnaire items, radar chart governance profiles, recommendations engine, and anonymized benchmarking layer."
     ],
     stack: ["Next.js", "Supabase", "Recharts", "Tailwind CSS"],
-    github: null,
-    live: null,
+    github: "basebattle/haira-assessment",
+    live: "https://haira-assessment.vercel.app",
     kpis: ["Governance maturity score across 7 domains", "Benchmarking percentile vs. aggregate orgs", "Prioritized action items with effort/impact"],
     veteran: "Operationalizes Hussein et al. 2026. References ONC HTI-2 algorithmic transparency, NIST AI RMF Govern function, and pre-deployment clinical validation protocols."
   },
