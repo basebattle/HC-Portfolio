@@ -11,7 +11,7 @@ const DOMAIN_COLORS: Record<string, string> = {
   "Strategic Governance": "#1565C0",
 };
 
-export default function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({ project, compact = false }: { project: Project; compact?: boolean }) {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
   const accentColor = DOMAIN_COLORS[project.category] || "#0D7377";
@@ -25,21 +25,23 @@ export default function ProjectCard({ project }: { project: Project }) {
     return text.replace(/(\$?\d+(?:,\d+)*(?:\.\d+)?(?:K|M|%)?)/g, `<span style="font-weight:500;color:${accentColor}">$1</span>`);
   };
 
-  return (
+  const cardContent = (
     <div
       role="article"
       tabIndex={0}
       aria-label={`${project.name} — ${project.descriptor}`}
-      className="relative flex flex-col transition-all overflow-hidden cursor-pointer"
+      className={`flex flex-col transition-all overflow-hidden cursor-pointer ${compact ? "absolute top-0 left-0 w-full" : "relative"}`}
       style={{
-        background: isHovered ? "rgba(22,32,41,0.9)" : "rgba(22,32,41,0.7)",
+        background: isHovered ? "rgba(22,32,41,0.95)" : "rgba(22,32,41,0.7)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
         border: `1px solid ${isHovered ? accentColor + "99" : "rgba(255,255,255,0.08)"}`,
         boxShadow: isHovered ? `0 0 18px ${accentColor}1F` : "none",
         borderRadius: "10px",
-        padding: "14px",
+        padding: compact ? "10px 12px" : "14px",
         transitionDuration: prefersReduced ? "0s" : "0.25s",
+        zIndex: compact && isHovered ? 20 : 10,
+        height: compact && !isHovered ? "100%" : "auto"
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -56,14 +58,14 @@ export default function ProjectCard({ project }: { project: Project }) {
         style={{
           border: `1px solid ${accentColor}59`, // 35% opacity hex
           borderRadius: "6px",
-          padding: "8px 12px",
+          padding: compact ? "6px 10px" : "8px 12px",
           background: `${accentColor}0F`, // 6% opacity hex
         }}
       >
         <span
           style={{
             fontFamily: "var(--font-dm-serif)",
-            fontSize: "32px",
+            fontSize: compact ? "26px" : "32px",
             color: accentColor,
             fontWeight: 500,
             lineHeight: 1,
@@ -102,17 +104,19 @@ export default function ProjectCard({ project }: { project: Project }) {
             fontSize: "13px",
             fontWeight: 500,
             color: "#ECEFF1",
+            lineHeight: 1.4,
           }}
         >
           {project.name}
         </span>
         <span
-          className="truncate"
+          className={!isHovered && compact ? "line-clamp-2" : ""}
           style={{
             fontFamily: "var(--font-dm-sans)",
             fontSize: "11px",
             color: "#607D8B",
             fontStyle: "italic",
+            lineHeight: 1.5,
           }}
         >
           {project.descriptor}
@@ -169,6 +173,29 @@ export default function ProjectCard({ project }: { project: Project }) {
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+
+  if (!compact) return cardContent;
+
+  return (
+    <div className="relative w-full h-full">
+      {/* Invisible placeholder to maintain grid cell dimensions */}
+      <div
+        className="invisible flex flex-col pointer-events-none"
+        style={{ padding: "10px 12px", border: "1px solid transparent" }}
+      >
+        <div style={{ padding: "6px 10px", marginBottom: "10px", border: "1px solid transparent" }}>
+          <span style={{ fontSize: "26px", lineHeight: 1 }}>{project.heroNumber}</span>
+          <span style={{ fontSize: "10px", marginTop: "3px" }}>{project.heroUnit}</span>
+        </div>
+        <div className="flex flex-col gap-[2px]">
+          <span style={{ fontSize: "10px" }}>P{project.idx}</span>
+          <span style={{ fontSize: "13px", lineHeight: 1.4 }}>{project.name}</span>
+          <span className="line-clamp-2" style={{ fontSize: "11px", lineHeight: 1.5 }}>{project.descriptor}</span>
+        </div>
+      </div>
+      {cardContent}
     </div>
   );
 }

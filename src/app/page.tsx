@@ -10,8 +10,10 @@ export default function Home() {
       <HeroSection />
       <ProjectGrid />
       <ImpactMetrics />
-      <AboutSection />
-      <ContactSection />
+      <div className="relative" style={{ backgroundColor: "#080F16" }}>
+        <AboutSection />
+        <ContactSection />
+      </div>
     </main>
   );
 }

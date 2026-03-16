@@ -32,8 +32,8 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative py-28 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ background: "#080F16" }}
+      className="relative z-10 py-28 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      style={{ background: "transparent" }}
     >
       {/* Radial glow */}
       <div

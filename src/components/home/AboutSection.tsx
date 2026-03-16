@@ -1,6 +1,7 @@
 "use client";
 
 import { createElement, useEffect, useState } from "react";
+import Image from "next/image";
 import { GraduationCap, Briefcase, Award, Globe, Stethoscope } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
 import SectionLabel from "@/components/ui/SectionLabel";
@@ -53,33 +54,55 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden py-24 px-6 lg:px-8"
+      className="relative overflow-hidden lg:overflow-visible py-24 px-6 lg:px-8"
       style={{
-        backgroundImage: "url('/images/speaker-bg.jpg')",
-        backgroundSize: "cover",
-        // Using center 20% on mobile via CSS class override, center top on desktop
-        backgroundPosition: "center 20%",
-        backgroundRepeat: "no-repeat",
-        backgroundColor: "#0F1923"
+        backgroundColor: "#0F1923",
+        zIndex: 5
       }}
     >
+      {/* Background Image Container */}
+      <div className="absolute inset-0 z-0 lg:left-auto lg:right-0 lg:w-[45%] lg:-bottom-[200px] pointer-events-none">
+        <Image
+          src="/images/speaker-bg.jpg"
+          alt="Piyush Sharma"
+          fill
+          priority
+          className="object-cover"
+          style={{
+            objectPosition: "center 20%",
+          }}
+        />
+
+        {/* Mobile Blur & Tint Overlay */}
+        <div
+          className="absolute inset-0 lg:hidden"
+          style={{
+            backdropFilter: prefersReduced ? "none" : "blur(4px) saturate(0.6)",
+            WebkitBackdropFilter: prefersReduced ? "none" : "blur(4px) saturate(0.6)",
+            background: "linear-gradient(135deg, rgba(15,25,35,0.55) 0%, rgba(15,25,35,0.40) 40%, rgba(15,25,35,0.65) 100%)",
+          }}
+        />
+
+        {/* Desktop bottom fade for bleed */}
+        <div
+          className="hidden lg:block absolute inset-x-0 bottom-0 h-48"
+          style={{
+            background: "linear-gradient(to top, #080F16 0%, transparent 100%)",
+          }}
+        />
+      </div>
+
       <style dangerouslySetInnerHTML={{
         __html: `
-        @media (min-width: 768px) {
-          #about { background-position: center top !important; }
+        @media (min-width: 1024px) {
+          #about img { 
+            object-position: center top !important; 
+            mask-image: radial-gradient(ellipse 80% 90% at 50% 30%, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0) 85%) !important;
+            -webkit-mask-image: radial-gradient(ellipse 80% 90% at 50% 30%, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0) 85%) !important;
+            opacity: 0.9 !important;
+          }
         }
       ` }} />
-
-      {/* Layer 2 (Blur) + Layer 3 (Tint) */}
-      <div
-        className="absolute inset-0 z-0"
-        aria-hidden="true"
-        style={{
-          backdropFilter: prefersReduced ? "none" : "blur(14px) saturate(0.35)",
-          WebkitBackdropFilter: prefersReduced ? "none" : "blur(14px) saturate(0.35)",
-          background: "linear-gradient(135deg, rgba(15,25,35,0.82) 0%, rgba(15,25,35,0.70) 40%, rgba(15,25,35,0.88) 100%)",
-        }}
-      />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* ── Section label ── */}
@@ -88,10 +111,10 @@ export default function AboutSection() {
         </AnimateIn>
 
         {/* ── Two-column layout ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
 
           {/* ── Left: prose ── */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-8 lg:col-span-3">
             <AnimateIn from="bottom" delay={0.10}>
               <blockquote
                 className="text-3xl sm:text-4xl font-normal leading-tight"
@@ -124,7 +147,7 @@ export default function AboutSection() {
           </div>
 
           {/* ── Right: credential cards ── */}
-          <div className="flex flex-col gap-4 mt-2 lg:mt-0">
+          <div className="flex flex-col gap-4 mt-12 lg:mt-64 lg:col-span-2 relative z-20">
             {CREDENTIALS.map((cred, i) => {
               const Icon = cred.icon;
               const hasLink = !!cred.link;

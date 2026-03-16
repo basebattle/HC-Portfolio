@@ -1,127 +1,80 @@
 "use client";
 
+import Link from "next/link";
 import AnimateIn from "@/components/ui/AnimateIn";
-import SectionLabel from "@/components/ui/SectionLabel";
+import CountUpMetric from "@/components/ui/CountUpMetric";
+import { projects } from "@/data/projects";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
-const DOMAINS = [
+const METRICS = [
+  { label: "FHIR Standards Implemented", value: 7, color: "#0D7377", projects: ["P01", "P06", "P08", "P09", "P10"] },
+  { label: "Agent Nodes Deployed", value: 12, suffix: "+", color: "#0D7377", projects: ["P02", "P03"] },
+  { label: "Claims Analyzed", value: 5000, color: "#FF8F00", projects: ["P04"] },
+  { label: "HFMA KPIs Tracked", value: 12, color: "#FF8F00", projects: ["P03"] },
+  { label: "Governance Domains Covered", value: 7, color: "#1565C0", projects: ["P07"] },
+  { label: "Infrastructure Cost", value: 0, prefix: "$", color: "#FF8F00", projects: ["P05", "P07"] },
+];
+
+const NARRATIVES = [
   {
-    name: "Clinical Intelligence",
+    title: "The Data Layer",
+    text: "Before an AI agent can reason about a patient, it needs clean, typed, terminology-resolved clinical data. The portfolio starts here: a standards-compliant FHIR bridge, a synthetic patient generator, and a clinical data gateway that serves three deployment modes from a single codebase.",
     color: "#0D7377",
-    projects: [
-      {
-        id: "P01",
-        name: "FHIR-MCP Bridge",
-        bullets: [
-          <>First MCP-native FHIR R4 bridge — reduces EHR integration surface from hundreds of API endpoints to <strong style={{ color: "#0D7377" }}>4</strong> semantically meaningful clinical tool calls</>,
-          <>Real-time terminology resolution across <strong style={{ color: "#0D7377" }}>4</strong> code systems: ICD-10-CM, SNOMED CT, RxNorm, LOINC — simultaneously per patient query</>,
-          <>Pydantic v2 strict-mode model layer enforces type safety across the MCP boundary — <strong style={{ color: "#0D7377" }}>zero</strong> runtime type errors in deployed build</>,
-          <>Next.js 16 EHR Simulator enables HIPAA-compliant AI development: full patient chart simulation with <strong style={{ color: "#0D7377" }}>no PHI exposure risk</strong></>,
-        ],
-      },
-      {
-        id: "P02",
-        name: "Prior Authorization Pipeline",
-        bullets: [
-          <><strong style={{ color: "#0D7377" }}>6-node</strong> LangGraph DAG automates a workflow requiring <strong style={{ color: "#0D7377" }}>45+ minutes</strong> of clinical staff time per request — to near-real-time processing</>,
-          <>Probabilistic denial risk assessment runs <strong style={{ color: "#0D7377" }}>before submission</strong> — identifying documentation gaps and code mismatches at the point of care</>,
-          <>CMS NPPES provider credentialing validation integrated as a dedicated agent node — eliminates manual NPI verification step</>,
-          <>Dual deployment: legacy Streamlit (main branch) + Next.js/FastAPI (v2-nextjs branch on Render) — <strong style={{ color: "#0D7377" }}>zero</strong> migration downtime</>,
-        ],
-      },
-      {
-        id: "P06",
-        name: "FHIR-to-LLM Clinical Data Gateway",
-        bullets: [
-          <>Tri-mode FHIR client (static/cloud/local) — <strong style={{ color: "#0D7377" }}>single codebase</strong> serves demo, live, and development environments without code changes</>,
-          <>Medplum Cloud integration: <strong style={{ color: "#0D7377" }}>13</strong> Synthea patient bundles, OAuth2 client_credentials flow, Innovation-Showroom-FHIR project</>,
-          <><strong style={{ color: "#0D7377" }}>4-panel</strong> API Playground (Tool Selection / FHIR Request / FHIR Response / Agent Trace) — full observability of LLM-to-FHIR call chain</>,
-        ],
-      },
-      {
-        id: "P08",
-        name: "CDS Hooks + LLM Reasoning Engine",
-        bullets: [
-          <>CDS Hooks <strong style={{ color: "#0D7377" }}>v2.0.1 compliant</strong> — interoperable with any HL7-conformant EHR</>,
-          <>Rule engine: <strong style={{ color: "#0D7377" }}>20</strong> drug-drug interactions + <strong style={{ color: "#0D7377" }}>15</strong> drug-condition contraindications encoded in JSON lookup tables</>,
-          <>Custom ai_reasoning_trace extension (com.healthcareshowroom.ai_reasoning_trace) — provides <strong style={{ color: "#0D7377" }}>full audit trail</strong> from rule evaluation through LLM reasoning to card generation: addresses clinical AI explainability requirements</>,
-          <>Demo fidelity: Opioid+Benzo (<strong style={{ color: "#0D7377" }}>0.94</strong> confidence), NSAID+Renal CKD (<strong style={{ color: "#0D7377" }}>0.91</strong>)</>,
-        ],
-      },
-      {
-        id: "P09",
-        name: "Synthetic Patient Cohort Generator",
-        bullets: [
-          <><strong style={{ color: "#0D7377" }}>3</strong> preconfigured FHIR R4 cohorts: <strong style={{ color: "#0D7377" }}>500</strong> oncology patients (lung/breast/colorectal), <strong style={{ color: "#0D7377" }}>300</strong> high-risk readmission (CHF/COPD/diabetes), <strong style={{ color: "#0D7377" }}>200</strong> hospital-at-home (pneumonia/CHF/COPD exacerbation)</>,
-          <>CMS BSFCC public-use file benchmark comparison — validates synthetic cohort clinical realism against federal reference data</>,
-          <>FHIR R4 Bundle output per patient — direct integration with P01/P02/P06</>,
-        ],
-      },
-      {
-        id: "P10",
-        name: "Hospital-at-Home Intelligence Layer",
-        bullets: [
-          <>NEWS2 scoring engine (<strong style={{ color: "#0D7377" }}>6</strong> physiological parameters) applied to <strong style={{ color: "#0D7377" }}>20</strong> simulated patients: <strong style={{ color: "#0D7377" }}>12</strong> Green (0–4), <strong style={{ color: "#0D7377" }}>5</strong> Amber (5–6), <strong style={{ color: "#0D7377" }}>3</strong> Red (7+)</>,
-          <>CMS Acute Hospital Care at Home waiver compliance checklist: all <strong style={{ color: "#0D7377" }}>10</strong> conditions of participation implemented and checkable</>,
-          <>Escalation alert queue auto-sorted by NEWS2 severity — automates clinical triage decisions across full patient census</>,
-        ],
-      },
-    ],
+    projects: ["P01", "P06", "P09"],
   },
   {
-    name: "Financial Optimization",
+    title: "The Intelligence Layer",
+    text: "With data flowing, the next layer applies clinical and financial reasoning. A prior auth pipeline that collapses 45-minute workflows. A CDS engine that scores drug interactions at 0.94 confidence. A revenue cycle dashboard benchmarked against HFMA standards. A denial workflow that catches problems before submission, not after.",
     color: "#FF8F00",
-    projects: [
-      {
-        id: "P03",
-        name: "Revenue Cycle Management Dashboard",
-        bullets: [
-          <><strong style={{ color: "#FF8F00" }}>12</strong> HFMA-benchmarked KPIs calculated in real time: Days in A/R, Clean Claim Rate, Collection Rate, Denial Rate, Net Collection Rate and <strong style={{ color: "#FF8F00" }}>7</strong> others — with industry benchmark comparison (MGMA/HFMA)</>,
-          <><strong style={{ color: "#FF8F00" }}>6-node</strong> LangGraph pipeline: query_parser → analysis_engine → anomaly_detector → benchmark_comparator → summary_writer → report_generator (PowerPoint/Excel/Plotly)</>,
-          <>Automated anomaly detection flags deviations in revenue cycle metrics before they impact cash flow — shift from monthly review to <strong style={{ color: "#FF8F00" }}>real-time alerting</strong></>,
-          <>LangSmith observability integrated for end-to-end agent tracing, prompt debugging, and LLM output quality evaluation</>,
-        ],
-      },
-      {
-        id: "P04",
-        name: "Claims Denial Workflow Agent",
-        bullets: [
-          <>CARC/RARC taxonomy engine maps top <strong style={{ color: "#FF8F00" }}>50</strong> denial codes to <strong style={{ color: "#FF8F00" }}>4</strong> root-cause categories — enabling systemic pattern analysis across <strong style={{ color: "#FF8F00" }}>5,000</strong> synthetic claims at <strong style={{ color: "#FF8F00" }}>12%</strong> denial rate</>,
-          <>ROI model with <strong style={{ color: "#FF8F00" }}>10/20/30%</strong> prevention scenario calculators — enables CFO-level business case construction for denial prevention investment</>,
-          <>Prevention Scorer ranks pending claims by denial probability <strong style={{ color: "#FF8F00" }}>before submission</strong> — prospective risk management rather than reactive denial appeal</>,
-          <>Denial chain drill-down: submission → denial → appeal → resolution — full lifecycle visibility per claim</>,
-        ],
-      },
-      {
-        id: "P05",
-        name: "VBC Reimbursement Analyzer",
-        bullets: [
-          <>Tuva Project (Apache 2.0) dbt pipeline integration — open-source claims-to-analytics standard used by leading US health systems</>,
-          <>Episode-level Total Cost of Care (TCOC) calculation for oncology service lines — the foundational metric of all VBC contracts</>,
-          <>CMS-HCC V28 risk-adjustment sensitivity analysis via interactive scenario sliders — actuarial-grade modeling without actuarial cost</>,
-          <>DuckDB analytical engine: <strong style={{ color: "#FF8F00" }}>zero</strong> cloud database cost, file-based, runs entirely locally — <strong style={{ color: "#FF8F00" }}>$0</strong> infrastructure for production analytics</>,
-        ],
-      },
-    ],
+    projects: ["P02", "P08", "P03", "P04"],
   },
   {
-    name: "Strategic Governance",
+    title: "The Governance Layer",
+    text: "Intelligence without oversight is liability. The portfolio closes with a digital implementation of a peer-reviewed AI governance framework and a hospital-at-home monitoring system that bakes CMS compliance into every clinical decision.",
     color: "#1565C0",
-    projects: [
-      {
-        id: "P07",
-        name: "HAIRA AI Governance Assessment Tool",
-        bullets: [
-          <>First digital implementation of the HAIRA framework (Hussein et al. 2026, npj Digital Medicine) — peer-reviewed academic foundation for all <strong style={{ color: "#1565C0" }}>35</strong> assessment questions</>,
-          <><strong style={{ color: "#1565C0" }}>7</strong> governance domains, <strong style={{ color: "#1565C0" }}>5-level</strong> maturity scoring (Initial → Leading), <strong style={{ color: "#1565C0" }}>7-axis</strong> RadarChart with synthetic industry benchmark comparison</>,
-          <>Prioritised recommendations engine sorted by lowest-scoring domain — directs improvement effort to highest-leverage governance gaps</>,
-          <>Fully serverless: localStorage state persistence, zero-cost Vercel deployment, no backend — any healthcare organisation can self-assess in <strong style={{ color: "#1565C0" }}>15 minutes</strong> without a consulting engagement</>,
-        ],
-      },
-    ],
+    projects: ["P07", "P10", "P05"],
   },
 ];
+
+// Helper for Venn Diagram Nodes
+function ProjectLink({ id, color, className }: { id: string, color: string, className?: string }) {
+  const numId = id.replace("P", "");
+  const proj = projects.find(p => p.idx === numId);
+  if (!proj) return null;
+
+  return (
+    <Link
+      href={`/projects/${proj.slug}`}
+      className={`group absolute flex items-center justify-center pointer-events-auto ${className}`}
+      style={{
+        width: "28px", height: "28px",
+        background: `${color}1A`,
+        border: `1px solid ${color}4D`,
+        borderRadius: "50%",
+        textDecoration: "none",
+        transition: "all 0.2s ease"
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.background = `${color}33`;
+        (e.currentTarget as HTMLElement).style.transform = "scale(1.15)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.background = `${color}1A`;
+        (e.currentTarget as HTMLElement).style.transform = "scale(1)";
+      }}
+    >
+      <span style={{ color, fontSize: "10px", fontFamily: "var(--font-jetbrains-mono)", fontWeight: 600 }}>
+        {id}
+      </span>
+
+      {/* Tooltip on hover */}
+      <div className="absolute opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity bg-[#1A2535] border border-white/10 rounded-md px-2 py-1 -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap z-50 shadow-lg">
+        <span style={{ color: "#ECEFF1", fontSize: "11px", fontFamily: "var(--font-dm-sans)" }}>{proj.name}</span>
+      </div>
+    </Link>
+  );
+}
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
@@ -132,88 +85,223 @@ export default function ImpactMetrics() {
       className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-b"
       style={{
         background: "#1A2535",
+        backgroundImage: "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(13,115,119,0.06) 0%, transparent 70%)",
         borderColor: "rgba(255,255,255,0.06)"
       }}
     >
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* ── Section header ── */}
         <AnimateIn from="bottom" delay={0}>
-          <SectionLabel className="block mb-6">Impact</SectionLabel>
+          <div className="mb-3">
+            <span
+              className="text-xs font-semibold tracking-[0.18em] uppercase"
+              style={{
+                color: "#00BFA5",
+                fontFamily: "var(--font-dm-sans)",
+              }}
+            >
+              Impact Architecture
+            </span>
+          </div>
         </AnimateIn>
 
         <AnimateIn from="bottom" delay={0.07}>
           <h2
-            className="text-4xl sm:text-5xl lg:text-6xl font-normal leading-tight mb-16"
+            className="text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight mb-16"
             style={{ fontFamily: "var(--font-dm-serif)", color: "#ECEFF1" }}
           >
             Measured Impact
           </h2>
         </AnimateIn>
 
-        {/* ── MECE Grid ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
-          {DOMAINS.map((domain, i) => (
-            <AnimateIn key={domain.name} from="bottom" delay={0.15 + i * 0.1}>
-              <div className="flex flex-col gap-8">
-                {/* Domain Header */}
-                <div className="flex items-center gap-3 border-b pb-4" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-                  <div className="w-4 h-4 shrink-0 rounded-sm" style={{ background: domain.color }} />
-                  <h3
-                    className="text-xl font-semibold tracking-wide"
-                    style={{ fontFamily: "var(--font-dm-sans)", color: domain.color }}
-                  >
-                    {domain.name}
-                  </h3>
+        {/* ── Band 1: Impact Distribution ── */}
+        <AnimateIn from="bottom" delay={0.15}>
+          <div className="flex overflow-x-auto pb-4 mb-4 sm:mb-8 -mx-4 px-4 sm:mx-0 sm:px-0 gap-4 sm:gap-6 snap-x [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            {METRICS.map((metric, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-[240px] sm:w-[260px] snap-start rounded-xl p-5 sm:p-6 flex flex-col"
+                style={{
+                  background: "rgba(26,37,53,0.5)",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  border: `1px solid rgba(255,255,255,0.05)`,
+                  borderLeft: `3px solid ${metric.color}`
+                }}
+              >
+                <div style={{ color: metric.color, fontFamily: "var(--font-dm-serif)", fontSize: "40px", lineHeight: 1, marginBottom: "12px" }}>
+                  {metric.prefix}<CountUpMetric target={metric.value} />{metric.suffix}
                 </div>
-
-                {/* Projects */}
-                <div className="flex flex-col gap-10">
-                  {domain.projects.map((project) => (
-                    <div key={project.name} className="flex flex-col gap-4">
-                      {/* Project Title */}
-                      <div className="flex items-baseline gap-2">
-                        <span
-                          className="text-xs font-bold px-2 py-0.5 rounded-md"
-                          style={{
-                            background: "rgba(255,255,255,0.05)",
-                            color: "rgba(232,237,240,0.6)",
-                            fontFamily: "var(--font-jetbrains-mono)"
-                          }}
+                <div style={{ fontFamily: "var(--font-dm-sans)", fontSize: "14px", color: "#E8EDF0", fontWeight: 500, marginBottom: "16px", flexGrow: 1 }}>
+                  {metric.label}
+                </div>
+                <div className="flex flex-wrap items-center mt-auto pt-2">
+                  {metric.projects.map((id, pIdx) => {
+                    const numId = id.replace("P", "");
+                    const proj = projects.find(p => p.idx === numId);
+                    return proj ? (
+                      <span key={id} className="flex items-center">
+                        <Link
+                          href={`/projects/${proj.slug}`}
+                          className="hover:underline transition-all hover:brightness-125"
+                          style={{ color: metric.color, fontFamily: "var(--font-jetbrains-mono)", fontSize: "11px" }}
                         >
-                          {project.id}
-                        </span>
-                        <h4
-                          className="text-lg font-medium"
-                          style={{ fontFamily: "var(--font-dm-serif)", color: "#E8EDF0" }}
-                        >
-                          {project.name}
-                        </h4>
-                      </div>
-
-                      {/* Bullets */}
-                      <ul className="flex flex-col gap-3">
-                        {project.bullets.map((bullet, idx) => (
-                          <li key={idx} className="flex items-start gap-3">
-                            <span
-                              className="mt-2.5 w-1.5 h-[2px] shrink-0 rounded-full"
-                              style={{ background: "#0D7377" }}
-                            />
-                            <p
-                              className="text-[15px] leading-relaxed"
-                              style={{ fontFamily: "var(--font-dm-sans)", color: "#ECEFF1" }}
-                            >
-                              {bullet}
-                            </p>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
+                          {id}
+                        </Link>
+                        {pIdx < metric.projects.length - 1 && (
+                          <span className="mx-1.5" style={{ color: "rgba(255,255,255,0.15)", fontSize: "10px" }}>•</span>
+                        )}
+                      </span>
+                    ) : null;
+                  })}
                 </div>
               </div>
-            </AnimateIn>
-          ))}
-        </div>
+            ))}
+          </div>
+        </AnimateIn>
+
+        {/* ── Band 2: The Intersection ── */}
+        <AnimateIn from="bottom" delay={0.25}>
+          <div className="my-16 sm:my-24 flex flex-col items-center">
+            <h3
+              className="text-xl sm:text-2xl mb-8 sm:mb-12 text-center"
+              style={{ fontFamily: "var(--font-dm-serif)", color: "rgba(232,237,240,0.6)" }}
+            >
+              Where the work converges
+            </h3>
+
+            <div className="relative w-full max-w-[280px] sm:max-w-lg md:max-w-xl aspect-square sm:aspect-video flex items-center justify-center">
+              {/* Clinical Circle */}
+              <div
+                className="absolute w-[65%] sm:w-[50%] pt-[65%] sm:pt-[50%] rounded-full mix-blend-screen"
+                style={{
+                  background: "radial-gradient(circle at center, rgba(13,115,119,0.18) 0%, rgba(13,115,119,0.02) 100%)",
+                  border: "1px solid rgba(13,115,119,0.25)",
+                  top: "0%", left: "15%",
+                }}
+              >
+                <div className="absolute top-[15%] left-[20%] transform -translate-x-1/2 -translate-y-1/2 text-center">
+                  <span style={{ color: "#0D7377", fontSize: "10px", fontFamily: "var(--font-jetbrains-mono)", letterSpacing: "0.05em", textTransform: "uppercase" }} className="hidden sm:block">Clinical<br />Informatics</span>
+                </div>
+              </div>
+
+              {/* Agentic AI Circle */}
+              <div
+                className="absolute w-[65%] sm:w-[50%] pt-[65%] sm:pt-[50%] rounded-full mix-blend-screen"
+                style={{
+                  background: "radial-gradient(circle at center, rgba(21,101,192,0.18) 0%, rgba(21,101,192,0.02) 100%)",
+                  border: "1px solid rgba(21,101,192,0.25)",
+                  top: "0%", right: "15%",
+                }}
+              >
+                <div className="absolute top-[15%] right-[20%] transform translate-x-1/2 -translate-y-1/2 text-center">
+                  <span style={{ color: "#1565C0", fontSize: "10px", fontFamily: "var(--font-jetbrains-mono)", letterSpacing: "0.05em", textTransform: "uppercase" }} className="hidden sm:block">Agentic<br />AI</span>
+                </div>
+              </div>
+
+              {/* Payer-Provider Circle */}
+              <div
+                className="absolute w-[65%] sm:w-[50%] pt-[65%] sm:pt-[50%] rounded-full mix-blend-screen"
+                style={{
+                  background: "radial-gradient(circle at center, rgba(255,143,0,0.18) 0%, rgba(255,143,0,0.02) 100%)",
+                  border: "1px solid rgba(255,143,0,0.25)",
+                  bottom: "10%", left: "50%", transform: "translateX(-50%)"
+                }}
+              >
+                <div className="absolute bottom-[10%] left-1/2 transform -translate-x-1/2 translate-y-1/2 text-center">
+                  <span style={{ color: "#FF8F00", fontSize: "10px", fontFamily: "var(--font-jetbrains-mono)", letterSpacing: "0.05em", textTransform: "uppercase" }} className="hidden sm:block">Payer-Provider<br />Operations</span>
+                </div>
+              </div>
+
+              {/* Center Text */}
+              <div className="absolute z-20 text-center flex flex-col items-center justify-center pointer-events-none mt-[-10%] sm:mt-[-5%]">
+                <span style={{ fontFamily: "var(--font-dm-serif)", fontSize: "20px", color: "#ECEFF1", lineHeight: 1.2 }} className="sm:text-2xl md:text-3xl">
+                  10 Projects.<br />1 Builder.
+                </span>
+              </div>
+
+              {/* Project Nodes positioned roughly */}
+              <div className="absolute z-30 w-full h-full pointer-events-none mt-[-10%] sm:mt-[-5%]">
+                {/* Clinical Only */}
+                <ProjectLink id="P01" color="#0D7377" className="top-[15%] sm:top-[25%] left-[25%] sm:left-[22%]" />
+                <ProjectLink id="P09" color="#0D7377" className="top-[35%] sm:top-[40%] left-[15%] sm:left-[18%]" />
+
+                {/* Agentic AI Only */}
+                <ProjectLink id="P08" color="#1565C0" className="top-[15%] sm:top-[25%] right-[25%] sm:right-[22%]" />
+
+                {/* Financial / Payer-Provider Only */}
+                <ProjectLink id="P05" color="#FF8F00" className="bottom-[10%] sm:bottom-[15%] left-[45%] sm:left-[48%]" />
+
+                {/* Intersections */}
+                {/* Clinical + AI */}
+                <ProjectLink id="P06" color="#0D7377" className="top-[20%] sm:top-[25%] left-[50%] -translate-x-1/2" />
+                <ProjectLink id="P07" color="#1565C0" className="top-[35%] sm:top-[38%] left-[50%] -translate-x-1/2" />
+
+                {/* Clinical + Financial */}
+                <ProjectLink id="P02" color="#0D7377" className="top-[60%] sm:top-[55%] left-[30%] sm:left-[35%]" />
+                <ProjectLink id="P04" color="#FF8F00" className="top-[75%] sm:top-[68%] left-[35%] sm:left-[40%]" />
+
+                {/* Financial + AI */}
+                <ProjectLink id="P10" color="#1565C0" className="top-[60%] sm:top-[55%] right-[30%] sm:right-[35%]" />
+                <ProjectLink id="P03" color="#FF8F00" className="top-[75%] sm:top-[68%] right-[35%] sm:right-[40%]" />
+              </div>
+            </div>
+
+            <div className="mt-8 text-center flex items-center justify-center pb-2">
+              <a
+                href="https://github.com/basebattle"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 transition-opacity hover:opacity-100 opacity-60"
+              >
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="text-[#E8EDF0]">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+                <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "12px", color: "#E8EDF0" }}>
+                  All 10 projects are open-source on GitHub
+                </span>
+              </a>
+            </div>
+          </div>
+        </AnimateIn>
+
+        {/* ── Band 3: Impact Narrative ── */}
+        <AnimateIn from="bottom" delay={0.35}>
+          <div className="flex flex-col gap-10 sm:gap-12 mt-8 md:max-w-4xl mx-auto">
+            {NARRATIVES.map((block, i) => (
+              <div key={i} className="relative pl-6 sm:pl-8">
+                <div className="absolute left-0 top-1.5 bottom-0 w-[3px] rounded-full" style={{ background: block.color }} />
+                <h4 className="text-xl sm:text-2xl mb-3" style={{ fontFamily: "var(--font-dm-serif)", color: "#E8EDF0" }}>{block.title}</h4>
+                <p className="text-[15px] sm:text-base leading-relaxed mb-5" style={{ fontFamily: "var(--font-dm-sans)", color: "#ECEFF1" }}>
+                  {block.text}
+                </p>
+                <div className="flex flex-wrap gap-2 sm:gap-3">
+                  {block.projects.map(id => {
+                    const numId = id.replace("P", "");
+                    const proj = projects.find(p => p.idx === numId);
+                    return proj ? (
+                      <Link
+                        key={id}
+                        href={`/projects/${proj.slug}`}
+                        className="px-3 sm:px-4 py-1.5 rounded-full flex items-center gap-1.5 transition-colors hover:brightness-125"
+                        style={{ background: `${block.color}1A`, color: block.color, border: `1px solid ${block.color}33` }}
+                      >
+                        <span style={{ fontFamily: "var(--font-jetbrains-mono)", fontSize: "10px", fontWeight: 600 }}>{id}</span>
+                        <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "12px", fontWeight: 500 }}>{proj.name}</span>
+                      </Link>
+                    ) : null;
+                  })}
+                </div>
+
+                {/* Connecting line between blocks */}
+                {i < NARRATIVES.length - 1 && (
+                  <div className="absolute -bottom-6 sm:-bottom-7 left-0 w-full h-[1px]" style={{ background: "rgba(255,255,255,0.06)" }} />
+                )}
+              </div>
+            ))}
+          </div>
+        </AnimateIn>
+
       </div>
     </section>
   );
