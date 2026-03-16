@@ -86,7 +86,7 @@ export const projects: Project[] = [
     name: "Claims Denial Workflow Agent",
     slug: "claims-denial",
     category: "Financial Optimization",
-    status: "Blueprint",
+    status: "Deployed",
     phase: 2,
     oneLiner: "Multi-agent denial prevention system mapping root causes before claims are submitted, targeting the $260 billion annual US denial problem.",
     metric: "$0.8M/yr projected savings (20% prevention rate)",
@@ -97,8 +97,8 @@ export const projects: Project[] = [
       "Multi-agent LangGraph system integrating Gmail, Drive, Sheets, and Slack via MCP. CARC/RARC denial taxonomy engine mapping top 50 codes to structured root-cause hierarchy. Prevention Score predicting highest-risk pending claims."
     ],
     stack: ["Python", "LangGraph", "FastAPI", "MCP", "Streamlit"],
-    github: null,
-    live: null,
+    github: "basebattle/claims-denial-agent",
+    live: "https://claims-denial-agent.streamlit.app",
     kpis: ["Denial rate reduction from 12% to 9.6%", "CARC/RARC root-cause mapping: top 50 codes", "Rework cost avoidance and write-off reduction"],
     veteran: "References X12 835 remittance advice parsing, CARC/RARC denial taxonomy, and Change Healthcare Revenue Cycle Denials Index for baseline benchmarking."
   },
