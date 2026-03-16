@@ -69,7 +69,7 @@ export default function AboutSection() {
           priority
           className="object-cover"
           style={{
-            objectPosition: "center 20%",
+            objectPosition: "center 30%",
           }}
         />
 
@@ -95,8 +95,8 @@ export default function AboutSection() {
       <style dangerouslySetInnerHTML={{
         __html: `
         @media (min-width: 1024px) {
-          #about img { 
-            object-position: center top !important; 
+          #about img {
+            object-position: center 15% !important;
             mask-image: radial-gradient(ellipse 80% 90% at 50% 30%, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0) 85%) !important;
             -webkit-mask-image: radial-gradient(ellipse 80% 90% at 50% 30%, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0) 85%) !important;
             opacity: 0.9 !important;

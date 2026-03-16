@@ -38,7 +38,7 @@ export default function CountUpMetric({
   once = true,
 }: CountUpMetricProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once, margin: "-60px" });
+  const isInView = useInView(ref, { once, margin: "0px" });
   const [display, setDisplay] = useState(0);
   const hasRun = useRef(false);
 
