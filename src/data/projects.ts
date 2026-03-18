@@ -14,6 +14,7 @@ export interface Project {
   github: string | null;
   live: string | null;
   simulation?: string | null;
+  deepDive?: string | null;
   features?: { name: string; benefit: string; icon?: "zap" | "shield" | "cpu" | "check" }[];
   kpis: string[];
   veteran: string;
@@ -27,38 +28,39 @@ export interface Project {
 export const projects: Project[] = [
   {
     idx: "01",
-    name: "FHIR-MCP Bridge",
+    name: "FHIR-MCP Clinical OS",
     slug: "fhir-mcp-bridge",
     category: "Clinical Intelligence",
     status: "Deployed",
     phase: 1,
-    oneLiner: "The first MCP-native healthcare data bridge, turning 200+ FHIR API endpoints into a single AI-callable interface.",
+    oneLiner: "Full Clinical Intelligence Simulator — the first MCP-native healthcare data bridge with Agentic Reasoning Visualization and a High-Fidelity spatial-glassmorphism EHR UI.",
     metric: "Eliminates bespoke EHR integration engineering",
     metricType: "enabler",
     problem: "Every AI vendor trying to access clinical data faces the same wall: hundreds of proprietary FHIR API endpoints, each EHR system requiring custom integration code, and months of development before an agent can read a single patient record.",
     evolution: [
       "Standard, highly coupled API calls requiring custom integrations for every specific EHR and health system.",
-      "Architected the first MCP-native healthcare data bridge, abstracting HL7 FHIR R4 operations into semantically meaningful clinical tools with Pydantic v2 strict-mode type safety and real-time terminology resolution across ICD-10, SNOMED CT, RxNorm, and LOINC."
+      "Architected the first MCP-native healthcare data bridge with Agentic Reasoning Visualization — a live, node-based Reasoning Graph that maps LLM decisions tracking FHIR standards. Pydantic v2 strict-mode type safety and real-time terminology resolution across ICD-10, SNOMED CT, RxNorm, and LOINC."
     ],
-    stack: ["Python 3.12+", "FastMCP", "HTTPX", "HL7 FHIR R4", "Pydantic v2", "Uvicorn"],
+    stack: ["Python 3.12+", "FastMCP", "Next.js", "Tailwind CSS", "Framer Motion", "HL7 FHIR R4", "Pydantic v2", "lucide-react"],
     github: "basebattle/FHIR-MCP-data-bridge",
-    live: "https://v3-ehr-simulator.vercel.app",
-    simulation: "https://v3-ehr-simulator.vercel.app/test-suite",
+    live: "https://v3-ehr-simulator-7hr0ga8db-basebattle-2762s-projects.vercel.app/",
+    simulation: "https://v3-ehr-simulator-7hr0ga8db-basebattle-2762s-projects.vercel.app/",
+    deepDive: "https://github.com/basebattle/FHIR-MCP-data-bridge",
     features: [
-      { name: "Tri-mode FHIR Client", benefit: "Allows zero-cost static deployment while retaining live OAuth compatibility via standard FHIR APIs.", icon: "zap" },
-      { name: "Pydantic v2 Type Safety", benefit: "Enforces strict-mode validation at execution, removing runtime crashes when schemas evolve.", icon: "shield" },
-      { name: "FastMCP Orchestration", benefit: "Registers 200+ endpoints automatically using semantic abstractions, eliminating boilerplate routing.", icon: "cpu" }
+      { name: "Agentic Reasoning Graph", benefit: "Live, node-based Reasoning Graph maps LLM decisions step-by-step against FHIR standards — full auditability.", icon: "cpu" },
+      { name: "High-Fidelity Clinical UI", benefit: "Spatial-glassmorphism design with 21st.dev Magic UI: MagicCard hover spotlights, NumberTicker live stat rolling, BorderBeam pulsing alarms, AnimatedList event timelines.", icon: "zap" },
+      { name: "Pydantic v2 Type Safety", benefit: "Enforces strict-mode validation at execution, removing runtime crashes when schemas evolve.", icon: "shield" }
     ],
     kpis: ["Data exchange latency reduced to sub-second", "Multi-vocabulary terminology resolution across 4 code systems", "Zero custom integration code per downstream agent"],
     veteran: "References TEFCA cross-network interoperability framework. Addresses the Azure API for FHIR retirement (September 2026) by demonstrating the migration-ready architecture pattern.",
     heroNumber: "4",
     heroUnit: "MCP TOOLS",
-    descriptor: "First MCP-native FHIR R4 clinical data bridge",
+    descriptor: "Clinical Intelligence Simulator · Agentic Reasoning Graph · Glassmorphism EHR UI",
     bullets: [
       "4 MCP tools replace hundreds of raw FHIR API endpoints",
-      "Real-time terminology across ICD-10, SNOMED CT, RxNorm, LOINC",
-      "Pydantic v2 strict-mode enforces type safety at MCP boundary",
-      "Next.js 16 EHR Simulator — HIPAA-compliant dev environment"
+      "Live Reasoning Graph — node-based LLM decision trace per FHIR standard",
+      "Interactive Micro-Interactions: MagicCard · NumberTicker · BorderBeam · AnimatedList",
+      "Framer Motion + Tailwind spatial-glassmorphism — backdrop-filter: blur(24px)"
     ],
   },
   {
@@ -313,27 +315,29 @@ export const projects: Project[] = [
     category: "Clinical Intelligence",
     status: "Deployed",
     phase: 3,
-    oneLiner: "Clinical Command Center for distributed care, applying NEWS2 risk scoring to remote patient monitoring data in real time.",
+    oneLiner: "Clinical Command Center for distributed care, applying NEWS2 risk scoring to remote patient monitoring data in real time across 9 diagnoses and 20 live patients.",
     metric: "CMS waiver compliance coverage for Hospital-at-Home programs",
     metricType: "strategic",
     problem: "CMS Hospital-at-Home waivers are expanding but health systems lack the clinical intelligence layer on top of RPM device data. Vital signs flow in but there is no automated triage, risk scoring, or escalation logic.",
     evolution: [
       "Raw device data without clinical risk interpretation or automated escalation.",
-      "Python ingestion transforming RPM data into FHIR Observations. NEWS2 risk scoring with real-time escalation alerts. Clinician dashboard with RAG-status indicators and trending vitals. Every feature mapped to CMS waiver compliance."
+      "Python ingestion transforming RPM data into FHIR Observations. NEWS2 risk scoring (7 vitals → Red/Amber/Green RAG) with real-time escalation alerts. AI Analysis Engine synthesising NEWS2 scores with clinical notes. Every feature mapped to the 10 CMS AHCaH conditions of participation (42 CFR §412.65)."
     ],
-    stack: ["Python 3.12", "Streamlit", "Plotly", "Pandas", "NEWS2 Engine", "RAG Classifier"],
+    stack: ["Python 3.12", "Streamlit", "Plotly", "Pandas", "NEWS2 Engine", "RAG Classifier", "FHIR R4"],
     github: "https://github.com/basebattle/hah-intelligence",
     live: "https://hah-intelligence.streamlit.app",
-    kpis: ["NEWS2 escalation accuracy", "Time-to-clinician-alert", "CMS waiver compliance coverage"],
-    veteran: "References CMS Acute Hospital Care at Home waiver conditions (42 CFR §412.65), NEWS2 clinical deterioration scoring, FHIR Observation vital-signs profile, and IEEE 11073 RPM interoperability. Covers 9 diagnoses across CHF, COPD, Pneumonia, Cellulitis, Sepsis, UTI, DKA, CKD, and Post-Surgical.",
+    deepDive: "https://github.com/basebattle/hah-intelligence#readme",
+    kpis: ["NEWS2 escalation accuracy across 7 vitals", "Time-to-clinician-alert on RAG status change", "10 CMS AHCaH conditions of participation tracked"],
+    veteran: "References CMS Acute Hospital Care at Home waiver conditions (42 CFR §412.65), NEWS2 clinical deterioration scoring, FHIR Observation vital-signs profile, and IEEE 11073 RPM interoperability. Covers 9 diagnoses: CHF, COPD, Pneumonia, Cellulitis, Sepsis, UTI, DKA, CKD, and Post-Surgical.",
     heroNumber: "20",
     heroUnit: "PATIENTS LIVE",
-    descriptor: "NEWS2 + RAG risk engine · CMS AHCaH waiver compliance",
+    descriptor: "NEWS2 + RAG risk engine · CMS AHCaH waiver · FHIR Observations",
     bullets: [
       "NEWS2 scoring: 7 vitals → automated Red/Amber/Green RAG triage",
       "20-patient census: 12 Green · 5 Amber · 3 Red — real-time refresh",
       "AI Analysis Engine: RAG classifier synthesises NEWS2 + clinical notes",
-      "CMS AHCaH waiver: 10 conditions of participation tracked (42 CFR §412.65)"
+      "CMS AHCaH waiver: 10 conditions of participation tracked (42 CFR §412.65)",
+      "9 diagnoses: CHF · COPD · Pneumonia · Sepsis · DKA · CKD + more"
     ],
   }
 ];

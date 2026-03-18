@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Globe, Activity, Github } from "lucide-react";
+import { Globe, Activity, Github, BookOpen } from "lucide-react";
 import { Project } from "@/data/projects";
 
 const DOMAIN_COLORS: Record<string, string> = {
-  "Clinical Intelligence": "#0D7377",
+  "Clinical Intelligence": "#00d4aa",
   "Financial Optimization": "#FF8F00",
   "Strategic Governance": "#1565C0",
 };
@@ -15,7 +15,7 @@ const DOMAIN_COLORS: Record<string, string> = {
 export default function ProjectCard({ project, compact = false }: { project: Project; compact?: boolean }) {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
-  const accentColor = DOMAIN_COLORS[project.category] || "#0D7377";
+  const accentColor = DOMAIN_COLORS[project.category] || "#00d4aa";
 
   const prefersReduced = typeof window !== "undefined" && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const duration = prefersReduced ? 0 : 0.22;
@@ -34,8 +34,8 @@ export default function ProjectCard({ project, compact = false }: { project: Pro
       className={`flex flex-col transition-all overflow-hidden cursor-pointer ${compact ? "absolute top-0 left-0 w-full" : "relative"}`}
       style={{
         background: isHovered ? "rgba(22,32,41,0.95)" : "rgba(22,32,41,0.7)",
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
         border: `1px solid ${isHovered ? accentColor + "99" : "rgba(255,255,255,0.08)"}`,
         boxShadow: isHovered ? `0 0 18px ${accentColor}1F` : "none",
         borderRadius: "10px",
@@ -233,6 +233,30 @@ export default function ProjectCard({ project, compact = false }: { project: Pro
                   }}
                 >
                   <Github size={15} />
+                </button>
+              )}
+
+              {project.deepDive && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(project.deepDive || "", "_blank");
+                  }}
+                  className="flex items-center justify-center p-2 rounded-lg border transition-all duration-200"
+                  style={{
+                    background: "rgba(232,237,240,0.06)",
+                    borderColor: "rgba(255,255,255,0.1)",
+                    color: "#ECEFF1",
+                  }}
+                  title="Architecture Deep-Dive"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(232,237,240,0.12)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(232,237,240,0.06)";
+                  }}
+                >
+                  <BookOpen size={15} />
                 </button>
               )}
 

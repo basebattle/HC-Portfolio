@@ -65,7 +65,7 @@ export default async function ProjectDetailPage({
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 70% 45% at 60% 0%, rgba(13,115,119,0.12) 0%, transparent 65%)",
+            "radial-gradient(ellipse 70% 45% at 60% 0%, rgba(0,212,170,0.10) 0%, transparent 65%)",
         }}
       />
 
@@ -97,7 +97,7 @@ export default async function ProjectDetailPage({
         {/* ── (7) Links ── */}
         <Divider />
         <AnimateIn from="bottom" delay={0}>
-          <ProjectLinks github={project.github} live={project.live} />
+          <ProjectLinks github={project.github} live={project.live} simulation={project.simulation} deepDive={project.deepDive} />
         </AnimateIn>
 
         <Divider />

@@ -84,7 +84,7 @@ export default function ProjectGrid({ standalone = false }: ProjectGridProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
           {/* Clinical Intelligence */}
           <div className="md:col-span-2 lg:col-span-5 flex flex-col gap-6">
-            <DomainHeader title="Clinical Intelligence" count={clinicalProjects.length} color="#0D7377" />
+            <DomainHeader title="Clinical Intelligence" count={clinicalProjects.length} color="#00d4aa" />
             <div className="grid grid-cols-2 gap-4">
               {clinicalProjects.map((project, i) => (
                 <motion.div

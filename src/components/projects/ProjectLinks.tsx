@@ -1,14 +1,22 @@
 "use client";
 
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, PlayCircle, BookOpen } from "lucide-react";
 import type { Project } from "@/data/projects";
 
 interface ProjectLinksProps {
   github: Project["github"];
   live: Project["live"];
+  simulation?: Project["simulation"];
+  deepDive?: Project["deepDive"];
 }
 
-export default function ProjectLinks({ github, live }: ProjectLinksProps) {
+export default function ProjectLinks({ github, live, simulation, deepDive }: ProjectLinksProps) {
+  const githubUrl = github
+    ? github.startsWith("http")
+      ? github
+      : `https://github.com/${github}`
+    : null;
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3">
@@ -28,9 +36,10 @@ export default function ProjectLinks({ github, live }: ProjectLinksProps) {
       </div>
 
       <div className="flex flex-wrap gap-3">
-        {github && (
+        {/* Source Code */}
+        {githubUrl && (
           <a
-            href={`https://github.com/${github}`}
+            href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition-all duration-150 border transform hover:scale-[1.02] active:scale-[0.98]"
@@ -41,31 +50,54 @@ export default function ProjectLinks({ github, live }: ProjectLinksProps) {
               fontFamily: "var(--font-dm-sans)",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background =
-                "rgba(255,255,255,0.08)";
-              (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                "rgba(255,255,255,0.20)";
+              (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.08)";
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.20)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background =
-                "rgba(255,255,255,0.04)";
-              (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                "rgba(255,255,255,0.12)";
+              (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.04)";
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.12)";
             }}
           >
             <Github size={15} />
-            View on GitHub
+            Source Code
           </a>
         )}
 
+        {/* Live Simulation (if separate from live) */}
+        {simulation && simulation !== live && (
+          <a
+            href={simulation}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-150 transform hover:scale-[1.02] active:scale-[0.98]"
+            style={{
+              background: "#00d4aa",
+              color: "#0F1923",
+              fontFamily: "var(--font-dm-sans)",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "#00b894"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "#00d4aa"; }}
+          >
+            <PlayCircle size={15} />
+            Live Simulation
+          </a>
+        )}
+
+        {/* Live Demo */}
         {live ? (
           <a
             href={live}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-150 transform hover:scale-[1.02] active:scale-[0.98] bg-[#008080] hover:bg-[#006666]"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-150 transform hover:scale-[1.02] active:scale-[0.98]"
             style={{
+              background: simulation && simulation !== live ? "rgba(0,136,128,0.85)" : "#008080",
               fontFamily: "var(--font-dm-sans)",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "#006666"; }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.background =
+                simulation && simulation !== live ? "rgba(0,136,128,0.85)" : "#008080";
             }}
           >
             <ExternalLink size={15} />
@@ -87,6 +119,33 @@ export default function ProjectLinks({ github, live }: ProjectLinksProps) {
             />
             Technical Preview — in development
           </div>
+        )}
+
+        {/* Architecture Deep-Dive */}
+        {deepDive && (
+          <a
+            href={deepDive}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition-all duration-150 border transform hover:scale-[1.02] active:scale-[0.98]"
+            style={{
+              color: "#E8EDF0",
+              borderColor: "rgba(255,255,255,0.10)",
+              background: "rgba(255,255,255,0.03)",
+              fontFamily: "var(--font-dm-sans)",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.07)";
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.18)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.03)";
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.10)";
+            }}
+          >
+            <BookOpen size={15} />
+            Architecture Deep-Dive
+          </a>
         )}
       </div>
     </div>
