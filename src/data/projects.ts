@@ -321,19 +321,19 @@ export const projects: Project[] = [
       "Raw device data without clinical risk interpretation or automated escalation.",
       "Python ingestion transforming RPM data into FHIR Observations. NEWS2 risk scoring with real-time escalation alerts. Clinician dashboard with RAG-status indicators and trending vitals. Every feature mapped to CMS waiver compliance."
     ],
-    stack: ["Next.js", "Python", "IoMT FHIR patterns", "FHIR Observation"],
+    stack: ["Python 3.12", "Streamlit", "Plotly", "Pandas", "NEWS2 Engine", "RAG Classifier"],
     github: "https://github.com/basebattle/hah-intelligence",
     live: "https://hah-intelligence.streamlit.app",
     kpis: ["NEWS2 escalation accuracy", "Time-to-clinician-alert", "CMS waiver compliance coverage"],
-    veteran: "References CMS Acute Hospital Care at Home waiver conditions, NEWS2 clinical deterioration scoring, FHIR Observation vital-signs profile, and IEEE 11073 RPM interoperability.",
+    veteran: "References CMS Acute Hospital Care at Home waiver conditions (42 CFR §412.65), NEWS2 clinical deterioration scoring, FHIR Observation vital-signs profile, and IEEE 11073 RPM interoperability. Covers 9 diagnoses across CHF, COPD, Pneumonia, Cellulitis, Sepsis, UTI, DKA, CKD, and Post-Surgical.",
     heroNumber: "20",
     heroUnit: "PATIENTS LIVE",
-    descriptor: "NEWS2 monitoring with CMS AHCaH waiver compliance",
+    descriptor: "NEWS2 + RAG risk engine · CMS AHCaH waiver compliance",
     bullets: [
-      "NEWS2 scoring: 6 physiological parameters → RAG triage",
-      "Census: 12 Green (0–4), 5 Amber (5–6), 3 Red (7+)",
-      "Escalation queue auto-sorted by NEWS2 severity",
-      "CMS AHCaH waiver: all 10 conditions of participation checked"
+      "NEWS2 scoring: 7 vitals → automated Red/Amber/Green RAG triage",
+      "20-patient census: 12 Green · 5 Amber · 3 Red — real-time refresh",
+      "AI Analysis Engine: RAG classifier synthesises NEWS2 + clinical notes",
+      "CMS AHCaH waiver: 10 conditions of participation tracked (42 CFR §412.65)"
     ],
   }
 ];
