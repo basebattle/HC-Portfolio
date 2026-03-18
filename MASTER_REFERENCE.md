@@ -4,7 +4,7 @@
 
 ### All Projects, Links, Paths, Stacks, Features, and Architecture
 
-**Last Updated:** March 2026
+**Last Updated:** March 18, 2026 (Session: FHIR-MCP Clinical OS + Venn Redesign)
 **Portfolio URL:** <https://hc-portfolio-zeta.vercel.app>
 **GitHub Owner:** basebattle
 
@@ -42,7 +42,7 @@
 
 | File | Purpose | When to Edit |
 |------|---------|-------------|
-| `src/data/projects.ts` | SINGLE SOURCE OF TRUTH for all 10 project objects | When updating project status, URLs, descriptions, KPIs |
+| `src/data/projects.ts` | SINGLE SOURCE OF TRUTH for all 10 project objects | When updating project status, URLs, descriptions, KPIs, deepDive links |
 | `src/app/page.tsx` | Homepage (Hero, Grid, Impact, About, Contact) | When changing homepage sections |
 | `src/app/projects/[slug]/page.tsx` | Dynamic Project Detail Page | When changing PDP layout or sections |
 | `tailwind.config.ts` | Design tokens (colors, fonts) | When adjusting the design system |
@@ -55,14 +55,15 @@
 | Token | Value | Usage |
 |-------|-------|-------|
 | Background | #0F1923 | Every page, always dark |
-| Primary Teal | #0D7377 | Clinical Intelligence accent, nav, CTAs |
+| Medical Teal | #00d4aa | Clinical Intelligence accent — ALL Clinical domain cards, nav CTAs, Venn nodes |
+| Legacy Teal (deprecated) | #0D7377 | Do not use — replaced by Medical Teal |
 | Accent Glow | #00BFA5 | Hover states, highlights |
 | Deep Slate | #37474F | Body text on dark bg |
 | Slate Mid | #607D8B | Secondary text |
 | Slate Light | #ECEFF1 | Primary text on dark bg |
 | Warm Gold | #FF8F00 | Financial metrics, impact numbers |
 | Trust Blue | #1565C0 | Strategic Governance accent |
-| Card Glass | rgba(22,32,41,0.7) + backdrop-blur-md + border-white/10 | All cards |
+| Card Glass | rgba(22,32,41,0.7) + backdrop-filter: blur(24px) + border-white/10 | All cards (updated from blur(8px) → blur(24px) March 2026) |
 
 ### 1.6 Architecture
 
@@ -93,15 +94,15 @@ Each project covers: Links, Local Filepath, Tech Stack, Architecture, Deployment
 
 ---
 
-### P01: FHIR-MCP Bridge — Clinical Intelligence Platform
+### P01: FHIR-MCP Clinical OS — Full Clinical Intelligence Simulator
 
 **Category:** Clinical Intelligence | **Status:** Deployed | **Phase:** 1
 
 #### 2.1.1 Links
 
 | Type | URL |
-|------|-----|
-| Live Frontend | <https://v3-ehr-simulator.vercel.app> |
+|------|----- |
+| Live Simulation | <https://v3-ehr-simulator-7hr0ga8db-basebattle-2762s-projects.vercel.app/> |
 | GitHub Repo | <https://github.com/basebattle/FHIR-MCP-data-bridge> |
 | HC-Portfolio PDP | <https://hc-portfolio-zeta.vercel.app/projects/fhir-mcp-bridge> |
 
@@ -134,11 +135,14 @@ Each project covers: Links, Local Filepath, Tech Stack, Architecture, Deployment
 
 #### 2.1.5 Features
 
+- **Clinical Intelligence Simulator** — full spatial-glassmorphism EHR UI (Tailwind CSS + Framer Motion + lucide-react)
+- **Agentic Reasoning Visualization** — live, node-based Reasoning Graph mapping LLM decisions to FHIR standards
+- **High-Fidelity Clinical UI** — 21st.dev Magic UI: MagicCard, NumberTicker, BorderBeam, AnimatedList
 - MCP-native abstraction of HL7 FHIR R4 operations
 - Pydantic v2 strict-mode model layer for type-safe clinical data
-- Real-time terminology resolution across 4 code systems (ICD-10, SNOMED CT, RxNorm, LOINC)
-- REST API gateway exposing MCP tools as standard HTTP endpoints
+- Real-time terminology resolution across 4 code systems
 - Interactive Next.js simulated EHR frontend
+- **deepDive** link: <https://github.com/basebattle/FHIR-MCP-data-bridge>
 
 ---
 
@@ -649,7 +653,7 @@ Each project covers: Links, Local Filepath, Tech Stack, Architecture, Deployment
 | Dashboard | Streamlit |
 | Clinical Engine | NEWS2 scoring (Python) |
 | Charts | Plotly |
-| Data | Simulated vital signs (20 patients, JSON) |
+| Data | Simulated vital signs (20 patients, JSON) + FHIR R4 Observations |
 | Deployment | Streamlit Community Cloud |
 
 #### 2.10.4 Architecture
@@ -673,12 +677,15 @@ Each project covers: Links, Local Filepath, Tech Stack, Architecture, Deployment
 
 #### 2.10.6 Features
 
-- NEWS2 scoring engine (6 parameters: RR, SpO2, temp, systolic BP, HR, consciousness)
-- Patient census dashboard with RAG-status indicators
+- NEWS2 scoring engine (7 vitals: RR, SpO2, temp, systolic BP, HR, consciousness, supplemental O2)
+- Patient census dashboard with RAG-status indicators (12 Green · 5 Amber · 3 Red)
 - 6 vital sign trend charts per patient (24h hourly data)
-- Escalation alert queue (patients NEWS2 >= 5, sorted by severity)
-- CMS Acute Hospital Care at Home waiver compliance checklist (10 items)
+- Escalation alert queue (patients NEWS2 ≥ 5, sorted by severity)
+- AI Analysis Engine: RAG classifier synthesises NEWS2 + clinical notes
+- CMS Acute Hospital Care at Home waiver compliance checklist (10 conditions of participation — 42 CFR §412.65)
 - Simulated vital sign fluctuation on refresh
+- **9 diagnoses covered:** CHF · COPD · Pneumonia · Cellulitis · Sepsis · UTI · DKA · CKD · Post-Surgical
+- **deepDive** link: <https://github.com/basebattle/hah-intelligence#readme>
 
 ---
 
@@ -735,7 +742,7 @@ Each project covers: Links, Local Filepath, Tech Stack, Architecture, Deployment
 
 | Category | Accent Color | Projects |
 |----------|-------------|----------|
-| Clinical Intelligence | Teal #0D7377 | P01 FHIR-MCP, P02 Prior Auth, P06 FHIR Gateway, P08 CDS Hooks, P09 Synthea, P10 HaH |
+| Clinical Intelligence | Medical Teal #00d4aa | P01 FHIR-MCP Clinical OS, P02 Prior Auth, P06 FHIR Gateway, P08 CDS Hooks, P09 Synthea, P10 HaH |
 | Financial Optimization | Gold #FF8F00 | P03 RCM Dashboard, P04 Claims Denial, P05 VBC Analyzer |
 | Strategic Governance | Blue #1565C0 | P07 HAIRA |
 
@@ -757,4 +764,37 @@ Each project covers: Links, Local Filepath, Tech Stack, Architecture, Deployment
 | Render cold starts (50s delay) | P06, P08 backends | Hit /health endpoint 1 min before demo to warm up |
 | Synthea Coverage gap | P06 traces | coverage_search.json has 0 entries. CoverageLookup tool handles empty results gracefully |
 | Antigravity repo naming | P08 | Named cds-analytics instead of cds-hooks-llm. HC-Portfolio projects.ts uses the actual name |
-| npm EPERM on Antigravity sandbox | Next.js projects | Run npm install locally outside the Antigravity sandbox if needed |
+| npm EPERM on local node_modules | HC-Portfolio | macOS has Restricted flag on node_modules dir. Fix: open System Preferences → Privacy & Security → Full Disk Access → grant Terminal. Then run the 3-command sequence below. |
+
+#### EPERM Fix Commands (run in Terminal with Full Disk Access granted)
+
+```bash
+# Step 1 — remove macOS quarantine attribute
+xattr -cr /Users/piyushsharma/Projects/12_HC-Portfolio/node_modules
+
+# Step 2 — reset permissions
+chmod -R u+rwX /Users/piyushsharma/Projects/12_HC-Portfolio/node_modules
+
+# Step 3 — delete and reinstall
+rm -rf /Users/piyushsharma/Projects/12_HC-Portfolio/node_modules
+cd /Users/piyushsharma/Projects/12_HC-Portfolio && npm install
+
+# Step 4 — verify build
+npm run build
+```
+
+#### New Interface Fields Added (March 2026)
+
+```typescript
+// In Project interface (src/data/projects.ts):
+depDive?: string | null;  // URL for Architecture Deep-Dive CTA button
+// Currently set for: P01, P10
+```
+
+#### Interactive Venn Diagram (March 2026)
+
+- Fully rewritten as SVG in `ImpactMetrics.tsx`
+- Each node is a clickable `<Link href="/projects/[slug]">` — navigates to case study
+- Hover shows tooltip: project name + "Click to view case study →"
+- Domain circles: Clinical Informatics (teal) · Agentic AI (blue) · Payer-Provider (amber)
+- P01 repositioned to Clinical + AI intersection
