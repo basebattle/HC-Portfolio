@@ -69,7 +69,7 @@ export const projects: Project[] = [
     slug: "prior-auth",
     category: "Clinical Intelligence",
     status: "Deployed",
-    phase: 1,
+    phase: 4,
     oneLiner: "Multi-agent orchestration engine that predicts and preempts claim denials before submission, cutting authorization cycles from 14 days to 3.",
     metric: "$1.2M/yr projected impact",
     metricType: "financial",
@@ -94,7 +94,8 @@ export const projects: Project[] = [
       "6-node DAG: Intake → Clinical Review → NPPES → Denial Risk → FHIR Bundle → Decision Synthesis",
       "Probabilistic denial risk scored before submission",
       "CMS NPPES provider credentialing as a dedicated agent node",
-      "Dual deployment: Streamlit legacy + Next.js/FastAPI v2"
+      "Dual deployment: Streamlit legacy + Next.js/FastAPI v2",
+      "Validated: UI approval lifecycle for PAT-8829-X (12% risk)"
     ],
   },
   {
