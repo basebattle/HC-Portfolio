@@ -102,7 +102,7 @@ Each project covers: Links, Local Filepath, Tech Stack, Architecture, Deployment
 
 | Type | URL |
 |------|----- |
-| Live Simulation | <https://v3-ehr-simulator-7hr0ga8db-basebattle-2762s-projects.vercel.app/> |
+| Live Simulation | <https://v3-ehr-simulator-enehit767-basebattle-2762s-projects.vercel.app/> |
 | GitHub Repo | <https://github.com/basebattle/FHIR-MCP-data-bridge> |
 | HC-Portfolio PDP | <https://hc-portfolio-zeta.vercel.app/projects/fhir-mcp-bridge> |
 
