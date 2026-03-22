@@ -1,0 +1,131 @@
+# stack_profile.yaml — Pillar 12: Healthcare Portfolio
+
+pillar: "12_Healthcare_Portfolio"
+domain: "Active healthcare technology builds — clinical tools, analytics, AI agents"
+
+stack:
+  languages: ["typescript", "python", "javascript"]
+  frameworks: ["next.js", "fastapi", "streamlit", "langraph", "react", "dbt"]
+  runtime: "node 20 / python 3.12"
+  package_manager: "npm / pip"
+
+build:
+  command: "npm run build"
+  lint: "npx eslint . / ruff check ."
+  test: "npm test / pytest tests/"
+  deploy: "npx vercel --prod / streamlit deploy"
+
+safety:
+  classification: "P0.1 — Healthcare Data Safety"
+  protected_paths:
+    - "12_HC-Portfolio/src/"
+    - "12_HC-Portfolio/.agents/"
+    - "12_HC-Portfolio/CLAUDE.md"
+    - "FHIR-MCP-data-bridge/.env"
+    - "FHIR-MCP-data-bridge/run_server.py"
+    - "P04-Claims-Denial-Agent/"
+    - "P05-VBC-Analyzer/"
+    - "P06-FHIR-LLM-Gateway/"
+    - "P07-HAIRA-Assessment/"
+    - "P08-CDS-Analytics/"
+    - "P09-Synthea-Cohort-Generator/"
+    - "P10-HaH-Intelligence/"
+    - "Prior-Auth-Pipeline/"
+  requires_approval:
+    - "deploy"
+    - "delete"
+    - "config_change"
+    - "restructure"
+    - "bulk_modify"
+    - "database_migration"
+  env_files: [".env", ".env.local", ".env.production"]
+
+dependencies:
+  upstream: ["03_System_Integration_MCP", "10_Healthcare_Consulting", "05_Intelligence_Agents"]
+  downstream: []
+  external_services: ["vercel", "medplum", "hapi-fhir", "streamlit-cloud", "render", "supabase"]
+
+conventions:
+  branch_prefix: "feat/"
+  commit_style: "conventional"
+  design_system: "glassmorphism-dark"
+
+# Registry of all Pillar 12 projects and their root-level paths.
+# These projects live at ~/Projects/ root, not inside a 12_* directory.
+# The kernel uses this registry to identify Pillar 12 membership.
+project_registry:
+  - name: "HC-Portfolio Showroom"
+    path: "12_HC-Portfolio"
+    stack: "next.js"
+    deploy_target: "vercel"
+    category: "portfolio"
+    accent_color: null
+  - name: "FHIR-MCP Data Bridge"
+    path: "FHIR-MCP-data-bridge"
+    stack: "python/fastapi"
+    deploy_target: "local/render"
+    category: "clinical"
+    accent_color: "#0D7377"
+  - name: "Claims Denial Agent"
+    path: "P04-Claims-Denial-Agent"
+    stack: "python/langraph/streamlit"
+    deploy_target: "streamlit-cloud"
+    category: "financial"
+    accent_color: "#FF8F00"
+  - name: "VBC Analyzer"
+    path: "P05-VBC-Analyzer"
+    stack: "python/dbt/streamlit"
+    deploy_target: "streamlit-cloud"
+    category: "financial"
+    accent_color: "#FF8F00"
+  - name: "FHIR-LLM Gateway"
+    path: "P06-FHIR-LLM-Gateway"
+    stack: "python/fastapi/next.js"
+    deploy_target: "render/vercel"
+    category: "clinical"
+    accent_color: "#0D7377"
+  - name: "HAIRA Assessment"
+    path: "P07-HAIRA-Assessment"
+    stack: "next.js"
+    deploy_target: "vercel"
+    category: "governance"
+    accent_color: "#1565C0"
+  - name: "CDS Analytics"
+    path: "P08-CDS-Analytics"
+    stack: "next.js"
+    deploy_target: "vercel"
+    category: "clinical"
+    accent_color: "#0D7377"
+  - name: "Synthea Cohort Generator"
+    path: "P09-Synthea-Cohort-Generator"
+    stack: "python"
+    deploy_target: "local"
+    category: "clinical"
+    accent_color: null
+  - name: "HaH Intelligence"
+    path: "P10-HaH-Intelligence"
+    stack: "python/streamlit"
+    deploy_target: "streamlit-cloud"
+    category: "clinical"
+    accent_color: "#0D7377"
+  - name: "Prior Auth Pipeline"
+    path: "Prior-Auth-Pipeline"
+    stack: "python/langraph/fastapi"
+    deploy_target: "render"
+    category: "financial"
+    accent_color: "#FF8F00"
+
+notes: |
+  CRITICAL: All Pillar 12 projects are protected-active. Deletion or restructuring requires per-project approval.
+  Design system details are in 12_HC-Portfolio/.agents/skills/showroom-design/SKILL.md (23 lessons learned).
+  Design tokens are in 12_HC-Portfolio/.agents/skills/showroom-design/resources/TOKENS.md.
+  Category accent colors: Clinical = Teal #0D7377, Financial = Gold #FF8F00, Governance = Blue #1565C0.
+  Background: #0F1923 everywhere. Glassmorphism cards: backdrop-blur-md, bg-white/5, border-white/10.
+  MEDPLUM rate limits: ~160 req/60s. Add sleep(2) between batch calls.
+  Always use python3/pip3, not python/pip.
+  Cloud platforms default to Python 3.14 in 2026. Always add .python-version file with "3.12".
+  Never pin exact dependency versions in requirements.txt for deployed projects.
+  Vercel is for Next.js ONLY. Streamlit apps go to Streamlit Community Cloud.
+  Port 8080 is reserved for FHIR server. Do not bind uvicorn or npm dev to 8080.
+  NO DOCKER. Use FHIR_MODE=static for deployed sites, FHIR_MODE=cloud for live demos.
+  Supabase is optional for P07. Build with localStorage first, add Supabase as enhancement.
