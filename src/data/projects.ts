@@ -43,8 +43,8 @@ export const projects: Project[] = [
     ],
     stack: ["Python 3.12+", "FastMCP", "Next.js", "Tailwind CSS", "Framer Motion", "HL7 FHIR R4", "Pydantic v2", "lucide-react"],
     github: "basebattle/FHIR-MCP-data-bridge",
-    live: "https://v3-ehr-simulator-enehit767-basebattle-2762s-projects.vercel.app/",
-    simulation: "https://v3-ehr-simulator-enehit767-basebattle-2762s-projects.vercel.app/",
+    live: "https://v3-ehr-simulator.vercel.app/",
+    simulation: "https://v3-ehr-simulator.vercel.app/simulator",
     deepDive: "https://github.com/basebattle/FHIR-MCP-data-bridge",
     features: [
       { name: "Agentic Reasoning Graph", benefit: "Live, node-based Reasoning Graph maps LLM decisions step-by-step against FHIR standards — full auditability.", icon: "cpu" },
