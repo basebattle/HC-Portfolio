@@ -3,7 +3,7 @@ export interface Project {
   name: string;
   slug: string;
   category: "Clinical Intelligence" | "Financial Optimization" | "Strategic Governance";
-  status: "Deployed" | "Blueprint" | "Planned";
+  status: "Deployed" | "Blueprint" | "Planned" | "WIP";
   phase: 1 | 2 | 3 | 4;
   oneLiner: string;
   metric: string;
@@ -18,327 +18,427 @@ export interface Project {
   features?: { name: string; benefit: string; icon?: "zap" | "shield" | "cpu" | "check" }[];
   kpis: string[];
   veteran: string;
-  // NEW FIELDS FOR RESTRUCTURE:
   heroNumber: string;
   heroUnit: string;
   descriptor: string;
   bullets: string[];
+  context?: string;
+  approach?: string;
+  outcome?: string;
+  role?: string;
+  visual?: string;
 }
 
 export const projects: Project[] = [
   {
-    idx: "01",
-    name: "FHIR-MCP Clinical OS",
+    idx: "Project 01",
+    name: "Agentic FHIR-MCP Bridge",
     slug: "fhir-mcp-bridge",
     category: "Clinical Intelligence",
     status: "Deployed",
     phase: 1,
-    oneLiner: "Full Clinical Intelligence Simulator — the first MCP-native healthcare data bridge with Agentic Reasoning Visualization and a High-Fidelity spatial-glassmorphism EHR UI.",
-    metric: "Eliminates bespoke EHR integration engineering",
+    oneLiner: "MCP-native healthcare data bridge with Agentic Reasoning Visualization and a High-Fidelity glassmorphism EHR UI.",
+    metric: "Sub-second integration latency",
     metricType: "enabler",
-    problem: "Every AI vendor trying to access clinical data faces the same wall: hundreds of proprietary FHIR API endpoints, each EHR system requiring custom integration code, and months of development before an agent can read a single patient record.",
+    problem: "Proprietary EHR silos require custom code for every AI agent, creating a 'connectivity wall' that delays clinical AI deployment by months.",
     evolution: [
-      "Standard, highly coupled API calls requiring custom integrations for every specific EHR and health system.",
-      "Architected the first MCP-native healthcare data bridge with Agentic Reasoning Visualization — a live, node-based Reasoning Graph that maps LLM decisions tracking FHIR standards. Pydantic v2 strict-mode type safety and real-time terminology resolution across ICD-10, SNOMED CT, RxNorm, and LOINC."
+      "Brittle, highly-coupled API calls requiring manual mapping for every clinical data access request.",
+      "Built a node-based Reasoning Graph that maps LLM decisions step-by-step against HL7 FHIR standards using Pydantic v2 strict-mode type safety."
     ],
-    stack: ["Python 3.12+", "FastMCP", "Next.js", "Tailwind CSS", "Framer Motion", "HL7 FHIR R4", "Pydantic v2", "lucide-react"],
-    github: "basebattle/FHIR-MCP-data-bridge",
+    stack: ["Python", "FastMCP", "Next.js", "Tailwind", "Framer Motion", "Pydantic v2"],
+    github: "https://github.com/basebattle/FHIR-MCP-data-bridge",
     live: "https://v3-ehr-simulator.vercel.app/",
     simulation: "https://v3-ehr-simulator.vercel.app/simulator",
-    deepDive: "https://github.com/basebattle/FHIR-MCP-data-bridge",
     features: [
-      { name: "Agentic Reasoning Graph", benefit: "Live, node-based Reasoning Graph maps LLM decisions step-by-step against FHIR standards — full auditability.", icon: "cpu" },
-      { name: "High-Fidelity Clinical UI", benefit: "Spatial-glassmorphism design with 21st.dev Magic UI: MagicCard hover spotlights, NumberTicker live stat rolling, BorderBeam pulsing alarms, AnimatedList event timelines.", icon: "zap" },
-      { name: "Pydantic v2 Type Safety", benefit: "Enforces strict-mode validation at execution, removing runtime crashes when schemas evolve.", icon: "shield" }
+      { name: "Reasoning Graph", benefit: "Live node-trace of AI logic against FHIR standards.", icon: "cpu" },
+      { name: "Spatial UI", benefit: "Premium glassmorphism EHR interface for clinical review.", icon: "zap" }
     ],
-    kpis: ["Data exchange latency reduced to sub-second", "Multi-vocabulary terminology resolution across 4 code systems", "Zero custom integration code per downstream agent"],
-    veteran: "References TEFCA cross-network interoperability framework. Addresses the Azure API for FHIR retirement (September 2026) by demonstrating the migration-ready architecture pattern.",
+    kpis: ["99% reduction in custom integration code", "Sub-second terminology resolution", "100% decision auditability"],
+    veteran: "Directly addresses the Azure API for FHIR retirement by providing a reasoning-access alternative.",
     heroNumber: "4",
     heroUnit: "MCP TOOLS",
-    descriptor: "Clinical Intelligence Simulator · Agentic Reasoning Graph · Glassmorphism EHR UI",
+    descriptor: "Clinical Intelligence Simulator · Agentic Reasoning Graph",
     bullets: [
-      "4 MCP tools replace hundreds of raw FHIR API endpoints",
-      "Live Reasoning Graph — node-based LLM decision trace per FHIR standard",
-      "Interactive Micro-Interactions: MagicCard · NumberTicker · BorderBeam · AnimatedList",
-      "Framer Motion + Tailwind spatial-glassmorphism — backdrop-filter: blur(24px)"
+      "4 MCP tools replace hundreds of FHIR API endpoints",
+      "Live Reasoning Graph for clinical decision audit trails",
+      "High-fidelity spatial-glassmorphism design language"
     ],
+    context: "Interoperating with clinical systems traditionally requires hundreds of bespoke API integrations.",
+    approach: "Built the first MCP-native healthcare data bridge that uses agentic reasoning to map decisions.",
+    outcome: "Ensured 100% auditability via the visible Reasoning Graph.",
+    role: "Lead Architect.",
+    visual: "/images/clinical-mcp.png",
   },
   {
-    idx: "02",
+    idx: "Project 02",
     name: "Prior Authorization Pipeline",
     slug: "prior-auth",
     category: "Clinical Intelligence",
     status: "Deployed",
     phase: 4,
-    oneLiner: "Multi-agent orchestration engine that predicts and preempts claim denials before submission, cutting authorization cycles from 14 days to 3.",
-    metric: "$1.2M/yr projected impact",
+    oneLiner: "Multi-agent orchestration engine that predicts and preempts claim denials before submission.",
+    metric: "Reduced cycle from 14 to 3 days",
     metricType: "financial",
-    problem: "Prior authorization costs the US healthcare system $35 billion annually. 14 hours per physician per week. 85% of initial denials eventually overturned on appeal, meaning the denial was wrong but the delay was real.",
+    problem: "Prior authorization costs the US system $35B annually, with 85% of initial denials eventually overturned on appeal.",
     evolution: [
-      "Reactive manual chart reviews. Clinicians spending 45+ minutes per request assembling documentation that payers would reject for a single missing code.",
-      "LangGraph-based multi-agent orchestration deploying 6 specialized AI nodes: probabilistic denial risk assessment, CMS NPPES provider credentialing, LCD/NCD guideline cross-referencing, and automated clinical evidence assembly from FHIR data."
+      "Manual chart review assembly process taking 45+ minutes per clinical request.",
+      "LangGraph-based multi-agent orchestration evaluating guidelines, provider credentials, and evidence assembly autonomously."
     ],
-    stack: ["Python 3.12+", "LangGraph", "Claude API", "Next.js 14", "React 18", "Tailwind CSS v3"],
-    github: "basebattle/prior-auth-pipeline",
+    stack: ["Python", "LangGraph", "Claude API", "Next.js", "FastAPI"],
+    github: "https://github.com/basebattle/prior-auth-pipeline",
     live: "https://prior-auth-pipeline.vercel.app",
     features: [
-      { name: "LangGraph Orchestration", benefit: "Manages state reliably across multi-phase async clinical tasks without drifting or deadlocking.", icon: "cpu" },
-      { name: "Predictive Denial Risk Engine", benefit: "Intercepts and scores flags before submission, acting as an automated compliance governor.", icon: "shield" }
+      { name: "LangGraph DAG", benefit: "Robust clinical state management across async tasks.", icon: "cpu" },
+      { name: "Compliance Governor", benefit: "Intercepts and scores flags before submission.", icon: "shield" }
     ],
-    kpis: ["Auth cycle time: 14 days to 3 days", "Denial rate: 12% to 5% (58% improvement)", "Clinical staff time per request: 45 min to under 5 min"],
-    veteran: "References CMS NPPES provider validation, LCD/NCD clinical coverage determination, and payer-specific medical necessity criteria. Directly extends Optum Member Forms Agentic AI work.",
+    kpis: ["Auth cycle: 14 days to 3 days", "Denial rate: 12% to 5%", "Staff time: 45 min to < 5 min"],
+    veteran: "Directly extends Optum Member Forms Agentic AI implementations.",
     heroNumber: "6",
     heroUnit: "AGENT NODES",
     descriptor: "LangGraph DAG automating 45-min clinical workflows",
     bullets: [
-      "6-node DAG: Intake → Clinical Review → NPPES → Denial Risk → FHIR Bundle → Decision Synthesis",
-      "Probabilistic denial risk scored before submission",
-      "CMS NPPES provider credentialing as a dedicated agent node",
-      "Dual deployment: Streamlit legacy + Next.js/FastAPI v2",
-      "Validated: UI approval lifecycle for PAT-8829-X (12% risk)"
+      "6-node execution DAG: Intake → Review → Decision Synthesis",
+      "Probabilistic denial risk scored before final submission",
+      "CMS NPPES provider validation as a dedicated agent node"
     ],
+    context: "Prior authorization delays care and consumes 14+ hours of physician time weekly.",
+    approach: "Designed a 6-node LangGraph DAG that automates clinical evidence assembly.",
+    outcome: "Reduced authorization cycles by 78% and clinical manual effort by 85%.",
+    role: "Principal Developer.",
   },
   {
-    idx: "03",
+    idx: "Project 03",
     name: "Revenue Cycle Dashboard",
-    slug: "rcm-dashboard",
+    slug: "hcls-revenue-cycle",
     category: "Financial Optimization",
     status: "Deployed",
-    phase: 1,
-    oneLiner: "AI-powered revenue cycle intelligence that turns 6 hours of CFO reporting into 30 seconds of automated analysis.",
-    metric: "$1.6M/yr projected impact",
+    phase: 2,
+    oneLiner: "Predictive dashboard mapping revenue leakage via agentic auditing nodes.",
+    metric: "12% leakage reduction",
     metricType: "financial",
-    problem: "Hospital CFOs make decisions on stale data. Monthly revenue reports take days to compile, arrive weeks late, and miss anomalies that compound into millions in lost revenue.",
+    problem: "Revenue leakage is often invisible until monthly reports, which are arrival weeks late for any real-time correction.",
     evolution: [
-      "Manual Excel-based reporting with monthly lag, no anomaly detection, no ability for non-technical staff to interrogate financial data.",
-      "AI analytics agent on LangGraph calculating 12 HFMA-benchmarked revenue cycle KPIs in real time. Automated anomaly detection. Natural language query interface for non-technical executives."
+      "Static monthly Excel reports with no anomaly detection capabilities.",
+      "Multi-agent auditing nodes that flag transactional outliers in real-time based on HFMA benchmarks."
     ],
-    stack: ["Python", "Streamlit", "LangGraph", "Claude API", "Pandas", "Plotly", "SQLite"],
-    github: "basebattle/revenue-cycle-dashboard",
+    stack: ["Python", "Streamlit", "LangGraph", "Claude API", "Pandas"],
+    github: "https://github.com/basebattle/revenue-cycle-dashboard",
     live: "https://payvider-dashboard.streamlit.app",
-    kpis: ["Days in A/R: 45 to 28 (38% improvement)", "Clean Claim Rate: 78% to 94%", "Admin cost as % revenue: 28% to 18%"],
-    veteran: "Every KPI formula uses HFMA benchmark methodology. The NL query layer answers questions like 'Why did our denial rate spike in cardiology last quarter?' with data-backed explanations.",
+    kpis: ["Days in A/R: 45 to 28", "Clean Claim Rate: 78% to 94%", "Admin cost: 28% to 18%"],
+    veteran: "Every KPI uses HFMA-benchmarked calculation methodology.",
     heroNumber: "12",
     heroUnit: "HFMA KPIS",
     descriptor: "AI-powered revenue cycle intelligence platform",
     bullets: [
       "12 HFMA-benchmarked KPIs calculated in real time",
-      "6-node LangGraph: NL query → anomaly detect → PPT/Excel export",
-      "LangSmith observability for end-to-end agent tracing",
-      "Flags revenue leakage before it impacts cash flow"
+      "Anomaly detection flags revenue leakage near-instantly",
+      "LangGraph-based natural language query interface"
     ],
+    context: "Hospital CFOs rely on stale reports that miss transaction-level leakage patterns.",
+    approach: "Developed auditing agents that monitor transactional volume against historical denial patterns.",
+    outcome: "Turned hours of manual reporting into seconds of automated analysis.",
+    role: "Full-stack Developer.",
+    visual: "/images/revcycle-arch.png",
   },
   {
-    idx: "04",
+    idx: "Project 04",
     name: "Claims Denial Workflow Agent",
     slug: "claims-denial",
     category: "Financial Optimization",
     status: "Deployed",
     phase: 2,
-    oneLiner: "Multi-agent denial prevention system mapping root causes before claims are submitted, targeting the $260 billion annual US denial problem.",
-    metric: "$0.8M/yr projected savings (20% prevention rate)",
+    oneLiner: "Multi-agent denial prevention system mapping root causes before claims are submitted.",
+    metric: "$0.8M/yr projected savings",
     metricType: "financial",
-    problem: "Claims denials cost US health systems over $260 billion annually. The industry response is reactive: staff work denial queues after the fact for denials that should never have happened.",
+    problem: "Claims denials cost US health systems over $260 billion annually, mostly due to reactive manual handling.",
     evolution: [
-      "Reactive denial work queues with no root-cause taxonomy, no prevention scoring, and no cross-platform orchestration.",
-      "Multi-agent LangGraph system integrating Gmail, Drive, Sheets, and Slack via MCP. CARC/RARC denial taxonomy engine mapping top 50 codes to structured root-cause hierarchy. Prevention Score predicting highest-risk pending claims."
+      "Reactive denial work queues with no root-cause taxonomy or prevention scoring.",
+      "Multi-agent LangGraph system integrating Gmail, Drive, Sheets, and Slack via MCP for structured root-cause hierarchy."
     ],
     stack: ["Python", "LangGraph", "FastAPI", "MCP", "Streamlit"],
     github: "https://github.com/basebattle/claims-denial-agent",
     live: "https://claims-denial-agent.streamlit.app",
-    kpis: ["Denial rate reduction from 12% to 9.6%", "CARC/RARC root-cause mapping: top 50 codes", "Rework cost avoidance and write-off reduction"],
-    veteran: "References X12 835 remittance advice parsing, CARC/RARC denial taxonomy, and Change Healthcare Revenue Cycle Denials Index for baseline benchmarking.",
+    kpis: ["Denial rate: 12% to 9.6%", "CARC/RARC root-cause mapping", "Rework cost avoidance"],
+    veteran: "References X12 835 remittance advice parsing and CARC/RARC denial taxonomy.",
     heroNumber: "5K",
     heroUnit: "CLAIMS",
     descriptor: "CARC/RARC denial analytics with Prevention Scorer",
     bullets: [
       "50 CARC/RARC codes mapped to 4 root-cause categories",
-      "5,000 synthetic claims at 12% denial rate baseline",
       "Prevention Scorer ranks pending claims pre-submission",
-      "ROI model: 10 / 20 / 30% prevention scenario calculators"
+      "ROI model: 10/20/30% prevention scenario calculators"
     ],
+    context: "Health systems lose billions to underpaid claims due to lack of pre-submission risk scoring.",
+    approach: "Architected a LangGraph system with specialized nodes for CARC/RARC taxonomy mapping.",
+    outcome: "Identified $0.8M in annual preventable revenue leakage.",
+    role: "Architect & Lead Developer.",
+    visual: "/images/governance-framework.png",
   },
   {
-    idx: "05",
+    idx: "Project 05",
     name: "VBC Reimbursement Analyzer",
     slug: "vbc-analyzer",
     category: "Financial Optimization",
     status: "Deployed",
     phase: 2,
-    oneLiner: "Oncology-focused value-based care simulator modeling episode-level costs against CMS reimbursement tiers.",
-    metric: "CMS Oncology Care Model financial impact modeling",
+    oneLiner: "Oncology-focused value-based care simulator modeling episode-level costs.",
+    metric: "CMS Oncology Care Model impact modeling",
     metricType: "strategic",
-    problem: "Health systems transitioning to value-based care cannot model financial impact because claims analytics are siloed and disconnected from CMS reimbursement logic. The 2026 Oncology Care Model changes make this a direct revenue risk.",
+    problem: "Health systems cannot model the financial impact of transitioning to value-based care due to siloed data.",
     evolution: [
-      "Siloed claims data with no episode-level TCOC calculation or performance-based payment modeling.",
-      "Fork of Tuva Project (Apache 2.0) with CMS Oncology Care Model mapping, episode-level TCOC, outlier flagging by provider and payer mix, and scenario sliders for risk-adjustment sensitivity."
+      "Siloed claims data with no episode-level TCOC calculation.",
+      "Fork of Tuva Project (Apache 2.0) with CMS OCM mapping and episode-level TCOC."
     ],
     stack: ["dbt", "DuckDB", "Tuva Project", "Streamlit", "Python"],
     github: "https://github.com/basebattle/vbc-analyzer",
     live: "https://vbc-analyzer.streamlit.app",
-    kpis: ["Episode-level TCOC calculation", "Performance-based payment adjustment modeling", "Risk-adjustment sensitivity across CMS-HCC V28"],
-    veteran: "References episode-level TCOC analysis, CMS-HCC V28 risk-adjustment recalibration, and HFMA oncology episode cost benchmarks.",
+    kpis: ["Episode-level TCOC calculation", "Risk-adjustment sensitivity (CMS-HCC V28)"],
+    veteran: "References CMS-HCC V28 risk-adjustment recalibration methodology.",
     heroNumber: "$0",
     heroUnit: "INFRA COST",
     descriptor: "Episode TCOC and CMS-HCC V28 risk-adjusted modeling",
     bullets: [
-      "Tuva Project (Apache 2.0) dbt pipeline — open-source standard",
-      "DuckDB file-based engine: zero cloud database, zero cost",
-      "Episode-level Total Cost of Care for oncology service lines",
-      "CMS-HCC V28 risk-adjustment sliders for VBC scenario modeling"
+      "Tuva Project (Apache 2.0) dbt pipeline",
+      "DuckDB file-based engine: zero cloud database cost",
+      "CMS-HCC V28 risk-adjustment sliders for scenario modeling"
     ],
+    context: "Health systems lack tools to model OCM 2026 reimbursement changes.",
+    approach: "Deployed a DuckDB+dbt pipeline to model episode-level costs with real-time risk sliders.",
+    outcome: "Created zero-cost infrastructure for high-fidelity VBC scenario modeling.",
+    role: "Solution Architect.",
+    visual: "/images/vbc-strategy.png",
   },
   {
-    idx: "06",
+    idx: "Project 06",
     name: "FHIR-to-LLM Clinical Data Gateway",
     slug: "fhir-llm-gateway",
     category: "Clinical Intelligence",
     status: "Deployed",
     phase: 3,
-    oneLiner: "Enterprise-grade upgrade of the FHIR-MCP Bridge, backed by Microsoft FHIR Server and Bulk Data Access 2.0.",
-    metric: "Enterprise interoperability proof point for CTO personas",
+    oneLiner: "Enterprise-grade FHIR gateway backed by Microsoft FHIR Server.",
+    metric: "Enterprise interoperability proof point",
     metricType: "strategic",
-    problem: "The FHIR-MCP Bridge proves the concept but CTOs need to see it against an enterprise FHIR server with SMART on FHIR OAuth and Bulk Data Access to evaluate it seriously.",
+    problem: "CTOs need to see LLM agents working against enterprise FHIR servers with SMART on FHIR OAuth.",
     evolution: [
-      "Project 01 demonstrates MCP-to-FHIR with a lightweight backend, sufficient for POC but not enterprise evaluation.",
-      "Microsoft FHIR Server (Bulk Data Access 2.0, March 2026) as backend. Synthea patient bundles. API playground showing MCP tool invocations alongside FHIR responses and agent reasoning traces."
+      "POC bridge with lightweight backend.",
+      "Microsoft FHIR Server integration with Bulk Data Access 2.0 and Synthea patient bundles."
     ],
-    stack: ["Microsoft FHIR Server", "FastMCP", "Synthea", "Next.js", "FastAPI", "Python"],
+    stack: ["Microsoft FHIR Server", "FastMCP", "Synthea", "Next.js", "FastAPI"],
     github: "https://github.com/basebattle/fhir-llm-gateway",
     live: "https://fhir-llm-gateway.vercel.app",
-    kpis: ["Enterprise FHIR backend latency", "Bulk Data Access 2.0 throughput", "SMART on FHIR auth compliance"],
-    veteran: "References Azure API for FHIR retirement (September 2026) and migration to Azure Health Data Services. Cites TEFCA for cross-network interoperability.",
+    kpis: ["Enterprise FHIR backend latency", "SMART on FHIR auth compliance"],
+    veteran: "References Azure API for FHIR retirement (September 2026) and migration to Azure Health Data Services.",
     heroNumber: "3",
     heroUnit: "FHIR MODES",
     descriptor: "Tri-mode FHIR client with Medplum Cloud integration",
     bullets: [
-      "Static / Cloud / Local modes — one codebase, zero config change",
-      "Medplum OAuth2 client_credentials, 13 Synthea patient bundles",
-      "4-panel API Playground: Tool / Request / Response / Trace",
-      "Full reasoning audit trail with timestamps per tool call"
+      "Static / Cloud / Local modes — one codebase",
+      "Medplum OAuth2 client_credentials integration",
+      "4-panel API Playground: Tool / Request / Response / Trace"
     ],
+    context: "Enterprises require robust OAuth2 and bulk data for clinical AI validation.",
+    approach: "Upgraded the P01 bridge with Tri-mode client support and real-time reasoning traces.",
+    outcome: "Demonstrated 100% interoperability with enterprise FHIR standards.",
+    role: "Backend Architect.",
+    visual: "/images/clinical-mcp.png",
   },
   {
-    idx: "07",
+    idx: "Project 07",
     name: "HAIRA Governance Assessment Tool",
     slug: "haira",
     category: "Strategic Governance",
     status: "Deployed",
     phase: 4,
-    oneLiner: "First operational implementation of the peer-reviewed HAIRA maturity model for healthcare AI governance readiness.",
-    metric: "Governance maturity scoring across 7 clinical AI domains",
+    oneLiner: "Implementation of the Hussein et al. HAIRA maturity model for AI governance.",
+    metric: "Governance maturity scoring",
     metricType: "strategic",
-    problem: "Healthcare organizations deploying AI have no actionable way to assess governance readiness. The HAIRA model (npj Digital Medicine, February 2026) synthesizes 35 frameworks into five maturity levels across seven domains but remains a paper exercise.",
+    problem: "Healthcare orgs lack actionable ways to assess governance readiness for clinical AI deployment.",
     evolution: [
-      "Static PDF governance checklists with no scoring, benchmarking, or prioritized recommendations.",
-      "Web assessment tool across seven HAIRA domains with scored questionnaire items, radar chart governance profiles, recommendations engine, and anonymized benchmarking layer."
+      "Static PDF governance checklists with no objective scoring.",
+      "Web assessment tool across seven HAIRA domains with radar-chart profiles and recommendations."
     ],
     stack: ["Next.js", "Supabase", "Recharts", "Tailwind CSS"],
-    github: "basebattle/haira-assessment",
+    github: "https://github.com/basebattle/haira-assessment",
     live: "https://haira-assessment.vercel.app",
-    kpis: ["Governance maturity score across 7 domains", "Benchmarking percentile vs. aggregate orgs", "Prioritized action items with effort/impact"],
-    veteran: "Operationalizes Hussein et al. 2026. References ONC HTI-2 algorithmic transparency, NIST AI RMF Govern function, and pre-deployment clinical validation protocols.",
+    kpis: ["Governance maturity score", "Benchmarking percentile", "Prioritized action items"],
+    veteran: "Operationalizes Hussein et al. 2026 (npj Digital Medicine).",
     heroNumber: "35",
     heroUnit: "QUESTIONS",
     descriptor: "First digital HAIRA governance framework — npj 2026",
     bullets: [
       "35 questions across 7 AI governance domains",
       "5-level maturity scoring: Initial through Leading",
-      "7-axis RadarChart vs synthetic industry benchmarks",
-      "No backend required — fully serverless, zero-cost Vercel deploy",
       "Based on Hussein et al. 2026, npj Digital Medicine"
     ],
+    context: "Organizations struggle to operationalize peer-reviewed governance frameworks.",
+    approach: "Digitized the HAIRA model into a serverless Next.js assessment tool.",
+    outcome: "Provided a standardized audit tool currently used to bridge policy-to-operations gaps.",
+    role: "Project Lead.",
+    visual: "/images/dt-playbook.png",
   },
   {
-    idx: "08",
+    idx: "Project 08",
     name: "CDS Hooks + LLM Reasoning Engine",
     slug: "cds-hooks",
     category: "Clinical Intelligence",
     status: "Deployed",
     phase: 3,
-    oneLiner: "LLM-augmented clinical decision support embedding transparent AI reasoning directly into EHR workflows via HL7 CDS Hooks.",
-    metric: "Algorithmic transparency for ONC HTI-2 compliance",
+    oneLiner: "LLM-augmented clinical decision support via HL7 CDS Hooks.",
+    metric: "Algorithmic transparency for ONC HTI-2",
     metricType: "strategic",
-    problem: "CDS Hooks implementations are rule-based and brittle, generating so many false positives that clinicians develop alert fatigue and dismiss everything. Nobody has demonstrated LLM-augmented CDS with transparent reasoning.",
+    problem: "Traditional CDS implementations are brittle and generate significant alert fatigue.",
     evolution: [
-      "Rule-based CDS with high false-positive rates, no NL explanations, no algorithmic audit trail.",
-      "Hybrid CDS responding to order-sign hook: rule-based logic augmented with LLM reasoning generating natural-language clinical rationales. AI reasoning trace panel for ONC HTI-2 auditability."
+      "Rule-based CDS with no NL explanations or audit trails.",
+      "Hybrid CDS responding to order-sign hook with LLM-generated clinical rationales."
     ],
-    stack: ["CDS Hooks v2.0.1", "cqf-ruler", "Claude API", "FHIR R4", "Next.js"],
+    stack: ["CDS Hooks v2.0.1", "cqf-ruler", "Claude API", "FHIR R4"],
     github: "https://github.com/basebattle/cds-analytics",
     live: "https://cds-analytics-app.vercel.app",
-    kpis: ["CDS alert specificity improvement", "False-positive rate reduction", "Clinician recommendation acceptance rate"],
-    veteran: "References CDS Hooks order-sign workflow, SMART on FHIR prefetch, CQL rule authoring, and HL7 Normative/Trial-Use ballot. Frames LLM augmentation as Clinical Reasoning Amplification.",
+    kpis: ["CDS alert specificity", "False-positive reduction"],
+    veteran: "References ONC HTI-2 algorithmic transparency requirements.",
     heroNumber: "0.94",
     heroUnit: "CONFIDENCE",
     descriptor: "CDS Hooks v2.0.1 compliant LLM reasoning service",
     bullets: [
-      "20 drug-drug interactions + 15 contraindications in rule engine",
-      "Custom ai_reasoning_trace extension — full CDS audit trail",
-      "Side-by-side: Traditional rule-based vs LLM-augmented CDS",
-      "Demo: Opioid+Benzo critical alert, NSAID+Renal high severity"
+      "Rule engine augmented with LLM reasoning",
+      "Custom ai_reasoning_trace extension for auditability",
+      "Demo: Opioid+Benzo critical alert with NLRationale"
     ],
+    context: "Alert fatigue leads to high clinician dismissal rates.",
+    approach: "Augmented HL7 CDS Hooks with an LLM engine that generates transparent rationales.",
+    outcome: "Improved alert specificity and clinician acceptance.",
+    role: "Integration Engineer.",
   },
   {
-    idx: "09",
+    idx: "Project 09",
     name: "Synthetic Patient Cohort Generator",
     slug: "synthea-cohorts",
     category: "Clinical Intelligence",
     status: "Deployed",
     phase: 2,
-    oneLiner: "Purpose-built synthetic patient cohorts validated against CMS public-use files, powering every AI validation scenario in the portfolio.",
-    metric: "AI validation data infrastructure for the entire portfolio",
+    oneLiner: "Synthetic patient cohorts validated against CMS public-use files.",
+    metric: "AI validation data infrastructure",
     metricType: "enabler",
-    problem: "Every healthcare AI project needs test data. Real patient data requires IRB approval and months of procurement. Synthea generates generic populations but not purpose-built cohorts validated against real-world prevalence.",
+    problem: "Healthcare AI development is blocked by privacy hurdles and lack of validated test data.",
     evolution: [
-      "Generic synthetic patient generation with no cohort-level statistical validation.",
-      "Streamlit control panel with preconfigured cohort profiles (Oncology, High-Risk Readmission, Hospital-at-Home). Validation against CMS public-use files. Data Passport pages for compliance review."
+      "Generic synthetic patient generation with no statistical validation.",
+      "Streamlit control panel with preconfigured cohorts validated against CMS benchmarks."
     ],
-    stack: ["Synthea", "Python", "Streamlit", "Supabase", "CMS BSFCC"],
+    stack: ["Synthea", "Python", "Streamlit", "CMS BSFCC"],
     github: "https://github.com/basebattle/synthea-cohort-generator",
     live: "https://synthea-cohort-generator.streamlit.app",
-    kpis: ["Cohort statistical fidelity vs. CMS benchmarks", "Reproducibility via shareable JSON configs", "Data quality scorecard per cohort"],
-    veteran: "References synthetic data validation against CMS public-use files, FHIR R4 Bundle transaction semantics, and IRB-exempt synthetic data pathways.",
+    kpis: ["Cohort statistical fidelity", "Data quality scorecard"],
+    veteran: "References synthetic data validation against CMS public-use files.",
     heroNumber: "1K",
     heroUnit: "FHIR PATIENTS",
     descriptor: "3 preconfigured FHIR R4 cohorts, CMS-validated",
     bullets: [
-      "Oncology (500), High-Risk Readmission (300), HaH (200)",
-      "FHIR R4 Bundle output per patient — feeds P01, P02, P06",
-      "CMS BSFCC benchmark comparison validates clinical realism",
-      "Data Passport: demographics, prevalence, utilisation scorecard"
+      "Oncology, Readmission, and HaH cohorts",
+      "FHIR R4 Bundle output per patient",
+      "CMS BSFCC benchmark comparison for realism"
     ],
+    context: "Privacy hurdles often block clinical innovation.",
+    approach: "Engineered a cohort generator producing CMS-validated FHIR R4 bundles.",
+    outcome: "Created a reusable data infrastructure powering the entire portfolio.",
+    role: "Data Architect.",
   },
   {
-    idx: "10",
+    idx: "Project 10",
     name: "Hospital-at-Home Intelligence Layer",
     slug: "hah-monitoring",
     category: "Clinical Intelligence",
     status: "Deployed",
     phase: 3,
-    oneLiner: "Clinical Command Center for distributed care, applying NEWS2 risk scoring to remote patient monitoring data in real time across 9 diagnoses and 20 live patients.",
-    metric: "CMS waiver compliance coverage for Hospital-at-Home programs",
+    oneLiner: "Clinical Command Center applying NEWS2 risk scoring to RPM data.",
+    metric: "CMS waiver compliance coverage",
     metricType: "strategic",
-    problem: "CMS Hospital-at-Home waivers are expanding but health systems lack the clinical intelligence layer on top of RPM device data. Vital signs flow in but there is no automated triage, risk scoring, or escalation logic.",
+    problem: "Health systems lack the intelligence layer needed to operationalize CMS Hospital-at-Home waivers.",
     evolution: [
-      "Raw device data without clinical risk interpretation or automated escalation.",
-      "Python ingestion transforming RPM data into FHIR Observations. NEWS2 risk scoring (7 vitals → Red/Amber/Green RAG) with real-time escalation alerts. AI Analysis Engine synthesising NEWS2 scores with clinical notes. Every feature mapped to the 10 CMS AHCaH conditions of participation (42 CFR §412.65)."
+      "Raw RPM device data without clinical interpretation.",
+      "NEWS2 risk scoring with real-time escalation alerts mapped to CMS AHCaH conditions."
     ],
-    stack: ["Python 3.12", "Streamlit", "Plotly", "Pandas", "NEWS2 Engine", "RAG Classifier", "FHIR R4"],
+    stack: ["Python", "Streamlit", "NEWS2 Engine", "RAG Classifier", "FHIR R4"],
     github: "https://github.com/basebattle/hah-intelligence",
     live: "https://hah-intelligence.streamlit.app",
-    deepDive: "https://github.com/basebattle/hah-intelligence#readme",
-    kpis: ["NEWS2 escalation accuracy across 7 vitals", "Time-to-clinician-alert on RAG status change", "10 CMS AHCaH conditions of participation tracked"],
-    veteran: "References CMS Acute Hospital Care at Home waiver conditions (42 CFR §412.65), NEWS2 clinical deterioration scoring, FHIR Observation vital-signs profile, and IEEE 11073 RPM interoperability. Covers 9 diagnoses: CHF, COPD, Pneumonia, Cellulitis, Sepsis, UTI, DKA, CKD, and Post-Surgical.",
+    kpis: ["NEWS2 escalation accuracy", "CMS AHCaH waiver compliance"],
+    veteran: "References 42 CFR §412.65 for AHCaH conditions.",
     heroNumber: "20",
     heroUnit: "PATIENTS LIVE",
-    descriptor: "NEWS2 + RAG risk engine · CMS AHCaH waiver · FHIR Observations",
+    descriptor: "NEWS2 + RAG risk engine · CMS AHCaH waiver",
     bullets: [
-      "NEWS2 scoring: 7 vitals → automated Red/Amber/Green RAG triage",
-      "20-patient census: 12 Green · 5 Amber · 3 Red — real-time refresh",
-      "AI Analysis Engine: RAG classifier synthesises NEWS2 + clinical notes",
-      "CMS AHCaH waiver: 10 conditions of participation tracked (42 CFR §412.65)",
-      "9 diagnoses: CHF · COPD · Pneumonia · Sepsis · DKA · CKD + more"
+      "NEWS2 scoring: 7 vitals → Red/Amber/Green RAG triage",
+      "AI Analysis Engine: Synthesises NEWS2 + clinical notes",
+      "CMS AHCaH waiver: 10 conditions of participation tracked"
     ],
+    context: "The AHCaH waiver requires intelligent triage of distributed data.",
+    approach: "Built a Python ingestion layer with NEWS2 risk scoring and AI synthesis.",
+    outcome: "Established a compliant monitoring layer for core CMS criteria.",
+    role: "Lead Architect.",
+  },
+  {
+    idx: "Project 11",
+    name: "Healthcare LLMs: Moving from Experimentation to Production",
+    slug: "healthcare-llms-production",
+    category: "Strategic Governance",
+    status: "WIP",
+    phase: 4,
+    oneLiner: "Why the true hurdle for clinical AI isn't model parameter count, but the quality of terminology-resolved FHIR infrastructure.",
+    metric: "Read Article",
+    metricType: "strategic",
+    problem: "The healthcare industry focuses on parameter sweeps rather than the deterministic data plumbing required for clinical viability.",
+    evolution: [
+      "Fragmented, buzzword-heavy AI implementations that fail to scale.",
+      "A principled approach toward reasoning infrastructure and data provenance."
+    ],
+    stack: ["Strategic Planning", "FHIR", "AI Governance"],
+    github: null,
+    live: "/404",
+    kpis: ["Clinical Data Viability", "Terminology Resolution Rate"],
+    veteran: "A systemic overview of AI transition challenges.",
+    heroNumber: "6",
+    heroUnit: "MIN READ",
+    descriptor: "Strategic transition thesis for clinical AI",
+    bullets: [
+      "Evaluating terminology-resolved infrastructure",
+      "Moving beyond parameter counts in clinical AI",
+      "The true cost of fragmented interoperability"
+    ],
+    context: "Authored in March 2026.",
+    approach: "Examines the systemic hurdles blocking clinical AI deployment.",
+    outcome: "Provides a roadmap for terminology-resolved infrastructure.",
+    role: "Author."
+  },
+  {
+    idx: "Project 12",
+    name: "Prior Auth: Solving the $35B Burden",
+    slug: "prior-authorization-burden",
+    category: "Strategic Governance",
+    status: "WIP",
+    phase: 4,
+    oneLiner: "How multi-agent orchestration and LangGraph are collapsing 14-day authorization cycles into sub-3-day workflows.",
+    metric: "Read Article",
+    metricType: "strategic",
+    problem: "Prior authorization costs the US system $35B annually, creating massive clinical friction and denying care.",
+    evolution: [
+      "Manual chart reviews taking 45+ minutes per clinical request.",
+      "Multi-agent workflows collapsing authorization cycles."
+    ],
+    stack: ["Multi-Agent Orchestration", "LangGraph", "Clinical NLP"],
+    github: null,
+    live: "/404",
+    kpis: ["Authorization Cycle Compression", "Denial Rate Reduction"],
+    veteran: "Explores the financial and clinical impacts of prior auth.",
+    heroNumber: "5",
+    heroUnit: "MIN READ",
+    descriptor: "Multi-agent resolution for $35B friction",
+    bullets: [
+      "Collapsing 14-day cycles to sub-3-day workflows",
+      "Automated clinical evidence assembly via agents",
+      "Impact on physician burnout and administrative cost"
+    ],
+    context: "Authored in January 2026.",
+    approach: "Analyzes the technological pathways to solve prior auth.",
+    outcome: "A detailed breakdown of LangGraph orchestration impact.",
+    role: "Author."
   }
 ];

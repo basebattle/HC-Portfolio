@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { projects } from "@/data/projects";
 import ProjectHero from "@/components/projects/ProjectHero";
 import CaseStudyContent from "@/components/projects/CaseStudyContent";
@@ -57,7 +58,7 @@ export default async function ProjectDetailPage({
   return (
     <div
       className="min-h-screen"
-      style={{ backgroundColor: "#0F1923" }}
+      style={{ backgroundColor: "#0A0F1A" }}
     >
       {/* ── Radial bloom behind hero ── */}
       <div
@@ -65,11 +66,31 @@ export default async function ProjectDetailPage({
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 70% 45% at 60% 0%, rgba(0,212,170,0.10) 0%, transparent 65%)",
+            "radial-gradient(ellipse 70% 45% at 60% 0%, rgba(0, 183, 255, 0.08) 0%, transparent 65%)",
         }}
       />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-24 flex flex-col gap-16">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-24 flex flex-col gap-16">
+        
+        {/* ── Project Visual ── */}
+        {project.visual && (
+          <AnimateIn from="top" delay={0.1}>
+            <div className="relative w-full aspect-video rounded-[32px] overflow-hidden border border-white/10 shadow-2xl group">
+               <Image 
+                 src={project.visual} 
+                 alt={`${project.name} Architecture`} 
+                 fill 
+                 className="object-cover group-hover:scale-105 transition-transform duration-1000"
+               />
+               <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1A] via-transparent to-transparent opacity-60" />
+               <div className="absolute bottom-8 left-8">
+                  <div className="px-4 py-2 rounded-full bg-background/80 backdrop-blur-md border border-white/10 text-[10px] font-bold uppercase tracking-widest text-slate-300">
+                    High-Fidelity Architecture
+                  </div>
+               </div>
+            </div>
+          </AnimateIn>
+        )}
 
         {/* ── (1+2) Hero: status bar, H1, one-liner, metric callout ── */}
         <ProjectHero project={project} />

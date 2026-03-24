@@ -1,16 +1,61 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0A0F1A;
+  --foreground: #F8FAFC;
+  --primary: #00B7FF;
+  --primary-foreground: #FFFFFF;
+  
+  /* Healing Hand Palette (Legacy) */
+  --clinical: #00F5D4;      /* Neon Teal */
+  --financial: #FF007A;     /* Neon Pink */
+  --governance: #4A6FA5;    /* Slate Blue */
+  
+  /* Neon Accents */
+  --neon-pink: #FF007A;
+  --neon-teal: #00F5D4;
+  --neon-blue: #00B7FF;
+  --neon-white: #FFFFFF;
+
+  --card: rgba(15, 23, 42, 0.6);
+  --card-foreground: #F8FAFC;
+  --border: rgba(255, 255, 255, 0.08);
+  
+  --radius: 0.75rem;
+}
+
+@layer components {
+  .glow-pink {
+    box-shadow: 0 0 20px rgba(255, 0, 122, 0.3);
+  }
+  .glow-teal {
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.3);
+  }
+  .glow-blue {
+    box-shadow: 0 0 20px rgba(0, 183, 255, 0.3);
+  }
+  .border-beam {
+    position: relative;
+    overflow: hidden;
+  }
+}
+
+@keyframes border-beam {
+  0% { transform: scale(0.95); opacity: 0.5; }
+  50% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(0.95); opacity: 0.5; }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-
+  --color-primary: var(--primary);
+  --color-clinical: var(--clinical);
+  --color-financial: var(--financial);
+  --font-sans: var(--font-dm-sans);
+  --font-serif: var(--font-dm-serif);
+  --font-mono: var(--font-jetbrains-mono);
+  
   --animate-glint: glint 2s ease-in-out infinite;
 
   @keyframes glint {
@@ -31,17 +76,11 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-dm-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ── Badge Marquee Animations ── */
@@ -68,4 +107,80 @@ body {
 
 .animate-glint {
   animation: glint 1.4s ease-in-out infinite;
+}
+
+/* ── V3 Strategic Refinements ── */
+
+@keyframes pulse-pink {
+  0% { box-shadow: 0 0 0 0 rgba(255, 0, 122, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 0, 122, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 0, 122, 0); }
+}
+
+.pulse-pink {
+  animation: pulse-pink 2s infinite;
+}
+
+@keyframes pulse-red {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.pulse-red {
+  animation: pulse-red 2s infinite;
+}
+
+.focal-guide {
+  position: absolute;
+  background: linear-gradient(to bottom, var(--primary), transparent);
+  width: 1px;
+  height: 100px;
+  opacity: 0.2;
+  z-index: 1;
+}
+
+.bento-card-base {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+.bento-card-hover {
+  z-index: 50;
+  transform: scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+@layer utilities {
+  .hide-on-mobile {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .hide-on-mobile {
+      display: flex;
+    }
+  }
+}
+
+/* ── Responsive Typography ── */
+@media (max-width: 768px) {
+  h1 { font-size: 2.5rem !important; line-height: 1.1 !important; }
+  h2 { font-size: 2rem !important; line-height: 1.2 !important; }
+  h3 { font-size: 1.5rem !important; }
+  
+  .glow-blue, .glow-teal, .glow-pink {
+    text-shadow: none !important; /* Disable heavy glows on mobile for performance */
+  }
+}
+
+/* ── Container Fixes ── */
+html, body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
 }

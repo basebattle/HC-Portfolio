@@ -54,17 +54,17 @@ export default function Navbar() {
             >
               {/* PS badge */}
               <span
-                className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-bold text-white"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-bold text-[#F5ECD7]"
                 style={{
-                  background: "linear-gradient(135deg, #0D7377 0%, #00BFA5 100%)",
+                  background: "linear-gradient(135deg, var(--primary) 0%, var(--clinical) 100%)",
                 }}
               >
                 PS
               </span>
               {/* Name */}
               <span
-                className="hidden sm:block text-[15px] font-semibold tracking-tight text-white"
-                style={{ fontFamily: "var(--font-dm-sans)" }}
+                className="hidden sm:block text-[17px] font-medium tracking-tight text-[#F5ECD7]"
+                style={{ fontFamily: "var(--font-dm-serif)" }}
               >
                 Dr. Piyush Sharma
               </span>
@@ -76,7 +76,7 @@ export default function Navbar() {
                 <button
                   key={item.href}
                   onClick={() => handleNavClick(item.href)}
-                  className="px-4 py-2 text-sm font-medium text-white/70 hover:text-white rounded-lg hover:bg-white/5 transition-colors duration-150 cursor-pointer"
+                  className="px-4 py-2 text-sm font-medium text-[#F5ECD7]/70 hover:text-[#F5ECD7] rounded-lg hover:bg-white/5 transition-colors duration-150 cursor-pointer"
                   style={{ fontFamily: "var(--font-dm-sans)" }}
                 >
                   {item.label}
@@ -91,7 +91,7 @@ export default function Navbar() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white transition-colors duration-150 border border-white/20 hover:bg-white/5"
+                className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-[#F5ECD7]/80 hover:text-[#F5ECD7] transition-colors duration-150 border border-[#F5ECD7]/20 hover:bg-white/5"
                 style={{ fontFamily: "var(--font-dm-sans)" }}
               >
                 <Download size={16} className="mr-2" />
@@ -105,9 +105,9 @@ export default function Navbar() {
                   e.preventDefault();
                   handleNavClick("#contact");
                 }}
-                className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold text-white transition-opacity duration-150 hover:opacity-90 active:opacity-80"
+                className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold text-[#1A2B4A] transition-opacity duration-150 hover:opacity-95 active:opacity-90"
                 style={{
-                  background: "linear-gradient(135deg, #0D7377 0%, #00BFA5 100%)",
+                  background: "var(--foreground)",
                   fontFamily: "var(--font-dm-sans)",
                 }}
               >

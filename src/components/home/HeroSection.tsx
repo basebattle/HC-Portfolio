@@ -1,39 +1,49 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight, ChevronRight, Download } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { ArrowDown, ArrowRight, ChevronRight, Sparkles, Activity, ShieldCheck, BarChart3 } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
 import CountUpMetric from "@/components/ui/CountUpMetric";
 import Image from "next/image";
 
-const STAT_CARDS = [
+const TYPEWRITER_WORDS = ["Clinician.", "Builder.", "Strategist."];
+
+const IMPACT_PILLS = [
   {
-    value: "$2.8M",
-    label: "Projected Annual Impact",
-    sublabel: "across deployed projects",
-    color: "#FF8F00",
+    label: "Projected Impact",
+    value: 2.8,
+    prefix: "$",
+    suffix: "M+",
+    icon: BarChart3,
+    color: "var(--financial)"
   },
   {
-    value: "60%",
-    label: "Admin Time Reduction",
-    sublabel: "prior auth workflows",
-    color: "#00BFA5",
+    label: "Deployed Systems",
+    value: 10,
+    suffix: "",
+    icon: Sparkles,
+    color: "var(--clinical)"
   },
   {
-    value: "3d",
-    label: "Auth Cycle Time",
-    sublabel: "down from 14 days",
-    color: "#00BFA5",
-  },
-  {
-    value: "94%",
-    label: "Clean Claim Rate",
-    sublabel: "up from 78% baseline",
-    color: "#FF8F00",
-  },
+    label: "DX Domain Pillars",
+    value: 4,
+    suffix: "",
+    icon: Activity,
+    color: "var(--primary)"
+  }
 ];
 
 export default function HeroSection() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % TYPEWRITER_WORDS.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
+
   const scrollTo = (id: string) =>
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -41,287 +51,183 @@ export default function HeroSection() {
     <section
       id="hero"
       className="relative min-h-screen flex flex-col overflow-hidden"
-      style={{ backgroundColor: "#0F1923" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
-      {/* Radial gradient overlays */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        {/* Animated Grid */}
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-            maskImage: "radial-gradient(ellipse at center, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%)",
-            WebkitMaskImage: "radial-gradient(ellipse at center, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%)",
-            animation: "pulse 8s ease-in-out infinite alternate"
-          }}
-        />
-        {/* Teal bloom — top-right */}
+      {/* ── Background: Warm Bloomed Aesthetics ── */}
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+        {/* Soft Warm Radial Blooms */}
         <div
           className="absolute"
           style={{
-            width: "700px",
-            height: "700px",
-            top: "-10%",
-            right: "-5%",
-            background:
-              "radial-gradient(ellipse at center, rgba(13,115,119,0.22) 0%, transparent 70%)",
-            animation: "pulse 10s ease-in-out infinite alternate"
+            width: "80vw",
+            height: "80vw",
+            top: "-20%",
+            right: "-10%",
+            background: "radial-gradient(ellipse at center, rgba(74, 111, 165, 0.08) 0%, transparent 70%)",
           }}
         />
-        {/* Green bloom — bottom-left */}
         <div
           className="absolute"
           style={{
-            width: "600px",
-            height: "600px",
-            bottom: "-5%",
-            left: "-5%",
-            background:
-              "radial-gradient(ellipse at center, rgba(0,191,165,0.13) 0%, transparent 70%)",
-            animation: "pulse 12s ease-in-out infinite alternate-reverse"
+            width: "60vw",
+            height: "60vw",
+            bottom: "-10%",
+            left: "-10%",
+            background: "radial-gradient(ellipse at center, rgba(212, 160, 53, 0.05) 0%, transparent 70%)",
           }}
         />
-        {/* Wide teal wash at 70% 40% per spec */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 70% 40%, rgba(13,115,119,0.10) 0%, transparent 60%)",
-          }}
-        />
+        {/* Subtle Paper Texture Overlay */}
+        <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay" 
+             style={{ backgroundImage: `url('https://www.transparenttextures.com/patterns/natural-paper.png')` }} />
       </div>
 
-      {/* Main content */}
+      {/* ── Main Content ── */}
       <div className="relative z-10 flex-1 flex items-center">
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-24 pb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-32 pb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
 
-            {/* ── Left column ── */}
-            <div className="flex flex-col gap-8">
-              {/* H1 */}
-              <AnimateIn delay={0.13}>
-                <h1
-                  className="text-5xl sm:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-normal leading-[1.06] tracking-tight"
-                  style={{ fontFamily: "var(--font-dm-serif)", color: "#E8EDF0" }}
-                >
-                  Healthcare AI,
-                  <br />
-                  <span style={{ color: "#0D7377" }}>Operationalised.</span>
-                </h1>
-              </AnimateIn>
+            {/* ── Left Column: Identity ── */}
+            <div className="flex flex-col gap-10">
+              <div className="flex flex-col gap-4">
+                <AnimateIn delay={0.1}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-[1px] bg-neon-blue/40" />
+                    <span className="text-sm font-bold tracking-[0.3em] uppercase text-neon-blue/80">
+                      HCLS Management Consultant
+                    </span>
+                  </div>
+                </AnimateIn>
+                
+                <AnimateIn delay={0.2}>
+                  <h1
+                    className="text-5xl sm:text-6xl lg:text-7xl font-normal leading-[1.1] tracking-tight text-foreground max-w-4xl"
+                    style={{ fontFamily: "var(--font-dm-serif)" }}
+                  >
+                    Architecting the <span className="text-neon-blue">Reasoning Infrastructure</span>
+                    <br />
+                    <span className="opacity-40 italic">for Global Health Systems.</span>
+                  </h1>
+                </AnimateIn>
 
-              {/* Body copy */}
-              <AnimateIn delay={0.21}>
-                <p
-                  className="text-base sm:text-lg leading-relaxed max-w-[520px]"
-                  style={{
-                    color: "#607D8B",
-                    fontFamily: "var(--font-dm-sans)",
-                  }}
-                >
-                  10 production systems at the intersection of clinical informatics,
-                  agentic AI, and US payer-provider operations. Built to prove
-                  a thesis: domain expertise is the only moat that matters.
+                <div className="h-12 flex items-center mt-4">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={TYPEWRITER_WORDS[index]}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
+                      className="text-xl sm:text-2xl font-light text-neon-teal/80"
+                      style={{ fontFamily: "var(--font-dm-sans)" }}
+                    >
+                      {TYPEWRITER_WORDS[index]}
+                    </motion.span>
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              <AnimateIn delay={0.4}>
+                <p className="text-lg sm:text-xl leading-relaxed text-foreground/60 max-w-[600px] font-light">
+                  A consulting-grade portfolio implementing the four pillars of 
+                  Digital Transformation. Shifting the paradigm from simple 
+                  dashboards to active, reasoning medical agents.
                 </p>
               </AnimateIn>
 
-              {/* Stats Bar */}
-              <AnimateIn delay={0.25}>
-                <div className="flex items-center gap-8 py-2">
-                  <div className="flex flex-col gap-1">
-                    <span
-                      className="text-4xl font-bold tabular-nums"
-                      style={{ color: "#00BFA5", fontFamily: "var(--font-dm-serif)" }}
-                    >
-                      <CountUpMetric value={10} duration={1200} />
-                    </span>
-                    <span
-                      className="text-[11px] uppercase tracking-wider font-semibold"
-                      style={{ color: "#607D8B", fontFamily: "var(--font-dm-sans)" }}
-                    >
-                      Live Systems
-                    </span>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <span
-                      className="text-4xl font-bold tabular-nums"
-                      style={{ color: "#FF8F00", fontFamily: "var(--font-dm-serif)" }}
-                    >
-                      <CountUpMetric value={3} duration={1200} />
-                    </span>
-                    <span
-                      className="text-[11px] uppercase tracking-wider font-semibold"
-                      style={{ color: "#607D8B", fontFamily: "var(--font-dm-sans)" }}
-                    >
-                      Healthcare AI Domains
-                    </span>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <span
-                      className="text-4xl font-bold tabular-nums"
-                      style={{ color: "#ECEFF1", fontFamily: "var(--font-dm-serif)" }}
-                    >
-                      <CountUpMetric value={7} duration={1200} />
-                    </span>
-                    <span
-                      className="text-[11px] uppercase tracking-wider font-semibold"
-                      style={{ color: "#607D8B", fontFamily: "var(--font-dm-sans)" }}
-                    >
-                      FHIR/CDS Standards Implemented
-                    </span>
-                  </div>
-                </div>
-              </AnimateIn>
-
-              {/* CTA buttons */}
-              <AnimateIn delay={0.29}>
-                <div className="flex flex-wrap gap-3 mt-2">
+              {/* ── CTA Row ── */}
+              <AnimateIn delay={0.5}>
+                <div className="flex flex-wrap gap-4 items-center">
                   <button
                     onClick={() => scrollTo("#solutions")}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
-                    style={{
-                      background: "#0D7377",
-                      fontFamily: "var(--font-dm-sans)",
-                    }}
+                    className="px-8 py-4 rounded-xl text-base font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-neon-blue/20 flex items-center gap-3 bg-neon-blue text-background"
                   >
-                    View Portfolio
-                    <ArrowRight size={15} />
+                    Explore Frameworks
+                    <ArrowRight size={18} />
                   </button>
                   <button
                     onClick={() => scrollTo("#about")}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
-                    style={{
-                      color: "#E8EDF0",
-                      border: "1px solid rgba(232,237,240,0.15)",
-                      background: "transparent",
-                      fontFamily: "var(--font-dm-sans)",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background =
-                        "rgba(232,237,240,0.08)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background =
-                        "transparent";
-                    }}
+                    className="group px-8 py-4 rounded-xl text-base font-medium text-neon-teal/80 hover:text-neon-teal transition-all flex items-center gap-2 border border-neon-teal/20 hover:border-neon-teal hover:bg-neon-teal/5"
                   >
-                    Read the Story
-                    <ChevronRight size={15} />
+                    The Story
+                    <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
               </AnimateIn>
-            </div>
 
-            {/* ── Right column: 2×2 stat cards + Hero Profile Image ── */}
-            <div className="hidden lg:flex flex-col gap-6 relative h-[600px] w-full items-center justify-center">
-
-              {/* Hero Image Container */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                className="absolute inset-0 flex items-center justify-center pointer-events-none"
-              >
-                {/* 
-                  Drop the hero image here. 
-                  Masked using maskImage so the harsh edges fade cleanly into the #0F1923 background.
-                */}
-                <div
-                  className="relative w-[380px] h-[500px]"
-                  style={{
-                    WebkitMaskImage: "radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%)",
-                    maskImage: "radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%)",
-                  }}
-                >
-                  <Image
-                    src="/hero-profile.png"
-                    alt="Dr. Piyush Sharma"
-                    fill
-                    className="object-cover opacity-80 mix-blend-screen"
-                    priority
-                    unoptimized
-                  />
-                </div>
-              </motion.div>
-
-              {/* Grid for Stat Cards, positioned over the image with high z-index */}
-              <div className="grid grid-cols-2 gap-4 w-full z-10">
-                {STAT_CARDS.map((card, i) => (
-                  <AnimateIn key={card.label} delay={0.20 + i * 0.09} from="bottom">
-                    <div
-                      className="flex flex-col gap-2 p-6 rounded-2xl border"
-                      style={{
-                        background: "rgba(22,32,41,0.65)", // increased transparency to peek image behind
-                        backdropFilter: "blur(14px)",
-                        WebkitBackdropFilter: "blur(14px)",
-                        borderColor: "rgba(255,255,255,0.05)",
-                      }}
-                    >
-                      <span
-                        className="text-[2.6rem] font-bold leading-none tabular-nums drop-shadow-md"
-                        style={{
-                          color: card.color,
-                          fontFamily: "var(--font-dm-serif)",
-                        }}
-                      >
-                        {card.value}
-                      </span>
-                      <span
-                        className="text-sm font-semibold leading-snug"
-                        style={{
-                          color: "#E8EDF0",
-                          fontFamily: "var(--font-dm-sans)",
-                        }}
-                      >
-                        {card.label}
-                      </span>
-                      <span
-                        className="text-xs"
-                        style={{
-                          color: "rgba(232,237,240,0.5)",
-                          fontFamily: "var(--font-dm-sans)",
-                        }}
-                      >
-                        {card.sublabel}
-                      </span>
-                      <div
-                        className="mt-2 h-px w-8 rounded-full"
-                        style={{ backgroundColor: card.color, opacity: 0.45 }}
-                      />
+              {/* ── Impact Pills ── */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+                {IMPACT_PILLS.map((pill, i) => (
+                  <AnimateIn key={pill.label} delay={0.6 + i * 0.1}>
+                    <div className="p-5 rounded-2xl bg-white/5 border border-white/5 flex flex-col gap-2 group hover:bg-white/10 hover:border-neon-teal/30 transition-all duration-300">
+                      <div className="flex items-center justify-between">
+                         <pill.icon size={18} className="opacity-40 group-hover:opacity-100 transition-opacity" style={{ color: pill.color }} />
+                         <span className="text-[10px] uppercase tracking-widest text-foreground/30 font-bold">Metric</span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-3xl font-serif text-foreground group-hover:text-neon-teal transition-colors">
+                          <CountUpMetric value={pill.value} prefix={pill.prefix} suffix={pill.suffix} decimals={pill.value % 1 !== 0 ? 1 : 0} />
+                        </span>
+                        <span className="text-[11px] font-medium text-foreground/40 mt-1 uppercase tracking-wide">
+                          {pill.label}
+                        </span>
+                      </div>
                     </div>
                   </AnimateIn>
                 ))}
               </div>
             </div>
+
+            {/* ── Right Column: Seamless Background Image ── */}
+            <div className="hidden lg:flex justify-end items-center relative h-[700px] w-full col-span-1">
+               <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 2 }}
+                className="absolute right-0 w-[120%] h-full pointer-events-none"
+               >
+                  <Image 
+                    src="/speaker-bg.jpg" 
+                    alt="Strategic Leadership" 
+                    fill 
+                    className="object-cover opacity-60 translate-x-[10%]"
+                    style={{
+                      objectPosition: "20% center",
+                      maskImage: "linear-gradient(to left, black 40%, transparent 90%), linear-gradient(to bottom, black 50%, transparent 100%)",
+                      WebkitMaskImage: "linear-gradient(to left, black 40%, transparent 90%), linear-gradient(to bottom, black 50%, transparent 100%)"
+                    }}
+                    priority
+                  />
+                  {/* Subtle Atmosphere Overlay */}
+                  <div className="absolute inset-0 bg-radial-at-r from-transparent via-background/40 to-background opacity-80" />
+               </motion.div>
+
+               {/* Floating Agentic Elements */}
+               <motion.div 
+                 animate={{ y: [0, -20, 0], opacity: [0.4, 0.8, 0.4] }}
+                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                 className="absolute top-20 right-40 p-4 rounded-full bg-neon-teal/5 border border-neon-teal/20 backdrop-blur-3xl z-20"
+               >
+                 <Sparkles className="text-neon-teal" size={32} />
+               </motion.div>
+            </div>
+
           </div>
         </div>
       </div>
 
-      {/* Bouncing scroll cue */}
-      <div className="relative z-10 flex justify-center pb-8">
-        <motion.button
-          onClick={() => scrollTo("#solutions")}
-          aria-label="Scroll down"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-1.5 group cursor-pointer"
-        >
-          <span
-            className="text-[10px] tracking-[0.2em] uppercase"
-            style={{
-              color: "rgba(232,237,240,0.28)",
-              fontFamily: "var(--font-dm-sans)",
-            }}
-          >
-            scroll
-          </span>
-          <ArrowDown
-            size={16}
-            style={{ color: "rgba(0,191,165,0.55)" }}
-            className="group-hover:opacity-100 transition-opacity"
-          />
-        </motion.button>
+      {/* ── Bouncing Scroll Cue ── */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-3">
+         <motion.button
+          onClick={() => scrollTo("#impact")}
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="flex flex-col items-center gap-2 group cursor-pointer"
+         >
+            <span className="text-[9px] uppercase tracking-[0.4em] text-foreground/20 group-hover:text-foreground/40 transition-colors">
+              Frameworks
+            </span>
+            <ArrowDown size={14} className="text-foreground/20 group-hover:text-foreground/40 transition-colors" />
+         </motion.button>
       </div>
     </section>
   );

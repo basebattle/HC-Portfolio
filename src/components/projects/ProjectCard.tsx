@@ -1,303 +1,165 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Globe, Activity, Github, BookOpen } from "lucide-react";
 import { Project } from "@/data/projects";
 
-const DOMAIN_COLORS: Record<string, string> = {
-  "Clinical Intelligence": "#00d4aa",
-  "Financial Optimization": "#FF8F00",
-  "Strategic Governance": "#1565C0",
+const DOMAIN_COLORS: Record<string, { striking: string; muted: string }> = {
+  "Clinical Intelligence": { striking: "var(--neon-teal)", muted: "rgba(0, 245, 212, 0.15)" },
+  "Financial Optimization": { striking: "var(--neon-pink)", muted: "rgba(255, 0, 122, 0.15)" },
+  "Strategic Governance": { striking: "var(--neon-blue)", muted: "rgba(0, 183, 255, 0.15)" },
 };
 
-export default function ProjectCard({ project, compact = false }: { project: Project; compact?: boolean }) {
+export default function ProjectCard({ project }: { project: Project }) {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
-  const accentColor = DOMAIN_COLORS[project.category] || "#00d4aa";
+  const [isMobile, setIsMobile] = useState(false);
+  const colors = DOMAIN_COLORS[project.category] || { striking: "#00d4aa", muted: "rgba(0, 212, 170, 0.1)" };
 
-  const prefersReduced = typeof window !== "undefined" && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const duration = prefersReduced ? 0 : 0.22;
-
-  // Enhance numbers within bullets
-  const formatBullet = (text: string) => {
-    // Matches numbers, percentages, currency, K/M suffixes
-    return text.replace(/(\$?\d+(?:,\d+)*(?:\.\d+)?(?:K|M|%)?)/g, `<span style="font-weight:500;color:${accentColor}">$1</span>`);
-  };
-
-  const cardContent = (
-    <div
-      role="article"
-      tabIndex={0}
-      aria-label={`${project.name} — ${project.descriptor}`}
-      className={`flex flex-col transition-all overflow-hidden cursor-pointer ${compact ? "absolute top-0 left-0 w-full" : "relative"}`}
-      style={{
-        background: isHovered ? "rgba(22,32,41,0.95)" : "rgba(22,32,41,0.7)",
-        backdropFilter: "blur(24px)",
-        WebkitBackdropFilter: "blur(24px)",
-        border: `1px solid ${isHovered ? accentColor + "99" : "rgba(255,255,255,0.08)"}`,
-        boxShadow: isHovered ? `0 0 18px ${accentColor}1F` : "none",
-        borderRadius: "10px",
-        padding: compact ? "10px 12px" : "14px",
-        transitionDuration: prefersReduced ? "0s" : "0.25s",
-        zIndex: compact && isHovered ? 20 : 10,
-        height: compact && !isHovered ? "100%" : "auto"
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={() => router.push(`/projects/${project.slug}`)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          router.push(`/projects/${project.slug}`);
-        }
-      }}
-    >
-      {/* Metric Hero Box (Stable Anchor) */}
-      <div
-        className="flex flex-col mb-[10px]"
-        style={{
-          border: `1px solid ${accentColor}59`, // 35% opacity hex
-          borderRadius: "6px",
-          padding: compact ? "6px 10px" : "8px 12px",
-          background: `${accentColor}0F`, // 6% opacity hex
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "var(--font-dm-serif)",
-            fontSize: compact ? "26px" : "32px",
-            color: accentColor,
-            fontWeight: 500,
-            lineHeight: 1,
-          }}
-        >
-          {project.heroNumber}
-        </span>
-        <span
-          className="uppercase tracking-widest"
-          style={{
-            fontFamily: "var(--font-jetbrains-mono)",
-            fontSize: "10px",
-            color: "#607D8B",
-            marginTop: "3px",
-            letterSpacing: "0.08em",
-          }}
-        >
-          {project.heroUnit}
-        </span>
-      </div>
-
-      {/* Project Identity */}
-      <div className="flex flex-col gap-[2px]">
-        <span
-          style={{
-            fontFamily: "var(--font-jetbrains-mono)",
-            fontSize: "10px",
-            color: "#607D8B",
-          }}
-        >
-          P{project.idx}
-        </span>
-        <span
-          style={{
-            fontFamily: "var(--font-dm-sans)",
-            fontSize: "13px",
-            fontWeight: 500,
-            color: "#ECEFF1",
-            lineHeight: 1.4,
-          }}
-        >
-          {project.name}
-        </span>
-        <span
-          className={!isHovered && compact ? "line-clamp-2" : ""}
-          style={{
-            fontFamily: "var(--font-dm-sans)",
-            fontSize: "11px",
-            color: "#607D8B",
-            fontStyle: "italic",
-            lineHeight: 1.5,
-          }}
-        >
-          {project.descriptor}
-        </span>
-      </div>
-
-      {/* Expanded Details */}
-      <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration, ease: "easeOut" }}
-            className="overflow-hidden"
-          >
-            <div className="pt-4 flex flex-col gap-2">
-              {project.bullets?.map((bullet, idx) => (
-                <div key={idx} className="flex items-start">
-                  <div
-                    className="shrink-0 mr-2"
-                    style={{
-                      width: "2px",
-                      height: "14px",
-                      background: accentColor,
-                      marginTop: "2px"
-                    }}
-                  />
-                  <span
-                    style={{
-                      fontFamily: "var(--font-dm-sans)",
-                      fontSize: "11px",
-                      color: "#ECEFF1",
-                      lineHeight: 1.6,
-                    }}
-                    dangerouslySetInnerHTML={{ __html: formatBullet(bullet) }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Quick Actions Row */}
-            <div className="pt-5 mt-auto flex items-center gap-3">
-              {project.live && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(project.live || "", "_blank");
-                  }}
-                  className="flex items-center justify-center p-2 rounded-lg border transition-all duration-200"
-                  style={{
-                    background: `${accentColor}12`,
-                    borderColor: `${accentColor}25`,
-                    color: accentColor,
-                  }}
-                  title="Visit Webpage"
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = `${accentColor}25`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = `${accentColor}12`;
-                  }}
-                >
-                  <Globe size={15} />
-                </button>
-              )}
-
-              {project.simulation && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(project.simulation || "", "_blank");
-                  }}
-                  className="flex items-center justify-center p-2 rounded-lg border transition-all duration-200"
-                  style={{
-                    background: `${accentColor}12`,
-                    borderColor: `${accentColor}25`,
-                    color: accentColor,
-                  }}
-                  title="Run Simulation"
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = `${accentColor}25`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = `${accentColor}12`;
-                  }}
-                >
-                  <Activity size={15} />
-                </button>
-              )}
-
-              {project.github && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const url = project.github?.startsWith("http")
-                      ? project.github
-                      : `https://github.com/${project.github}`;
-                    window.open(url, "_blank");
-                  }}
-                  className="flex items-center justify-center p-2 rounded-lg border transition-all duration-200"
-                  style={{
-                    background: "rgba(232,237,240,0.06)",
-                    borderColor: "rgba(255,255,255,0.1)",
-                    color: "#ECEFF1",
-                  }}
-                  title="View GitHub"
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(232,237,240,0.12)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "rgba(232,237,240,0.06)";
-                  }}
-                >
-                  <Github size={15} />
-                </button>
-              )}
-
-              {project.deepDive && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(project.deepDive || "", "_blank");
-                  }}
-                  className="flex items-center justify-center p-2 rounded-lg border transition-all duration-200"
-                  style={{
-                    background: "rgba(232,237,240,0.06)",
-                    borderColor: "rgba(255,255,255,0.1)",
-                    color: "#ECEFF1",
-                  }}
-                  title="Architecture Deep-Dive"
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(232,237,240,0.12)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "rgba(232,237,240,0.06)";
-                  }}
-                >
-                  <BookOpen size={15} />
-                </button>
-              )}
-
-              <div className="ml-auto flex items-center">
-                <span
-                  style={{
-                    fontFamily: "var(--font-jetbrains-mono)",
-                    fontSize: "10px",
-                    color: "#607D8B",
-                  }}
-                >
-                  View full case study →
-                </span>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-
-  if (!compact) return cardContent;
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
-    <div className="relative w-full h-full">
-      {/* Invisible placeholder to maintain grid cell dimensions */}
+    <motion.div
+      layout
+      onMouseEnter={() => !isMobile && setIsHovered(true)}
+      onMouseLeave={() => !isMobile && setIsHovered(false)}
+      onClick={() => isMobile ? setIsHovered(!isHovered) : router.push(`/projects/${project.slug}`)}
+      className="relative cursor-pointer group"
+      style={{ zIndex: isHovered ? 50 : 1 }}
+      animate={{ 
+        scale: isHovered && !isMobile ? 1.05 : 1,
+        transition: { duration: 0.4, ease: [0.23, 1, 0.32, 1] }
+      }}
+    >
       <div
-        className="invisible flex flex-col pointer-events-none"
-        style={{ padding: "10px 12px", border: "1px solid transparent" }}
+        className="flex flex-col h-full rounded-[32px] border transition-all duration-500 overflow-hidden"
+        style={{
+          background: isHovered ? "rgba(15, 25, 40, 0.95)" : "rgba(10, 15, 25, 0.7)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderColor: isHovered ? colors.striking : "rgba(255,255,255,0.06)",
+          padding: "32px",
+          boxShadow: isHovered ? `0 20px 40px rgba(0,0,0,0.5), 0 0 30px ${colors.striking}40, inset 0 0 20px ${colors.striking}10` : "none",
+        }}
       >
-        <div style={{ padding: "6px 10px", marginBottom: "10px", border: "1px solid transparent" }}>
-          <span style={{ fontSize: "26px", lineHeight: 1 }}>{project.heroNumber}</span>
-          <span style={{ fontSize: "10px", marginTop: "3px" }}>{project.heroUnit}</span>
+        {/* Shorthand Dot/Label */}
+        <div className="flex justify-between items-start mb-8">
+          <div className="flex items-center gap-3">
+             <div 
+               className="w-10 h-10 rounded-full flex items-center justify-center text-[10px] font-mono font-bold tracking-tighter border shadow-lg shrink-0"
+               style={{ 
+                 backgroundColor: colors.muted, 
+                 borderColor: colors.striking, 
+                 color: colors.striking,
+                 boxShadow: isHovered ? `0 0 15px ${colors.striking}40` : "none"
+               }}
+             >
+               {project.idx.replace("Project ", "P")}
+             </div>
+             <div className="flex flex-col">
+                <span className="text-[9px] uppercase tracking-[0.3em] font-bold opacity-30">Deployment Unit</span>
+                <h3 className="text-xl font-serif text-white group-hover:text-neon-teal transition-colors leading-tight">
+                  {project.name}
+                </h3>
+             </div>
+          </div>
+          <div 
+            className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border transition-all ${project.status === "Deployed" ? "pulse-red" : ""}`}
+            style={{ 
+              borderColor: project.status === "Deployed" ? "rgba(239, 68, 68, 0.4)" : (isHovered ? colors.striking : "rgba(255,255,255,0.1)"), 
+              color: project.status === "Deployed" ? "#ef4444" : (isHovered ? colors.striking : "rgba(255,255,255,0.4)"),
+              backgroundColor: project.status === "Deployed" ? "rgba(239, 68, 68, 0.05)" : "transparent"
+            }}
+          >
+            {project.status === "Deployed" ? "● Live" : project.status}
+          </div>
         </div>
-        <div className="flex flex-col gap-[2px]">
-          <span style={{ fontSize: "10px" }}>P{project.idx}</span>
-          <span style={{ fontSize: "13px", lineHeight: 1.4 }}>{project.name}</span>
-          <span className="line-clamp-2" style={{ fontSize: "11px", lineHeight: 1.5 }}>{project.descriptor}</span>
+
+        {/* Hero Metric (Muted background, striking text) */}
+        <div 
+          className="mb-8 w-28 h-28 mx-auto rounded-full flex flex-col items-center justify-center text-center transition-all duration-500 shrink-0 aspect-square"
+          style={{ 
+            backgroundColor: isHovered ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.01)",
+            border: isHovered ? "1px solid rgba(255,255,255,0.05)" : "1px solid transparent"
+          }}
+        >
+          <div className="text-4xl font-serif mb-1" style={{ color: colors.striking, textShadow: isHovered ? `0 0 20px ${colors.striking}40` : "none" }}>
+            {project.heroNumber}
+          </div>
+          <div className="text-[10px] font-bold tracking-[0.4em] text-slate-500 uppercase">
+            {project.heroUnit}
+          </div>
         </div>
+
+        <p className="text-sm text-slate-400 leading-relaxed mb-8 italic opacity-80 line-clamp-3">
+          {project.descriptor}
+        </p>
+
+        {/* Revealable Actions */}
+        <AnimatePresence>
+          {isHovered && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between"
+            >
+              <div className="flex gap-4">
+                {project.github && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(project.github || "#", "_blank");
+                    }}
+                    className="w-12 h-12 rounded-full flex items-center justify-center bg-white/5 border border-white/10 transition-all group/icon hover:bg-white/10 hover:border-white/20"
+                  >
+                    <Github 
+                      size={20} 
+                      className="transition-all duration-300 opacity-60 group-hover/icon:opacity-100"
+                      style={{ 
+                        color: colors.striking,
+                        filter: isHovered ? `drop-shadow(0 0 8px ${colors.striking}80)` : "none" 
+                      }} 
+                    />
+                  </button>
+                )}
+                {project.live && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(project.live || "#", "_blank");
+                    }}
+                    className="w-12 h-12 rounded-full flex items-center justify-center bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 pulse-red transition-all group/icon"
+                  >
+                    <Globe 
+                      size={20} 
+                      className="transition-all duration-300 opacity-80 group-hover/icon:opacity-100"
+                      style={{ filter: "drop-shadow(0 0 8px rgba(239, 68, 68, 0.6))" }}
+                    />
+                  </button>
+                )}
+              </div>
+              
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-neon-teal">
+                Full Case Study <BookOpen size={14} />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {!isHovered && (
+           <div className="mt-auto pt-4 flex justify-center">
+              <div className="w-1 h-1 rounded-full bg-white/20 animate-bounce" />
+           </div>
+        )}
       </div>
-      {cardContent}
-    </div>
+    </motion.div>
   );
 }

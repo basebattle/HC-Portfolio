@@ -34,6 +34,12 @@ const STATUS_META: Record<
     border: "rgba(255,255,255,0.10)",
     pulse: false,
   },
+  WIP: {
+    color: "#00B7FF",
+    bg: "rgba(0,183,255,0.10)",
+    border: "rgba(0,183,255,0.28)",
+    pulse: true,
+  },
 };
 
 const METRIC_COLOR: Record<Project["metricType"], string> = {

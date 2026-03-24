@@ -4,6 +4,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import "../styles/globals.css";
 import BadgeMarquee from "@/components/BadgeMarquee";
+import ScrollProgress from "@/components/layout/ScrollProgress";
+import FlowingLine from "@/components/ui/FlowingLine";
 
 const dmSerifDisplay = DM_Serif_Display({
   variable: "--font-dm-serif",
@@ -24,8 +26,26 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HC Portfolio",
-  description: "Healthcare AI Innovation Showroom",
+  title: "A Strategic Architect's Portfolio | Healthcare AI & Agentic Ecosystems",
+  description: "Specializing in the intersection of Clinical Intelligence, Financial Optimization, and Strategic Governance through Agentic AI implementations.",
+  keywords: ["Healthcare AI", "Agentic Ecosystems", "Clinical Intelligence", "FHIR-MCP", "Healthcare Strategy", "Strategic Governance"],
+  authors: [{ name: "Piyush Sharma" }],
+  openGraph: {
+    title: "The Agentic Architect - Healthcare AI Strategy Portfolio",
+    description: "Architectural DX frameworks and agentic clinical implementations by Piyush Sharma.",
+    url: "https://agent-architect.vercel.app",
+    siteName: "The Agentic Architect",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dr Piyush Sharma | Healthcare AI Architect",
+    description: "Agentic clinical implementations and strategic ecosystems.",
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -36,11 +56,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dmSerifDisplay.variable} ${dmSans.variable} ${jetbrainsMono.variable} antialiased`}
+        className={`${dmSerifDisplay.variable} ${dmSans.variable} ${jetbrainsMono.variable} antialiased selection:bg-primary/20`}
       >
+        <FlowingLine />
         <BadgeMarquee />
         <Navbar />
         {children}
+        <ScrollProgress />
         <Footer />
       </body>
     </html>
