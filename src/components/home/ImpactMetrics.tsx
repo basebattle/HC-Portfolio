@@ -98,17 +98,14 @@ function VennDiagram() {
         <text x="100" y="116" fill="#00F5D4" fontSize="11" className="font-bold tracking-[0.25em]" textAnchor="middle" opacity="0.9">INTELLIGENCE</text>
 
         <text x="500" y="100" fill="#00B7FF" fontSize="11" className="font-bold tracking-[0.25em]" textAnchor="middle" opacity="0.9">STRATEGIC</text>
-        <text x="500" y="116" fill="#00B7FF" fontSize="11" className="font-bold tracking-[0.25em]" textAnchor="middle" opacity="0.9">GOVERNANCE</text>
+        <text x="500" y="116" fill="#00B7FF" fontSize="11" className="font-bold tracking-[0.25em]" textAnchor="middle" opacity="0.9">AGENTS</text>
 
-        <text x="300" y="480" fill="#FF007A" fontSize="11" className="font-bold tracking-[0.25em]" textAnchor="middle" opacity="0.9">OPERATIONAL EFFICIENCY</text>
+        <text x="300" y="475" fill="#FF007A" fontSize="11" className="font-bold tracking-[0.25em]" textAnchor="middle" opacity="0.9">PAYER & RCM</text>
 
-        <text x="300" y="245" fill="var(--foreground)" fontSize="22" className="font-serif" textAnchor="middle" opacity="1">Interlocking</text>
-        <text x="300" y="272" fill="var(--foreground)" fontSize="16" className="font-light italic" textAnchor="middle" opacity="0.6">Impact Vectors</text>
-
-        {/* Project Nodes */}
+        {/* Nodes */}
         {VENN_NODES.map((node) => {
           const numId = node.id.replace("P", "");
-          const proj = projects.find(p => p.idx.includes(numId)); // Match P01 with Project 01
+          const proj = projects.find(p => p.idx.includes(numId));
           if (!proj) return null;
           const isHovered = hoveredId === node.id;
           
@@ -123,18 +120,18 @@ function VennDiagram() {
               <circle
                 cx={node.cx}
                 cy={node.cy}
-                r={isHovered ? 20 : 15}
-                fill={isHovered ? node.color : "rgba(10, 15, 25, 0.9)"}
+                r={isHovered ? 16 : 12}
+                fill={isHovered ? node.color : "rgba(8, 15, 25, 0.9)"}
                 stroke={node.color}
-                strokeWidth={isHovered ? 3 : 1}
+                strokeWidth={isHovered ? 2 : 1}
                 className="transition-all duration-300"
                 style={{ filter: isHovered ? `drop-shadow(0 0 10px ${node.color})` : "none" }}
               />
               <text
                 x={node.cx}
                 y={node.cy + 4}
-                fill={isHovered ? "var(--background)" : "var(--foreground)"}
-                fontSize="10"
+                fill={isHovered ? "var(--background)" : "white"}
+                fontSize="9"
                 className="font-mono font-bold"
                 textAnchor="middle"
                 pointerEvents="none"
@@ -142,44 +139,44 @@ function VennDiagram() {
                 {node.id}
               </text>
 
-              {/* Hover Tooltip/Label */}
+              {/* Hover Tooltip */}
               <AnimatePresence>
                 {isHovered && (
                   <motion.g
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
                     className="pointer-events-none"
                   >
                     <rect
-                      x={node.cx - 90}
-                      y={node.cy - 70}
-                      width="180"
-                      height="45"
-                      rx="12"
+                      x={node.cx - 80}
+                      y={node.cy - 60}
+                      width="160"
+                      height="40"
+                      rx="8"
                       fill="rgba(8, 15, 25, 0.95)"
                       stroke={node.color}
                       strokeWidth="1"
                     />
                     <text 
                       x={node.cx} 
-                      y={node.cy - 50} 
+                      y={node.cy - 42} 
                       fill="white" 
-                      fontSize="11" 
+                      fontSize="10" 
                       textAnchor="middle" 
-                      className="font-serif font-medium"
+                      className="font-serif italic"
                     >
                       {proj.name}
                     </text>
                     <text 
                       x={node.cx} 
-                      y={node.cy - 38} 
+                      y={node.cy - 30} 
                       fill={node.color} 
-                      fontSize="8" 
+                      fontSize="7" 
                       textAnchor="middle" 
-                      className="uppercase tracking-widest font-bold"
+                      className="uppercase tracking-[0.2em] font-bold"
                     >
-                      View Case Study →
+                      Case Study →
                     </text>
                   </motion.g>
                 )}
@@ -193,6 +190,8 @@ function VennDiagram() {
 }
 
 export default function ImpactMetrics() {
+  const [activeNarrative, setActiveNarrative] = useState(0);
+
   return (
     <section
       id="impact"
@@ -227,7 +226,7 @@ export default function ImpactMetrics() {
                   borderLeft: `4px solid ${metric.color}`
                 }}
               >
-                <div style={{ color: "var(--foreground)", fontFamily: "var(--font-dm-serif)", fontSize: "48px", lineHeight: 1 }}>
+                <div style={{ color: "var(--foreground)", fontFamily: "var(--font-dm-serif)", fontSize: "44px", lineHeight: 1 }}>
                   <CountUpMetric value={metric.value} prefix={metric.prefix} suffix={metric.suffix} />
                 </div>
                 <div style={{ fontFamily: "var(--font-dm-sans)", fontSize: "14px", color: "var(--foreground)", opacity: 0.6, fontWeight: 400, flexGrow: 1 }}>
@@ -235,15 +234,15 @@ export default function ImpactMetrics() {
                 </div>
                 <div className="flex flex-wrap items-center mt-auto pt-6 border-t border-white/5 gap-2">
                   {metric.projects.map((id) => {
-                    const numId = id.replace("P", "");
-                    const proj = projects.find(p => p.idx === numId);
+                    const numId = id.replace("Project ", "");
+                    const proj = projects.find(p => p.idx.includes(numId));
                     return proj ? (
                       <Link
                         key={id}
                         href={`/projects/${proj.slug}`}
                         className="px-2 py-0.5 rounded-md bg-white/5 text-[9px] font-mono font-bold text-foreground/40 hover:text-foreground transition-colors"
                       >
-                        {id}
+                        P{numId}
                       </Link>
                     ) : null;
                   })}
@@ -265,32 +264,49 @@ export default function ImpactMetrics() {
             
             {NARRATIVES.map((block, i) => (
               <AnimateIn key={i} delay={0.5 + i * 0.1}>
-                <div className="relative pl-8 group">
+                <div 
+                  className={`relative pl-8 group transition-all duration-300 ${activeNarrative === i ? "opacity-100" : "opacity-40 hover:opacity-100"}`}
+                  onMouseEnter={() => setActiveNarrative(i)}
+                >
                   <div className="absolute left-0 top-2 bottom-0 w-px bg-white/5 overflow-hidden">
                     <motion.div 
                       initial={{ scaleY: 0 }}
                       whileInView={{ scaleY: 1 }}
                       transition={{ duration: 1, delay: 0.8 + i * 0.2 }}
                       className="w-full h-full origin-top"
-                      style={{ background: block.color }}
+                      style={{ background: activeNarrative === i ? block.color : "transparent" }}
                     />
                   </div>
-                  <h4 className="text-xl font-serif text-foreground mb-3 group-hover:text-white transition-colors">{block.title}</h4>
-                  <p className="text-sm leading-relaxed text-foreground/50 mb-6 group-hover:text-foreground/70 transition-colors">
-                    {block.text}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
+                  <h4 className="text-xl font-serif mb-3 transition-colors" style={{ color: activeNarrative === i ? block.color : "var(--foreground)" }}>{block.title}</h4>
+                  
+                  <AnimatePresence initial={false}>
+                    {activeNarrative === i && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="text-sm leading-relaxed text-foreground/70 mb-4 mt-3">
+                          {block.text}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  
+                  <div className="flex flex-wrap gap-2 pb-4 mt-2">
                     {block.projects.map(id => {
-                      const numId = id.replace("P", "");
-                      const proj = projects.find(p => p.idx === numId);
+                      const numId = id.replace("Project ", "");
+                      const proj = projects.find(p => p.idx.includes(numId));
                       return proj ? (
                         <Link
                           key={id}
                           href={`/projects/${proj.slug}`}
-                          className="px-4 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.05] flex items-center gap-2 hover:bg-white/[0.07] transition-all"
+                          className="px-4 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.05] flex items-center gap-2 hover:bg-white/[0.1] hover:border-white/20 transition-all shadow-md hover:shadow-lg"
                         >
-                          <span className="text-[10px] font-mono font-bold" style={{ color: block.color }}>{id}</span>
-                          <span className="text-xs font-medium text-foreground/60">{proj.name}</span>
+                          <span className="text-[10px] font-mono font-bold drop-shadow-md" style={{ color: block.color }}>P{numId}</span>
+                          <span className="text-xs font-medium text-white">{proj.name}</span>
                         </Link>
                       ) : null;
                     })}

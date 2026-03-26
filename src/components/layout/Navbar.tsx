@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Menu, X, Download } from "lucide-react";
+import { motion } from "framer-motion";
 
 const NAV_ITEMS = [
   { label: "About", href: "#about" },
@@ -13,6 +14,24 @@ const NAV_ITEMS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+      if (visibleEntries.length > 0) {
+        visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        setActiveSection(visibleEntries[0].target.id);
+      }
+    }, { rootMargin: "-30% 0px -70% 0px" });
+
+    NAV_ITEMS.forEach(item => {
+      const el = document.querySelector(item.href);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -71,15 +90,22 @@ export default function Navbar() {
             </a>
 
             {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-1" aria-label="Primary">
+            <nav className="hidden md:flex items-center gap-1 relative" aria-label="Primary">
               {NAV_ITEMS.map((item) => (
                 <button
                   key={item.href}
                   onClick={() => handleNavClick(item.href)}
-                  className="px-4 py-2 text-sm font-medium text-[#F5ECD7]/70 hover:text-[#F5ECD7] rounded-lg hover:bg-white/5 transition-colors duration-150 cursor-pointer"
+                  className="relative px-4 py-2 text-sm font-medium text-[#F5ECD7]/70 hover:text-[#F5ECD7] rounded-lg hover:bg-white/5 transition-colors duration-150 cursor-pointer"
                   style={{ fontFamily: "var(--font-dm-sans)" }}
                 >
                   {item.label}
+                  {activeSection === item.href.substring(1) && (
+                    <motion.div
+                      layoutId="nav-indicator"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-neon-teal"
+                      style={{ boxShadow: "0 0 10px var(--neon-teal)" }}
+                    />
+                  )}
                 </button>
               ))}
             </nav>

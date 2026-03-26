@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowRight, ChevronRight, Sparkles, Activity, ShieldCheck, BarChart3 } from "lucide-react";
+import { ArrowDown, ArrowRight, ChevronRight, Sparkles, Activity, ShieldCheck, BarChart3, Zap } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
 import CountUpMetric from "@/components/ui/CountUpMetric";
 import Image from "next/image";
@@ -31,18 +31,62 @@ const IMPACT_PILLS = [
     suffix: "",
     icon: Activity,
     color: "var(--primary)"
+  },
+  {
+    label: "Manual Review Reduction",
+    value: 80,
+    prefix: "",
+    suffix: "%",
+    icon: Zap,
+    color: "var(--neon-pink)"
+  },
+  {
+    label: "Alert Confidence",
+    value: 0.94,
+    prefix: "",
+    suffix: "",
+    icon: Activity, // Reuse or could be Brain, we'll use Activity
+    color: "var(--neon-teal)"
+  },
+  {
+    label: "Governance Audit",
+    value: 35,
+    prefix: "",
+    suffix: "-Pt",
+    icon: ShieldCheck,
+    color: "var(--neon-blue)"
   }
 ];
 
 export default function HeroSection() {
   const [index, setIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const cursorX = useSpring(mouseX, { damping: 25, stiffness: 150 });
+  const cursorY = useSpring(mouseY, { damping: 25, stiffness: 150 });
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % TYPEWRITER_WORDS.length);
     }, 2500);
-    return () => clearInterval(timer);
-  }, []);
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener("resize", checkMobile);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [mouseX, mouseY]);
 
   const scrollTo = (id: string) =>
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
@@ -53,6 +97,23 @@ export default function HeroSection() {
       className="relative min-h-screen flex flex-col overflow-hidden"
       style={{ backgroundColor: "var(--background)" }}
     >
+      {/* ── Spotlight Orb (Enhancement B) ── */}
+      {!isMobile && (
+        <motion.div
+          className="pointer-events-none fixed z-0"
+          style={{
+            width: "80vw",
+            height: "80vw",
+            translateX: "-50%",
+            translateY: "-50%",
+            left: cursorX,
+            top: cursorY,
+            background: "radial-gradient(circle, rgba(0, 183, 255, 0.05) 0%, transparent 60%)",
+            mixBlendMode: "screen"
+          }}
+        />
+      )}
+
       {/* ── Background: Warm Bloomed Aesthetics ── */}
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
         {/* Soft Warm Radial Blooms */}
@@ -153,28 +214,6 @@ export default function HeroSection() {
                   </button>
                 </div>
               </AnimateIn>
-
-              {/* ── Impact Pills ── */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-                {IMPACT_PILLS.map((pill, i) => (
-                  <AnimateIn key={pill.label} delay={0.6 + i * 0.1}>
-                    <div className="p-5 rounded-2xl bg-white/5 border border-white/5 flex flex-col gap-2 group hover:bg-white/10 hover:border-neon-teal/30 transition-all duration-300">
-                      <div className="flex items-center justify-between">
-                         <pill.icon size={18} className="opacity-40 group-hover:opacity-100 transition-opacity" style={{ color: pill.color }} />
-                         <span className="text-[10px] uppercase tracking-widest text-foreground/30 font-bold">Metric</span>
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-3xl font-serif text-foreground group-hover:text-neon-teal transition-colors">
-                          <CountUpMetric value={pill.value} prefix={pill.prefix} suffix={pill.suffix} decimals={pill.value % 1 !== 0 ? 1 : 0} />
-                        </span>
-                        <span className="text-[11px] font-medium text-foreground/40 mt-1 uppercase tracking-wide">
-                          {pill.label}
-                        </span>
-                      </div>
-                    </div>
-                  </AnimateIn>
-                ))}
-              </div>
             </div>
 
             {/* ── Right Column: Seamless Background Image ── */}
@@ -189,9 +228,10 @@ export default function HeroSection() {
                     src="/speaker-bg.jpg" 
                     alt="Strategic Leadership" 
                     fill 
-                    className="object-cover opacity-60 translate-x-[10%]"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover opacity-60"
                     style={{
-                      objectPosition: "20% center",
+                      objectPosition: "30% center",
                       maskImage: "linear-gradient(to left, black 40%, transparent 90%), linear-gradient(to bottom, black 50%, transparent 100%)",
                       WebkitMaskImage: "linear-gradient(to left, black 40%, transparent 90%), linear-gradient(to bottom, black 50%, transparent 100%)"
                     }}
@@ -200,34 +240,55 @@ export default function HeroSection() {
                   {/* Subtle Atmosphere Overlay */}
                   <div className="absolute inset-0 bg-radial-at-r from-transparent via-background/40 to-background opacity-80" />
                </motion.div>
-
-               {/* Floating Agentic Elements */}
-               <motion.div 
-                 animate={{ y: [0, -20, 0], opacity: [0.4, 0.8, 0.4] }}
-                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                 className="absolute top-20 right-40 p-4 rounded-full bg-neon-teal/5 border border-neon-teal/20 backdrop-blur-3xl z-20"
-               >
-                 <Sparkles className="text-neon-teal" size={32} />
-               </motion.div>
             </div>
 
           </div>
+
+          {/* ── Impact Pills (Grid Expanded) ── */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mt-12 relative z-20">
+            {IMPACT_PILLS.map((pill, i) => (
+              <AnimateIn key={pill.label} delay={0.6 + i * 0.1}>
+                <div className="p-8 rounded-3xl bg-white/5 border border-white/5 flex flex-col gap-3 group hover:bg-white/10 transition-all duration-300 shadow-xl backdrop-blur-md"
+                     style={{
+                       borderColor: `color-mix(in srgb, ${pill.color} 15%, transparent)`
+                     }}
+                >
+                  <div className="flex items-center justify-between pointer-events-none">
+                     <pill.icon size={20} className="opacity-40 group-hover:opacity-100 transition-opacity" style={{ color: pill.color }} />
+                     <span className="text-[10px] uppercase tracking-widest text-foreground/30 font-bold">Metric</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-4xl font-serif text-foreground transition-colors group-hover:scale-[1.02] origin-left duration-300"
+                          style={{
+                            color: pill.color,
+                            textShadow: `0 0 20px ${pill.color}40, 0 0 10px ${pill.color}20`
+                          }}
+                    >
+                      <CountUpMetric value={pill.value} prefix={pill.prefix} suffix={pill.suffix} decimals={pill.value % 1 !== 0 ? 1 : 0} />
+                    </span>
+                    <span className="text-xs font-medium text-foreground/60 mt-1 uppercase tracking-wide group-hover:text-foreground/80 transition-colors">
+                      {pill.label}
+                    </span>
+                  </div>
+                </div>
+              </AnimateIn>
+            ))}
+          </div>
+
         </div>
       </div>
 
-      {/* ── Bouncing Scroll Cue ── */}
+      {/* ── Static Scroll Cue ── */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-3">
-         <motion.button
-          onClick={() => scrollTo("#impact")}
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+         <button
+          onClick={() => scrollTo("#solutions")}
           className="flex flex-col items-center gap-2 group cursor-pointer"
          >
-            <span className="text-[9px] uppercase tracking-[0.4em] text-foreground/20 group-hover:text-foreground/40 transition-colors">
+            <span className="text-[9px] uppercase tracking-[0.4em] text-foreground/10 group-hover:text-foreground/30 transition-colors">
               Frameworks
             </span>
-            <ArrowDown size={14} className="text-foreground/20 group-hover:text-foreground/40 transition-colors" />
-         </motion.button>
+            <ArrowDown size={14} className="text-foreground/10 group-hover:text-foreground/30 transition-colors" />
+         </button>
       </div>
     </section>
   );

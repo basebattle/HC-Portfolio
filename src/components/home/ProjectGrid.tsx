@@ -9,27 +9,31 @@ import AnimateIn from "@/components/ui/AnimateIn";
 
 function DomainHeader({ title, count, color }: { title: string; count: number; color: string }) {
   return (
-    <div className="flex flex-col gap-3 mb-12 group">
-      <div className="flex items-end justify-between">
-        <div className="flex flex-col">
-          <span className="text-[11px] font-bold tracking-[0.5em] uppercase opacity-40 group-hover:opacity-100 transition-opacity" style={{ color }}>
-            {title}
-          </span>
+    <div className="flex flex-col gap-3 mb-12 group relative">
+      <div className="absolute inset-0 z-0 pointer-events-none" style={{ background: `radial-gradient(circle at left, ${color}22 0%, transparent 60%)`, filter: "blur(20px)" }} />
+      <div className="flex items-end justify-between relative z-10">
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px]" style={{ color }}>●</span>
+            <span className="text-[11px] font-bold tracking-[0.5em] uppercase opacity-100 transition-opacity" style={{ color }}>
+              {title}
+            </span>
+          </div>
           {title === "Clinical Intelligence" && (
-            <span className="text-[9px] uppercase tracking-widest text-neon-teal/60 font-medium">Core Reasoning Domain</span>
+            <span className="text-[9px] uppercase tracking-widest text-neon-teal/60 font-medium ml-4">Core Reasoning Domain</span>
           )}
         </div>
         <span className="text-[10px] font-mono opacity-20 group-hover:opacity-100 transition-opacity">
           {count} UNITS
         </span>
       </div>
-      <div className="h-[2px] w-full bg-white/5 relative overflow-hidden">
+      <div className="h-[2px] w-full bg-white/5 relative overflow-hidden z-10">
         <motion.div 
           initial={{ x: "-100%" }}
           whileInView={{ x: "0%" }}
           transition={{ duration: 1.5, ease: "circOut" }}
           className="absolute inset-0 w-full h-full"
-          style={{ background: `linear-gradient(to right, ${color}, transparent)`, opacity: 0.6 }}
+          style={{ background: `linear-gradient(to right, ${color}, transparent)`, opacity: 1 }}
         />
       </div>
     </div>

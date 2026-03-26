@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ShieldCheck, Network, Zap, Home, ChevronRight, ArrowUpRight } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
 import GlassCard from "@/components/ui/GlassCard";
+import Link from "next/link";
 
 const PILLARS = [
   {
@@ -86,48 +87,54 @@ export default function DXPillarsSection() {
               >
                 {/* Icon Circle */}
                 <div 
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-2xl"
+                  className="w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-2xl relative z-10"
                   style={{ 
-                    background: `linear-gradient(135deg, ${pillar.color}22 0%, ${pillar.color}11 100%)`, 
+                    background: `linear-gradient(135deg, ${pillar.color}44 0%, ${pillar.color}22 100%)`, 
                     border: `1px solid ${pillar.color}33`,
-                    boxShadow: `0 0 20px ${pillar.color}11`
+                    boxShadow: `0 0 30px ${pillar.color}33`
                   }}
                 >
                   <pillar.icon size={28} style={{ color: pillar.color }} className="opacity-80 group-hover:opacity-100 transition-opacity" />
                 </div>
 
                 {/* Content */}
-                <div className="flex flex-col gap-4">
-                  <h3 className="text-2xl font-serif text-white tracking-tight">
+                <div className="flex flex-col gap-4 relative z-10">
+                  <h3 className="text-2xl font-serif tracking-tight" style={{ color: pillar.color }}>
                     {pillar.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-slate-400 group-hover:text-slate-300 transition-colors">
+                  <p className="text-sm leading-relaxed transition-colors opacity-80" style={{ color: pillar.color }}>
                     {pillar.description}
                   </p>
                 </div>
 
                 {/* Bottom section */}
-                <div className="mt-auto pt-8 border-t border-white/[0.05] flex flex-col gap-5">
+                <Link href={`/projects/${pillar.projects[0]}`} className="mt-auto pt-8 border-t border-white/[0.05] flex flex-col gap-5 relative z-20 group/link">
                   <div className="flex flex-col gap-1">
-                    <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Ref Project</span>
-                    <span className="text-xs font-semibold text-slate-300">{pillar.ref}</span>
+                    <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold group-hover/link:text-white transition-colors">Ref Project</span>
+                    <span className="text-xs font-semibold text-slate-300 group-hover/link:text-white transition-colors">{pillar.ref}</span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Success Metric</span>
+                    <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold group-hover/link:text-white transition-colors">Success Metric</span>
                     <span className="text-sm font-medium italic" style={{ color: pillar.color }}>{pillar.metric}</span>
                   </div>
                   
                   {/* Hover indicator */}
-                  <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-40 transition-opacity">
-                    <ArrowUpRight size={20} className="text-white" />
+                  <div className="absolute bottom-0 right-0 opacity-0 group-hover/link:opacity-100 transition-all duration-300 translate-x-4 -translate-y-4 group-hover/link:translate-x-0 group-hover/link:translate-y-0">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20">
+                      <ArrowUpRight size={18} className="text-white" />
+                    </div>
                   </div>
-                </div>
+                </Link>
 
                 {/* Vertical detail line */}
                 <div 
-                  className="absolute top-8 left-0 w-px h-16 transition-transform duration-500 origin-top group-hover:scale-y-[2.5]"
+                  className="absolute top-8 left-0 w-1 h-24 transition-transform duration-500 origin-top group-hover:scale-y-[2.5] z-10"
                   style={{ backgroundColor: pillar.color }}
                 />
+
+                {/* Domain Color Tide (Enhancement E) */}
+                <div className="absolute inset-0 transition-transform duration-500 origin-bottom scale-y-0 group-hover:scale-y-100 z-0 rounded-[32px] overflow-hidden pointer-events-none"
+                     style={{ backgroundColor: pillar.color, opacity: 0.05 }} />
               </div>
             </AnimateIn>
           ))}
@@ -148,13 +155,13 @@ export default function DXPillarsSection() {
                 enabling <span className="text-neon-pink font-medium italic">Efficiency</span> and safe <span className="text-white font-medium italic">Care Delivery</span>.
               </p>
             </div>
-            <button 
-              onClick={() => window.open("/404", "_blank")}
+            <Link 
+              href="/playbook"
               className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all group shrink-0"
             >
               View Methodology Playbook
               <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </button>
+            </Link>
           </div>
         </AnimateIn>
 

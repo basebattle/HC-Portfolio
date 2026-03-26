@@ -11,6 +11,7 @@ export interface Project {
   problem: string;
   evolution: [string, string];
   stack: string[];
+  tags?: string[];
   github: string | null;
   live: string | null;
   simulation?: string | null;
@@ -46,6 +47,7 @@ export const projects: Project[] = [
       "Built a node-based Reasoning Graph that maps LLM decisions step-by-step against HL7 FHIR standards using Pydantic v2 strict-mode type safety."
     ],
     stack: ["Python", "FastMCP", "Next.js", "Tailwind", "Framer Motion", "Pydantic v2"],
+    tags: ["FHIR", "MCP", "FastAPI"],
     github: "https://github.com/basebattle/FHIR-MCP-data-bridge",
     live: "https://v3-ehr-simulator.vercel.app/",
     simulation: "https://v3-ehr-simulator.vercel.app/simulator",
@@ -85,6 +87,7 @@ export const projects: Project[] = [
       "LangGraph-based multi-agent orchestration evaluating guidelines, provider credentials, and evidence assembly autonomously."
     ],
     stack: ["Python", "LangGraph", "Claude API", "Next.js", "FastAPI"],
+    tags: ["LangGraph", "DAG", "Agents"],
     github: "https://github.com/basebattle/prior-auth-pipeline",
     live: "https://prior-auth-pipeline.vercel.app",
     features: [
@@ -122,6 +125,7 @@ export const projects: Project[] = [
       "Multi-agent auditing nodes that flag transactional outliers in real-time based on HFMA benchmarks."
     ],
     stack: ["Python", "Streamlit", "LangGraph", "Claude API", "Pandas"],
+    tags: ["HFMA", "RCM", "Streamlit"],
     github: "https://github.com/basebattle/revenue-cycle-dashboard",
     live: "https://payvider-dashboard.streamlit.app",
     kpis: ["Days in A/R: 45 to 28", "Clean Claim Rate: 78% to 94%", "Admin cost: 28% to 18%"],
@@ -156,6 +160,7 @@ export const projects: Project[] = [
       "Multi-agent LangGraph system integrating Gmail, Drive, Sheets, and Slack via MCP for structured root-cause hierarchy."
     ],
     stack: ["Python", "LangGraph", "FastAPI", "MCP", "Streamlit"],
+    tags: ["CARC", "RARC", "X12"],
     github: "https://github.com/basebattle/claims-denial-agent",
     live: "https://claims-denial-agent.streamlit.app",
     kpis: ["Denial rate: 12% to 9.6%", "CARC/RARC root-cause mapping", "Rework cost avoidance"],
@@ -190,6 +195,7 @@ export const projects: Project[] = [
       "Fork of Tuva Project (Apache 2.0) with CMS OCM mapping and episode-level TCOC."
     ],
     stack: ["dbt", "DuckDB", "Tuva Project", "Streamlit", "Python"],
+    tags: ["VBC", "dbt", "CMS-HCC"],
     github: "https://github.com/basebattle/vbc-analyzer",
     live: "https://vbc-analyzer.streamlit.app",
     kpis: ["Episode-level TCOC calculation", "Risk-adjustment sensitivity (CMS-HCC V28)"],
@@ -224,6 +230,7 @@ export const projects: Project[] = [
       "Microsoft FHIR Server integration with Bulk Data Access 2.0 and Synthea patient bundles."
     ],
     stack: ["Microsoft FHIR Server", "FastMCP", "Synthea", "Next.js", "FastAPI"],
+    tags: ["Azure", "OAuth2", "Medplum"],
     github: "https://github.com/basebattle/fhir-llm-gateway",
     live: "https://fhir-llm-gateway.vercel.app",
     kpis: ["Enterprise FHIR backend latency", "SMART on FHIR auth compliance"],
@@ -258,6 +265,7 @@ export const projects: Project[] = [
       "Web assessment tool across seven HAIRA domains with radar-chart profiles and recommendations."
     ],
     stack: ["Next.js", "Supabase", "Recharts", "Tailwind CSS"],
+    tags: ["Governance", "Maturity", "HAIRA"],
     github: "https://github.com/basebattle/haira-assessment",
     live: "https://haira-assessment.vercel.app",
     kpis: ["Governance maturity score", "Benchmarking percentile", "Prioritized action items"],
@@ -292,6 +300,7 @@ export const projects: Project[] = [
       "Hybrid CDS responding to order-sign hook with LLM-generated clinical rationales."
     ],
     stack: ["CDS Hooks v2.0.1", "cqf-ruler", "Claude API", "FHIR R4"],
+    tags: ["CDS Hooks", "HL7", "ONC"],
     github: "https://github.com/basebattle/cds-analytics",
     live: "https://cds-analytics-app.vercel.app",
     kpis: ["CDS alert specificity", "False-positive reduction"],
@@ -325,6 +334,7 @@ export const projects: Project[] = [
       "Streamlit control panel with preconfigured cohorts validated against CMS benchmarks."
     ],
     stack: ["Synthea", "Python", "Streamlit", "CMS BSFCC"],
+    tags: ["Synthea", "Pipelines", "CMS"],
     github: "https://github.com/basebattle/synthea-cohort-generator",
     live: "https://synthea-cohort-generator.streamlit.app",
     kpis: ["Cohort statistical fidelity", "Data quality scorecard"],
@@ -358,6 +368,7 @@ export const projects: Project[] = [
       "NEWS2 risk scoring with real-time escalation alerts mapped to CMS AHCaH conditions."
     ],
     stack: ["Python", "Streamlit", "NEWS2 Engine", "RAG Classifier", "FHIR R4"],
+    tags: ["NEWS2", "AHCaH", "RAG"],
     github: "https://github.com/basebattle/hah-intelligence",
     live: "https://hah-intelligence.streamlit.app",
     kpis: ["NEWS2 escalation accuracy", "CMS AHCaH waiver compliance"],
@@ -391,6 +402,7 @@ export const projects: Project[] = [
       "A principled approach toward reasoning infrastructure and data provenance."
     ],
     stack: ["Strategic Planning", "FHIR", "AI Governance"],
+    tags: ["Strategy", "Thesis"],
     github: null,
     live: "/404",
     kpis: ["Clinical Data Viability", "Terminology Resolution Rate"],
@@ -424,6 +436,7 @@ export const projects: Project[] = [
       "Multi-agent workflows collapsing authorization cycles."
     ],
     stack: ["Multi-Agent Orchestration", "LangGraph", "Clinical NLP"],
+    tags: ["Orchestration", "Analysis"],
     github: null,
     live: "/404",
     kpis: ["Authorization Cycle Compression", "Denial Rate Reduction"],

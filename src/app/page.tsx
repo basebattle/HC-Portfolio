@@ -3,6 +3,7 @@ import DXPillarsSection from "@/components/home/DXPillarsSection";
 import ProjectGrid from "@/components/home/ProjectGrid";
 import ImpactMetrics from "@/components/home/ImpactMetrics";
 import AboutSection from "@/components/home/AboutSection";
+import FlowingLine from "@/components/ui/FlowingLine";
 
 import ContactSection from "@/components/home/ContactSection";
 import FocalGuide from "@/components/ui/FocalGuide";
@@ -20,6 +21,8 @@ export default function Home() {
       
       <FocalGuide className="mt-8 mb-4" color="var(--neon-teal)" />
       <ImpactMetrics />
+      
+      <FlowingLine />
       
       <FocalGuide className="mt-8 mb-4" color="var(--neon-pink)" />
       <ProjectGrid />

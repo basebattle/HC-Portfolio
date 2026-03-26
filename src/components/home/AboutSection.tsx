@@ -4,6 +4,7 @@ import { createElement, useEffect, useState } from "react";
 import Image from "next/image";
 import { Shield, Briefcase, Award, Zap, Building } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
+import ContactButton from "@/components/ui/ContactButton";
 
 // ─── Credential data ──────────────────────────────────────────────────────────
 
@@ -52,11 +53,16 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden py-24 px-6 lg:px-8"
+      className="relative overflow-hidden py-24 px-6 lg:px-8 group"
       style={{ backgroundColor: "var(--background)" }}
     >
-      {/* Background Image Container with Stylized Blur */}
-      <div className="absolute inset-0 z-0 lg:left-0 lg:right-auto lg:w-[120%] h-full pointer-events-none opacity-30 lg:opacity-40 transition-all duration-1000 blur-[60px] scale-110">
+      <div 
+        className="absolute inset-0 z-0 lg:left-0 lg:right-auto lg:w-[120%] h-full pointer-events-none transition-all duration-1000 scale-110 blur-[40px] group-hover:blur-[8px] opacity-35 group-hover:opacity-70"
+        style={{
+          maskImage: "radial-gradient(circle at 30% 50%, black 10%, transparent 60%)",
+          WebkitMaskImage: "radial-gradient(circle at 30% 50%, black 10%, transparent 60%)"
+        }}
+      >
         <Image
           src="/hero-profile.png"
           alt="Consulting Context"
@@ -112,6 +118,14 @@ export default function AboutSection() {
                 <p>
                    The 12 projects in this portfolio implement the four pillars of Digital Transformation: <span className="text-foreground">Readiness</span>, <span className="text-foreground">Interoperability</span>, <span className="text-foreground">Efficiency</span>, and <span className="text-foreground">Care Delivery</span>. They serve as a proof-of-concept for my thesis: that the next decade of healthcare will be defined by the quality of its reasoning infrastructure.
                 </p>
+              </div>
+            </AnimateIn>
+
+            {/* Uiverse Contact Button Add-in */}
+            <AnimateIn delay={0.4}>
+              <div className="mt-8 flex flex-col items-start text-left">
+                  <p className="text-sm font-serif italic text-foreground/60 mb-6">If you&apos;re looking to implement clinical AI or optimize operational workflows, I recommend reaching out via email to discuss a consultation.</p>
+                  <ContactButton />
               </div>
             </AnimateIn>
           </div>
